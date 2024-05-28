@@ -1,0 +1,7 @@
+[25-Jan-2024 06:50:29 Asia/Karachi] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home/infinitewellness/public_html/app.infinitewellnesspk.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:233
+Stack trace:
+#0 /home/infinitewellness/public_html/app.infinitewellnesspk.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(210): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home/infinitewellness/public_html/app.infinitewellnesspk.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(270): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home/infinitewellness/public_html/app.infinitewellnesspk.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 233
