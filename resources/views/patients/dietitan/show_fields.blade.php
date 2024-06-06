@@ -1609,7 +1609,7 @@
             processData: false,
             contentType: false,
             success: function(response) {
-                console.log("Forms submitted successfully:", response);
+                swal("Forms submitted successfully:", response, "success");
             },
             error: function(error) {
                 console.error("Error submitting the forms:", error);
