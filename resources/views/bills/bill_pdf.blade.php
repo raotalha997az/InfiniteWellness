@@ -24,7 +24,7 @@
         <tr>
             <td class="header-left">
                 <div class="main-heading">{{ __('messages.bill.bill') }}</div>
-                <img src="https://app.infinitewellnesspk.com/logo.png" width="120px" alt="logo">
+                <img src="{{ asset('logo.png') }}" width="120px" alt="logo">
                 <div class="invoice-number font-color-gray">Bill
                     #{{ $bill->patient_admission_id }}</div>
             </td>

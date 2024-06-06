@@ -71,7 +71,7 @@ margin-left: -10px;
 <div class="container my-3">
     <center>
         <div style="margin-top: 25px !important; margin-bottom: 25px !important">
-            <img src="https://app.infinitewellnesspk.com/logo.png" width="120px" alt="logo">
+            <img src="{{ asset('logo.png') }}" width="120px" alt="logo">
         </div>
     </center>
     <form action="{{request()->url()}}" method="POST" enctype="multipart/form-data">

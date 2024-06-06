@@ -3,7 +3,7 @@
     <thead>
         <center>
             <div style="margin-top: 25px !important; margin-bottom: 25px !important">
-                <img src="https://app.infinitewellnesspk.com/logo.png" width="120px" alt="logo">
+                <img src="{{ asset('logo.png') }}" width="120px" alt="logo">
             </div>
 
             <div style="margin-top: 25px !important; margin-bottom: 10px !important">
