@@ -106,6 +106,7 @@ use App\Http\Controllers\OpdPatientDepartmentController;
 use App\Http\Controllers\PatientDiagnosisTestController;
 use App\Http\Controllers\IpdConsultantRegisterController;
 use App\Http\Controllers\Purchase\GoodReceiveNoteController;
+use App\Http\Controllers\FunctionalMedicineController;
 
 /*
 |--------------------------------------------------------------------------
@@ -810,6 +811,9 @@ Route::middleware(['auth', 'verified', 'xss', 'checkUserStatus'])->group(functio
         Route::get('/fast-medical-record/{id}/edit', [NursingFormController::class, 'fastMedicalRecordEdit'])->name('fast-medical-record.edit');
         Route::put('/fast-medical-record/{id}', [NursingFormController::class, 'fastMedicalupdate'])->name('fast-medical-record.update');
         Route::get('/fast-medical-record/{id}/print', [NursingFormController::class, 'fastMedicalprint'])->name('fast-medical-record.prints');
+        
+        
+        Route::resource('functional-medicine', FunctionalMedicineController::class);
     });
 
     Route::middleware('role:Admin|Nurse|Receptionist|Doctor|Case Manager|Nurse')->group(function () {
