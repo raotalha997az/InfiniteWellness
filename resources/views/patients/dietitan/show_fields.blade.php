@@ -4,12 +4,12 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-xxl-5 col-12">
-                    <div class="d-sm-flex align-items-center mb-5 mb-xxl-0 text-center text-sm-start">
+                    <div class="mb-5 text-center d-sm-flex align-items-center mb-xxl-0 text-sm-start">
                         <div class="image image-circle image-small">
                             <img src="{{ !empty($data->patientUser->image_url) ? $data->patientUser->image_url : '' }}"
                                 alt="image" />
                         </div>
-                        <div class="ms-0 ms-md-10 mt-5 mt-sm-0">
+                        <div class="mt-5 ms-0 ms-md-10 mt-sm-0">
                             <h2><a href="javascript:void(0)"
                                     class="text-decoration-none">{{ !empty($data->patientUser->full_name) ? $data->patientUser->full_name : '' }}</a>
                             </h2>
@@ -18,7 +18,7 @@
                                 class="text-gray-600 text-decoration-none fs-5">
                                 {{ !empty($data->patientUser->email) ? $data->patientUser->email : '' }}
                             </a>
-                            <span class="d-flex align-items-center me-2 mb-2 mt-2">
+                            <span class="mt-2 mb-2 d-flex align-items-center me-2">
                                 @if (
                                     !empty($data->address->address1) ||
                                         !empty($data->address->address2) ||
@@ -37,25 +37,25 @@
                 </div>
                 <div class="col-xxl-7 col-12">
                     <div class="row justify-content-center">
-                        <div class="col-md-4 col-sm-6 col-12 mb-6 mb-md-0">
-                            <div class="border rounded-10 p-5 h-100">
-                                <h2 class="text-primary mb-3">{{ !empty($data->cases) ? $data->cases->count() : 0 }}
+                        <div class="mb-6 col-md-4 col-sm-6 col-12 mb-md-0">
+                            <div class="p-5 border rounded-10 h-100">
+                                <h2 class="mb-3 text-primary">{{ !empty($data->cases) ? $data->cases->count() : 0 }}
                                 </h2>
-                                <h3 class="fs-5 fw-light text-gray-600 mb-0">{{ __('messages.patient.total_cases') }}
+                                <h3 class="mb-0 text-gray-600 fs-5 fw-light">{{ __('messages.patient.total_cases') }}
                                 </h3>
                             </div>
                         </div>
-                        {{-- <div class="col-md-4 col-sm-6 col-12 mb-6 mb-md-0">
-                            <div class="border rounded-10 p-5 h-100">
-                                <h2 class="text-primary mb-3">{{!empty($data->admissions) ? $data->admissions->count() : 0}}</h2>
-                                <h3 class="fs-5 fw-light text-gray-600 mb-0">{{__('messages.patient.total_admissions')}}</h3>
+                        {{-- <div class="mb-6 col-md-4 col-sm-6 col-12 mb-md-0">
+                            <div class="p-5 border rounded-10 h-100">
+                                <h2 class="mb-3 text-primary">{{!empty($data->admissions) ? $data->admissions->count() : 0}}</h2>
+                                <h3 class="mb-0 text-gray-600 fs-5 fw-light">{{__('messages.patient.total_admissions')}}</h3>
                             </div>
                         </div> --}}
-                        <div class="col-md-4 col-sm-6 col-12 mb-6 mb-md-0">
-                            <div class="border rounded-10 p-5 h-100">
-                                <h2 class="text-primary mb-3">
+                        <div class="mb-6 col-md-4 col-sm-6 col-12 mb-md-0">
+                            <div class="p-5 border rounded-10 h-100">
+                                <h2 class="mb-3 text-primary">
                                     {{ !empty($data->appointments) ? $data->appointments->count() : 0 }}</h2>
-                                <h3 class="fs-5 fw-light text-gray-600 mb-0">
+                                <h3 class="mb-0 text-gray-600 fs-5 fw-light">
                                     {{ __('messages.patient.total_appointments') }}</h3>
                             </div>
                         </div>
@@ -64,70 +64,70 @@
             </div>
         </div>
     </div>
-    <div class="mt-7 overflow-hidden">
-        <ul class="nav nav-tabs mb-5 pb-1 overflow-auto flex-nowrap text-nowrap">
+    <div class="overflow-hidden mt-7">
+        <ul class="pb-1 mb-5 overflow-auto nav nav-tabs flex-nowrap text-nowrap">
             @role('Admin')
-                <li class="nav-item position-relative me-7 mb-3">
-                    <a class="nav-link active p-0" data-bs-toggle="tab"
+                <li class="mb-3 nav-item position-relative me-7">
+                    <a class="p-0 nav-link active" data-bs-toggle="tab"
                         href="#PatientOverview">{{ __('messages.overview') }}</a>
                 </li>
-                {{-- <li class="nav-item position-relative me-7 mb-3">
-                <a class="nav-link p-0" data-bs-toggle="tab"
+                {{-- <li class="mb-3 nav-item position-relative me-7">
+                <a class="p-0 nav-link" data-bs-toggle="tab"
                    href="#showPatientCases">{{ __('messages.cases') }}</a>
             </li> --}}
-                {{-- <li class="nav-item position-relative me-7 mb-3">
-                <a class="nav-link p-0" data-bs-toggle="tab"
+                {{-- <li class="mb-3 nav-item position-relative me-7">
+                <a class="p-0 nav-link" data-bs-toggle="tab"
                    href="#showPatientAdmissions">{{ __('messages.patient_admissions') }}</a>
             </li> --}}
-                {{-- <li class="nav-item position-relative me-7 mb-3">
-                <a class="nav-link p-0" data-bs-toggle="tab"
+                {{-- <li class="mb-3 nav-item position-relative me-7">
+                <a class="p-0 nav-link" data-bs-toggle="tab"
                    href="#showPatientAppointments">{{ __('messages.appointments') }}</a>
             </li>
-            <li class="nav-item position-relative me-7 mb-3">
-                <a class="nav-link p-0" data-bs-toggle="tab"
+            <li class="mb-3 nav-item position-relative me-7">
+                <a class="p-0 nav-link" data-bs-toggle="tab"
                    href="#showPatientBills">{{ __('messages.bills') }}</a>
             </li>
-            <li class="nav-item position-relative me-7 mb-3">
-                <a class="nav-link p-0" data-bs-toggle="tab"
+            <li class="mb-3 nav-item position-relative me-7">
+                <a class="p-0 nav-link" data-bs-toggle="tab"
                    href="#showPatientInvoices">{{ __('messages.invoices') }}</a>
             </li>
-            <li class="nav-item position-relative me-7 mb-3">
-                <a class="nav-link p-0" data-bs-toggle="tab"
+            <li class="mb-3 nav-item position-relative me-7">
+                <a class="p-0 nav-link" data-bs-toggle="tab"
                    href="#showPatientAdvancedPayments">{{ __('messages.advanced_payments') }}</a>
             </li>
-            <li class="nav-item position-relative me-7 mb-3">
-                <a class="nav-link p-0" data-bs-toggle="tab"
+            <li class="mb-3 nav-item position-relative me-7">
+                <a class="p-0 nav-link" data-bs-toggle="tab"
                    href="#showPatientDocument">{{ __('messages.documents') }}</a>
             </li>
-            <li class="nav-item position-relative me-7 mb-3">
-                <a class="nav-link p-0" data-bs-toggle="tab"
+            <li class="mb-3 nav-item position-relative me-7">
+                <a class="p-0 nav-link" data-bs-toggle="tab"
                    href="#showPatientVaccinated">{{ __('messages.vaccinations') }}</a>
             </li>
-            <li class="nav-item position-relative me-7 mb-3">
-                <a class="nav-link p-0" data-bs-toggle="tab"
+            <li class="mb-3 nav-item position-relative me-7">
+                <a class="p-0 nav-link" data-bs-toggle="tab"
                    href="#addonForms">Addon Forms</a>
             </li> --}}
-                <li class="nav-item position-relative me-7 mb-3">
-                    <a class="nav-link p-0" data-bs-toggle="tab" href="#nutritionassessment">Dietitian Assessment</a>
+                <li class="mb-3 nav-item position-relative me-7">
+                    <a class="p-0 nav-link" data-bs-toggle="tab" href="#nutritionassessment">Dietitian Assessment</a>
                 </li>
             @endrole
             @role('Nurse|Doctor')
-                <li class="nav-item position-relative me-7 mb-3">
-                    <a class="nav-link active p-0" data-bs-toggle="tab"
+                <li class="mb-3 nav-item position-relative me-7">
+                    <a class="p-0 nav-link active" data-bs-toggle="tab"
                         href="#PatientOverview">{{ __('messages.overview') }}</a>
                 </li>
-                <li class="nav-item position-relative me-7 mb-3">
-                    <a class="nav-link p-0" data-bs-toggle="tab" href="#nutritionassessment">Dietitian Assessment</a>
+                <li class="mb-3 nav-item position-relative me-7">
+                    <a class="p-0 nav-link" data-bs-toggle="tab" href="#nutritionassessment">Dietitian Assessment</a>
                 </li>
             @endrole
 
             @role('Dietitian')
-                <li class="nav-item position-relative me-7 mb-3">
-                    <a class="nav-link active p-0" data-bs-toggle="tab"
+                <li class="mb-3 nav-item position-relative me-7">
+                    <a class="p-0 nav-link active" data-bs-toggle="tab"
                         href="#PatientOverview">{{ __('messages.overview') }}</a>
                 </li>
-                <li class="nav-item position-relative me-7 mb-3">
-                    <a class="nav-link p-0" data-bs-toggle="tab" href="#nutritionassessment">Dietitian Assessment</a>
+                <li class="mb-3 nav-item position-relative me-7">
+                    <a class="p-0 nav-link" data-bs-toggle="tab" href="#nutritionassessment">Dietitian Assessment</a>
                 </li>
             @endrole
         </ul>
@@ -135,60 +135,60 @@
 </div>
 <div class="tab-content" id="myPatientTabContent">
     <div class="tab-pane fade show active" id="PatientOverview" role="tabpanel">
-        <div class="card mb-5 mb-xl-10">
+        <div class="mb-5 card mb-xl-10">
             <div>
-                <div class="card-body  border-top p-9">
+                <div class="card-body border-top p-9">
                     <div class="row">
-                        <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
+                        <div class="mb-5 col-sm-6 d-flex flex-column mb-md-10">
                             <label for="name"
-                                class="pb-2 fs-5 text-gray-600">{{ __('messages.user.phone') }}</label>
+                                class="pb-2 text-gray-600 fs-5">{{ __('messages.user.phone') }}</label>
                             <p>
                                 <span
-                                    class="fs-5 text-gray-800">{{ !empty($data->patientUser->phone) ? $data->patientUser->phone : __('messages.common.n/a') }}</span>
+                                    class="text-gray-800 fs-5">{{ !empty($data->patientUser->phone) ? $data->patientUser->phone : __('messages.common.n/a') }}</span>
                             </p>
                         </div>
-                        <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
+                        <div class="mb-5 col-sm-6 d-flex flex-column mb-md-10">
                             <label for="name"
-                                class="pb-2 fs-5 text-gray-600">{{ __('messages.user.gender') }}</label>
+                                class="pb-2 text-gray-600 fs-5">{{ __('messages.user.gender') }}</label>
                             <p>
                                 <span
-                                    class="fs-5 text-gray-800">{{ !empty($data->patientUser->phone) ? ($data->patientUser->gender != 1 ? __('messages.user.male') : __('messages.user.female')) : '' }}</span>
+                                    class="text-gray-800 fs-5">{{ !empty($data->patientUser->phone) ? ($data->patientUser->gender != 1 ? __('messages.user.male') : __('messages.user.female')) : '' }}</span>
                             </p>
                         </div>
-                        <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
+                        <div class="mb-5 col-sm-6 d-flex flex-column mb-md-10">
                             <label for="name"
-                                class="pb-2 fs-5 text-gray-600">{{ __('messages.user.blood_group') }}</label>
+                                class="pb-2 text-gray-600 fs-5">{{ __('messages.user.blood_group') }}</label>
                             <p>
                                 @if (!empty($data->patientUser->blood_group))
                                     <span
                                         class="badge fs-6 bg-light-{{ !empty($data->patientUser->blood_group) ? 'success' : 'danger' }}">
                                         {{ $data->patientUser->blood_group }} </span>
                                 @else
-                                    <span class="fs-5 text-gray-800">{{ __('messages.common.n/a') }}</span>
+                                    <span class="text-gray-800 fs-5">{{ __('messages.common.n/a') }}</span>
                                 @endif
                             </p>
                         </div>
-                        <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
-                            <label for="name" class="pb-2 fs-5 text-gray-600">{{ __('messages.user.dob') }}</label>
+                        <div class="mb-5 col-sm-6 d-flex flex-column mb-md-10">
+                            <label for="name" class="pb-2 text-gray-600 fs-5">{{ __('messages.user.dob') }}</label>
                             <p>
                                 <span
-                                    class="fs-5 text-gray-800">{{ !empty($data->patientUser->dob) ? \Carbon\Carbon::parse($data->patientUser->dob)->translatedFormat('jS M, Y') : __('messages.common.n/a') }}</span>
+                                    class="text-gray-800 fs-5">{{ !empty($data->patientUser->dob) ? \Carbon\Carbon::parse($data->patientUser->dob)->translatedFormat('jS M, Y') : __('messages.common.n/a') }}</span>
                             </p>
                         </div>
                         <div class="col-sm-6 d-flex flex-column">
                             <label for="name"
-                                class="pb-2 fs-5 text-gray-600">{{ __('messages.common.created_at') }}</label>
+                                class="pb-2 text-gray-600 fs-5">{{ __('messages.common.created_at') }}</label>
                             <p>
                                 <span
-                                    class="fs-5 text-gray-800">{{ !empty($data->patientUser->created_at) ? $data->patientUser->created_at->diffForHumans() : __('messages.common.n/a') }}</span>
+                                    class="text-gray-800 fs-5">{{ !empty($data->patientUser->created_at) ? $data->patientUser->created_at->diffForHumans() : __('messages.common.n/a') }}</span>
                             </p>
                         </div>
                         <div class="col-sm-6 d-flex flex-column">
                             <label for="name"
-                                class="pb-2 fs-5 text-gray-600">{{ __('messages.common.updated_at') }}</label>
+                                class="pb-2 text-gray-600 fs-5">{{ __('messages.common.updated_at') }}</label>
                             <p>
                                 <span
-                                    class="fs-5 text-gray-800">{{ !empty($data->patientUser->updated_at) ? $data->patientUser->updated_at->diffForHumans() : __('messages.common.n/a') }}</span>
+                                    class="text-gray-800 fs-5">{{ !empty($data->patientUser->updated_at) ? $data->patientUser->updated_at->diffForHumans() : __('messages.common.n/a') }}</span>
                             </p>
                         </div>
                     </div>
@@ -225,9 +225,9 @@
 
     <div class="tab-pane fade" id="addonForms" role="tabpanel">
 
-        <div class="card mb-5 mb-xl-10">
+        <div class="mb-5 card mb-xl-10">
             <div>
-                <div class="card-body  border-top p-9">
+                <div class="card-body border-top p-9">
 
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                         Add New Form
@@ -292,11 +292,11 @@
 </div>
 <div class="tab-pane fade" id="nutritionassessment" role="tabpanel">
 
-    <div class="card mb-5 mb-xl-10">
+    <div class="mb-5 card mb-xl-10">
         <div>
-            <div class="card-body  border-top p-9">
+            <div class="card-body border-top p-9">
                 <!-- Tabs navs -->
-                <ul class="nav nav-tabs nav-fill mb-3" id="ex1" role="tablist">
+                <ul class="mb-3 nav nav-tabs nav-fill" id="ex1" role="tablist">
                     <li class="nav-item" role="presentation">
                         <a class="nav-link active" id="ex2-tab-1" data-mdb-toggle="tab" href="#ex2-tabs-1"
                             role="tab" aria-controls="ex2-tabs-1" aria-selected="true">Anthropometric
@@ -359,7 +359,6 @@
                                             placeholder="{{$age}}" type="number" name="age"
                                             class="form-control" id="age">
                                     </div>
-
 
                                     <div class="col-md-6">
                                         <label for="weight" class="form-label">Weight (kg)</label>
@@ -637,7 +636,7 @@
                                         <div class="form-check">
 
 
-                                            <div class="row mb-3">
+                                            <div class="mb-3 row">
                                                 <label for="inputEmail3"
                                                     style="padding-right: inherit;margin-right: inherit;"
                                                     class="col-sm-6 col-form-label">Any other specific:</label>
@@ -799,7 +798,7 @@
                                         <label for="exampleInput8">Attach File</label>
                                         <input name="nutritionalInterventionFile" type="file" class="form-control " id="nutritionalInterventionFile">
                                     </div>
-                                    <div class="col-lx-6 col-lg-6 col-md-6 col-sm-6 col-6 mt-3">
+                                    <div class="mt-3 col-lx-6 col-lg-6 col-md-6 col-sm-6 col-6">
                                         <br>
                                         <label>View Attachment</label>
                                         <br>   
@@ -834,25 +833,25 @@
 
                                     <div class="col-md-4">
                                         <h3> Percent of Nutrients</h3>
-                                        <div class="col-md-8 pt-4 pb-4">
+                                        <div class="pt-4 pb-4 col-md-8">
                                             <label for="Protein" class="form-label">Protein %:
                                             </label>
                                             <input type="text" class="form-control"  value="{{ ($dietdata === null) ? '' : (($dietdata->Protein != null) ? $dietdata->Protein : '') }}" id="Protein"
                                                 name="Protein">
                                         </div>
-                                        <div class="col-md-8 pb-4">
+                                        <div class="pb-4 col-md-8">
                                             <label for="Carbohydrates" class="form-label">Carbohydrates %:
                                             </label>
                                             <input type="text" class="form-control"  value="{{ ($dietdata === null) ? '' : (($dietdata->Carbohydrates != null) ? $dietdata->Carbohydrates : '') }}" id="Carbohydrates"
                                                 name="Carbohydrates">
                                         </div>
-                                        <div class="col-md-8 pb-4">
+                                        <div class="pb-4 col-md-8">
                                             <label for="Fat" class="form-label">Fat %:
                                             </label>
                                             <input type="text" class="form-control"  value="{{ ($dietdata === null) ? '' : (($dietdata->Fat != null) ? $dietdata->Fat : '') }}" id="Fat"
                                                 name="Fat">
                                         </div>
-                                        <div class="col-md-8 pb-4">
+                                        <div class="pb-4 col-md-8">
                                             <label for="Fluid" class="form-label">Fluid Requirement as per body
                                                 weight:
 
@@ -860,7 +859,7 @@
                                             <input type="text" disabled class="form-control"   value="{{ ($dietdata === null) ? '' : (($dietdata->Fluid != null) ? $dietdata->Fluid : '') }}" id="Fluid"
                                                 name="Fluid">
                                         </div>
-                                        <div class="col-md-8 pb-4">
+                                        <div class="pb-4 col-md-8">
                                             <label for="Restriction" class="form-label">Fluid Restriction if any:
 
                                             </label>
@@ -871,19 +870,19 @@
 
                                     <div class="col-md-4">
                                         <h3> Calorie Of Nutrients </h3>
-                                        <div class="col-md-8 pt-4 pb-4">
+                                        <div class="pt-4 pb-4 col-md-8">
                                             <label for="Proteincalories" class="form-label">
                                             </label>
                                             <input type="text" disabled class="form-control"
                                             value="{{ ($dietdata === null) ? '' : (($dietdata->Proteincalories != null) ? $dietdata->Proteincalories : '') }}" id="Proteincaloriesval" name="Proteincalories">
                                         </div>
-                                        <div class="col-md-8 pb-4">
+                                        <div class="pb-4 col-md-8">
                                             <label for="Carbohydratescalories" class="form-label">
                                             </label>
                                             <input type="text" disabled class="form-control"
                                             value="{{ ($dietdata === null) ? '' : (($dietdata->Carbohydratescalories != null) ? $dietdata->Carbohydratescalories : '') }}" id="Carbohydratescaloriesval" name="Carbohydratescalories">
                                         </div>
-                                        <div class="col-md-8 pb-4">
+                                        <div class="pb-4 col-md-8">
                                             <label for="Fatcalories" class="form-label">
                                             </label>
                                             <input type="text" disabled class="form-control" id="Fatcaloriesval" value="{{ ($dietdata === null) ? '' : (($dietdata->Fatcalories != null) ? $dietdata->Fatcalories : '') }}"
@@ -893,19 +892,19 @@
                                     </div>
                                     <div class="col-md-4">
                                         <h3> Content of Nutrients in gm </h3>
-                                        <div class="col-md-8 pt-4 pb-4">
+                                        <div class="pt-4 pb-4 col-md-8">
                                             <label for="ProteinNutrients" class="form-label">
                                             </label>
                                             <input type="text" disabled class="form-control" id="ProteinNutrients" value="{{ ($dietdata === null) ? '' : (($dietdata->ProteinNutrients != null) ? $dietdata->ProteinNutrients : '') }}"
                                                 name="ProteinNutrients">
                                         </div>
-                                        <div class="col-md-8 pb-4">
+                                        <div class="pb-4 col-md-8">
                                             <label for="CarbohydratesNutrients" class="form-label">
                                             </label>
                                             <input type="text" disabled class="form-control"
                                             value="{{ ($dietdata === null) ? '' : (($dietdata->CarbohydratesNutrients != null) ? $dietdata->CarbohydratesNutrients : '') }}"  id="CarbohydratesNutrients" name="CarbohydratesNutrients">
                                         </div>
-                                        <div class="col-md-8 pb-4">
+                                        <div class="pb-4 col-md-8">
                                             <label for="FatNutrients" class="form-label">
                                             </label>
                                             <input type="text" disabled class="form-control" value="{{ ($dietdata === null) ? '' : (($dietdata->FatNutrients != null) ? $dietdata->FatNutrients : '') }}" id="FatNutrients"
@@ -915,7 +914,7 @@
                                     </div>
                                     <div class="col-md-6">
 
-                                        <div class="col-md-8 pt-4 pb-4">
+                                        <div class="pt-4 pb-4 col-md-8">
                                             <label for="BasalEnergy" class="form-label">Basal Energy Expenditure (BEE)
 
                                             </label>
@@ -927,7 +926,7 @@
                                     </div>
                                     <div class="col-md-6">
 
-                                        <div class="col-md-8 pt-4 pb-4">
+                                        <div class="pt-4 pb-4 col-md-8">
                                             <label for="TotalCalories" disabled class="form-label">Total Calories
 
                                             </label>
@@ -1224,7 +1223,7 @@
                                             <label for="exampleInput8">Attach File</label>
                                             <input name="patientFollowUpFile" type="file" class="form-control " id="patientFollowUpFile" style="width: 600px;">
                                         </div>
-                                        <div class="col-lx-6 col-lg-6 col-md-6 col-sm-6 col-6 mt-3">
+                                        <div class="mt-3 col-lx-6 col-lg-6 col-md-6 col-sm-6 col-6">
                                             <br>
                                             <label>View Attachment</label>
                                             <br>                                                                            
@@ -1274,7 +1273,7 @@
         $("#saveChangesBtn").click(function() {
             var selectedForm = $("#formSelect").val();
             if (selectedForm !== "Select Form") {
-                var newCard = '<div class="card mb-3">' +
+                var newCard = '<div class="mb-3 card">' +
                     '<div class="card-body">' +
                     '<h5 class="card-title">Selected Form: ' + selectedForm + '</h5>' +
                     '<p class="card-text">This is a new card added dynamically.</p>' +

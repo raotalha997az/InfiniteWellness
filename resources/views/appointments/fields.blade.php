@@ -3,7 +3,7 @@
     @if(Auth::user()->hasRole('Patient'))
         <input type="hidden" name="patient_id" value="{{ Auth::user()->owner_id }}">
     @else
-        <div class="form-group col-sm-6 mb-5">
+        <div class="mb-5 form-group col-sm-6">
             {{ Form::label('patient_name', __('messages.case.patient').':', ['class' => 'form-label']) }}
             <span class="required"></span>
             {{-- {{ Form::select('patient_id', $patients, null, ['class' => 'form-select','required','id' => 'appointmentPatientId','placeholder'=>'Select Patient', 'data-control' => 'select2']) }} --}}
@@ -15,7 +15,7 @@
         </select>
         </div>
     @endif
-    <div class="form-group col-sm-6 mb-5">
+    <div class="mb-5 form-group col-sm-6">
         {{ Form::label('Patient Cases', __('Patient Cases ').':', ['class' => 'form-label']) }}
         {{-- <span class="required"></span> --}}
         <select name="patient_case_id" class="form-select" data-control="select2" id="appointmentPatientCaseId">
@@ -24,13 +24,13 @@
         {{-- {{ Form::select('doctor_department_id',$departments, null, ['class' => 'form-select','required','id' => 'appointmentDepartmentId','placeholder'=>'Select Department', 'data-control' => 'select2']) }} --}}
     </div>
 <!-- Department Name Field -->
-    <div class="form-group col-sm-6 mb-5">
+    <div class="mb-5 form-group col-sm-6">
         {{ Form::label('department_name', __('messages.appointment.doctor_department').':', ['class' => 'form-label']) }}
         <span class="required"></span>
         {{ Form::select('doctor_department_id',$departments, null, ['class' => 'form-select','required','id' => 'appointmentDepartmentId','placeholder'=>'Select Department', 'data-control' => 'select2']) }}
     </div>
     <!-- Doctor Name Field -->
-    <div class="form-group col-sm-6 mb-5">
+    <div class="mb-5 form-group col-sm-6">
         {{ Form::label('doctor_name', __('messages.case.doctor').':', ['class' => 'form-label']) }}
         <span class="required"></span>
         {{ Form::select('doctor_id',(isset($doctors) ? $doctors : []), null, ['class' => 'form-select','required','id' => 'appointmentDoctorId','placeholder'=>'Select Doctor', 'data-control' => 'select2']) }}
@@ -38,20 +38,20 @@
 
     @if(!Auth::user()->hasRole('Patient'))
     <!-- Date Field -->
-        <div class="form-group col-sm-6 mb-5">
+        <div class="mb-5 form-group col-sm-6">
             {{ Form::label('opd_date', __('messages.appointment.date').':', ['class' => 'form-label']) }}
             <span class="required"></span>
             {{ Form::text('opd_date', isset($appointment) ? $appointment->opd_date->format('Y-m-d') : null, ['id'=>'appointmentOpdDate', 'class' => (getLoggedInUser()->thememode ? 'bg-light opdDate form-control' : 'bg-white opdDate form-control'), 'required', 'autocomplete'=>'off']) }}
         </div>
 
-        <div class="form-group col-sm-6 mb-5">
-            {{ Form::label('advance_amount', 'Advance Amount '.':', ['class' => 'form-label']) }}
+        <div class="mb-5 form-group col-sm-6">
+            {{ Form::label('advance_amount', 'Advance Amount '.'(optional):', ['class' => 'form-label']) }}
             {{-- <span class="required"></span> --}}
             {{-- {{ Form::text('advance_amount' ['id'=>'appointmentAdvanceAmount', 'class' => (getLoggedInUser()->thememode ? 'bg-light opdDate form-control' : 'bg-white opdDate form-control'), , 'autocomplete'=>'off']) }} --}}
             <input type="number" name="advance_amount" id="appointmentAdvanceAmount" class="form-control">
         </div>
 
-        <div class="form-group col-sm-6 mb-5">
+        <div class="mb-5 form-group col-sm-6">
             {{ Form::label('Payment Mode', __('Payment Mode ').':', ['class' => 'form-label']) }}
             <span class="required"></span>
             <select name="payment_mode" class="form-select" data-control="select2" id="payment_mode">
@@ -63,11 +63,11 @@
         </div>
 
         <!-- Notes Field -->
-        <div class="form-group col-sm-6 mb-5">
+        <div class="mb-5 form-group col-sm-6">
             {{ Form::label('problem', __('messages.appointment.description').':', ['class' => 'form-label']) }}
             {{ Form::textarea('problem', null, ['class' => 'form-control', 'rows'=>'4']) }}
         </div>
-        <div class="form-group col-sm-6 mb-5">
+        <div class="mb-5 form-group col-sm-6">
             {{ Form::label('status', __('messages.common.status').':', ['class' => 'form-label']) }}
             <br>
             <div class="form-check form-switch">
@@ -75,7 +75,7 @@
                        value="1" checked>
             </div>
         </div>
-        <div class="form-group col-sm-6 mb-5">
+        <div class="mb-5 form-group col-sm-6">
             <div class="doctor-schedule" style="display: none">
                 <i class="fas fa-calendar-alt"></i>
                 <span class="day-name"></span>
@@ -98,14 +98,14 @@
 
     @if(Auth::user()->hasRole('Patient'))
     <!-- Date Field -->
-        <div class="form-group col-sm-6 mb-5">
+        <div class="mb-5 form-group col-sm-6">
             {{ Form::label('opd_date', __('messages.appointment.date').':', ['class' => 'form-label']) }}
             <span class="required"></span>
             {{ Form::text('opd_date', null, ['id'=>'patientAppointmentOpdDate', 'class' => (getLoggedInUser()->thememode ? 'bg-light opdDate form-control' : 'bg-white opdDate form-control'), 'required', 'autocomplete'=>'off']) }}
         </div>
 
         <!-- Notes Field -->
-        <div class="form-group col-sm-6 mb-5">
+        <div class="mb-5 form-group col-sm-6">
             {{ Form::label('problem', __('messages.appointment.description').':', ['class' => 'form-label']) }}
             {{ Form::textarea('problem', null, ['class' => 'form-control', 'rows'=>'4']) }}
         </div>
