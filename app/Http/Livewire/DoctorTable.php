@@ -90,7 +90,15 @@ class DoctorTable extends LivewireTableComponent
     public function builder(): Builder
     {
         /** @var Doctor $query */
-        $query = Doctor::query()->select('doctors.*')->with('doctorUser');
+        $role = Auth::user()->roles()->first();
+        if($role->name == "Doctor"){
+            $query = Doctor::query()->select('doctors.*')->where('doctor_user_id', Auth::user()->id)->with('doctorUser');
+
+        }else if ($role->name == "Admin") {
+            $query = Doctor::query()->select('doctors.*')->with('doctorUser');
+
+        }
+
         $query->when(isset($this->statusFilter), function (Builder $q) {
             if ($this->statusFilter == 2) {
             }

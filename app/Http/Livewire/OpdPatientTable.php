@@ -2,8 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\OpdPatientDepartment;
 use App\Models\Patient;
+use App\Models\OpdPatientDepartment;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 
@@ -108,10 +109,23 @@ class OpdPatientTable extends LivewireTableComponent
     }
 
     public function builder(): Builder
-    {
-        $query = OpdPatientDepartment::whereHas('patient')->whereHas('doctor')
-            ->with(['patient.patientUser', 'doctor.doctorUser', 'patient.opd'])->select('opd_patient_departments.*');
+    {   /** @var OpdPatientDepartment $query */
+        $role = Auth::user()->roles()->first();
 
+        if ($role->name == "Doctor") {
+            $query = OpdPatientDepartment::query()
+                ->select('opd_patient_departments.*')
+                ->where('doctor_user_id', Auth::user()->id)
+                ->whereHas('patient')
+                ->whereHas('doctor')
+                ->with(['patient.patientUser', 'doctor.doctorUser', 'patient.opd']);
+        } else if ($role->name == "Admin") {
+            $query = OpdPatientDepartment::query()
+                ->select('opd_patient_departments.*')
+                ->whereHas('patient')
+                ->whereHas('doctor')
+                ->with(['patient.patientUser', 'doctor.doctorUser', 'patient.opd']);
+        }
         return $query;
 
         //        return Patient::whereHas('opd')->with(['opd','opd.doctor.user'])->withCount('opd');
