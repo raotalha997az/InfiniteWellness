@@ -2,10 +2,12 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\OpdPatientDepartment;
-use App\Models\DentalOpdPatientDepartment;
+use App\Models\Doctor;
 use App\Models\Patient;
+use App\Models\OpdPatientDepartment;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
+use App\Models\DentalOpdPatientDepartment;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 
 class DentalOpdPatientTable extends LivewireTableComponent
@@ -126,7 +128,13 @@ class DentalOpdPatientTable extends LivewireTableComponent
 
     public function builder(): Builder
     {
-        $query = DentalOpdPatientDepartment::whereHas('patient')->with(['patient.patientUser', 'patient.opd'])->select('dental_opd_patient_departments.*')->orderBy('id', 'desc');
+        $role = Auth::user()->roles()->first();
+        $doctor = Doctor::where('doctor_user_id', Auth::user()->id)->first();
+        if($role->name == "Admin"){
+            $query = DentalOpdPatientDepartment::whereHas('patient')->with(['patient.patientUser', 'patient.opd'])->select('dental_opd_patient_departments.*')->orderBy('id', 'desc');
+        }else if($role->name == "Doctor"){
+            $query = DentalOpdPatientDepartment::whereHas('patient')->with(['patient.patientUser', 'patient.opd'])->select('dental_opd_patient_departments.*')->where('doctor_id', $doctor->id)->orderBy('id', 'desc');
+        }
 
         return $query;
 

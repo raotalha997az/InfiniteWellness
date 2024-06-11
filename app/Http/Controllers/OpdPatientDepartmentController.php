@@ -99,10 +99,10 @@ class OpdPatientDepartmentController extends AppBaseController
     }
 
     public function dentalOpdEdit( $dentalOpdPatientDepartment , Request $request){
-        
+
         $dentalOpdPatientDepartment = DentalOpdPatientDepartment::findOrFail($dentalOpdPatientDepartment);
         //return $dentalOpdPatientDepartment;
-        
+
         //dd();
         $data = $this->opdPatientDepartmentRepository->getAssociatedData();
         $data['revisit'] = ($request->get('revisit')) ? $request->get('revisit') : 0;
@@ -217,7 +217,7 @@ class OpdPatientDepartmentController extends AppBaseController
         //         'message' => $message,
         //         'attachments' => null,
         //     ];
-        
+
         //     Email::to($recipient)
         //         ->send(new MarkdownMail('emails.email', $mail['subject'], $mail));
         // }else{
@@ -230,7 +230,7 @@ class OpdPatientDepartmentController extends AppBaseController
         //         'message' => $message,
         //         'attachments' => null,
         //     ];
-        
+
         //     Email::to($recipient)
         //         ->send(new MarkdownMail('emails.email', $mail['subject'], $mail));
         // }
@@ -240,15 +240,15 @@ class OpdPatientDepartmentController extends AppBaseController
         //             $reception_mail = $reception->user->email;
         //             $reception_array = [];
         //             $reception_array[] = $reception_mail;
-        
-        
+
+
         //             $mail = array(
         //                 'to' => $reception_array,
         //                 'subject' => $subject,
         //                 $message = 'Dental OPD And Appointment  has been Updated of '. $doctor->user->full_name .' to Patient '.$patient->user->full_name.' on this '.$request->appointment_date.' Date & Time ',
         //                 'attachments' => null,
         //             );
-        
+
         //             Email::to($reception_array)
         //             ->send(new MarkdownMail('emails.email',
         //                 $mail['subject'], $mail));
@@ -311,20 +311,20 @@ class OpdPatientDepartmentController extends AppBaseController
                     $reception_mail = $reception->user->email;
                     $reception_array = [];
                     $reception_array[] = $reception_mail;
-        
-        
+
+
                     $mail = array(
                         'to' => $reception_array,
                         'subject' => $subject,
                         'message' => 'Dental OPD And Appointment  has been Updated of '. $doctor->user->full_name .' to Patient '.$patient->user->full_name.' on this '.$request->appointment_date.' Date & Time ',
                         'attachments' => null,
                     );
-        
+
                     Email::to($reception_array)
                     ->send(new MarkdownMail('emails.email',
                         $mail['subject'], $mail));
                 }
-        
+
 
         return redirect(route('dentalopd.patient.index'));
     }
@@ -408,7 +408,7 @@ class OpdPatientDepartmentController extends AppBaseController
                 'message' => $message,
                 'attachments' => null,
             ];
-        
+
             Email::to($recipient)
                 ->send(new MarkdownMail('emails.email', $mail['subject'], $mail));
         }else{
@@ -421,7 +421,7 @@ class OpdPatientDepartmentController extends AppBaseController
                 'message' => $message,
                 'attachments' => null,
             ];
-        
+
             Email::to($recipient)
                 ->send(new MarkdownMail('emails.email', $mail['subject'], $mail));
         }
@@ -431,15 +431,15 @@ class OpdPatientDepartmentController extends AppBaseController
                     $reception_mail = $reception->user->email;
                     $reception_array = [];
                     $reception_array[] = $reception_mail;
-        
-        
+
+
                     $mail = array(
                         'to' => $reception_array,
                         'subject' => $subject,
                         'message' => 'OPD And Appointment  has been created of '.$doctor->user->full_name.' to Patient '.$patient->user->full_name.' on this '.$request->appointment_date.' Date & Time ',
                         'attachments' => null,
                     );
-        
+
                     Email::to($reception_array)
                     ->send(new MarkdownMail('emails.email',
                         $mail['subject'], $mail));
@@ -486,7 +486,7 @@ class OpdPatientDepartmentController extends AppBaseController
         ];
         DentalOpdPatientDepartment::insert($data);
 
-        
+
 
         $patient = Patient::where('id',  $request->patient_id)->with('user')->first();
         $doctor = Doctor::where('id',  $request->doctor_id)->with('user')->first();
@@ -540,15 +540,15 @@ class OpdPatientDepartmentController extends AppBaseController
                     $reception_mail = $reception->user->email;
                     $reception_array = [];
                     $reception_array[] = $reception_mail;
-        
-        
+
+
                     $mail = array(
                         'to' => $reception_array,
                         'subject' => $subject,
                         'message' => 'Dental OPD And Appointment  has been created of '.$doctor->user->full_name.' to Patient '.$patient->user->full_name.' on this '.$request->appointment_date.' Date & Time ',
                         'attachments' => null,
                     );
-        
+
                     Email::to($reception_array)
                     ->send(new MarkdownMail('emails.email',
                         $mail['subject'], $mail));
@@ -707,7 +707,7 @@ class OpdPatientDepartmentController extends AppBaseController
         //         'message' => $message,
         //         'attachments' => null,
         //     ];
-        
+
         //     Email::to($recipient)
         //         ->send(new MarkdownMail('emails.email', $mail['subject'], $mail));
         // }else{
@@ -720,7 +720,7 @@ class OpdPatientDepartmentController extends AppBaseController
         //         'message' => $message,
         //         'attachments' => null,
         //     ];
-        
+
         //     Email::to($recipient)
         //         ->send(new MarkdownMail('emails.email', $mail['subject'], $mail));
         // }
@@ -730,15 +730,15 @@ class OpdPatientDepartmentController extends AppBaseController
         //             $reception_mail = $reception->user->email;
         //             $reception_array = [];
         //             $reception_array[] = $reception_mail;
-        
-        
+
+
         //             $mail = array(
         //                 'to' => $reception_array,
         //                 'subject' => $subject,
         //                 $message = 'OPD And Appointment has been updated of '.$doctor->user->full_name.' to Patient '.$patient->user->full_name.' on this '.$input['appointment_date'].' Date & Time ',
         //                 'attachments' => null,
         //             );
-        
+
         //             Email::to($reception_array)
         //             ->send(new MarkdownMail('emails.email',
         //                 $mail['subject'], $mail));
@@ -800,20 +800,20 @@ class OpdPatientDepartmentController extends AppBaseController
                     $reception_mail = $reception->user->email;
                     $reception_array = [];
                     $reception_array[] = $reception_mail;
-        
-        
+
+
                     $mail = array(
                         'to' => $reception_array,
                         'subject' => $subject,
                         'message' => 'Dental OPD And Appointment  has been Updated of '. $doctor->user->full_name .' to Patient '.$patient->user->full_name.' on this '.$request->appointment_date.' Date & Time ',
                         'attachments' => null,
                     );
-        
+
                     Email::to($reception_array)
                     ->send(new MarkdownMail('emails.email',
                         $mail['subject'], $mail));
                 }
-        
+
 
         Flash::success(__('messages.opd_patient.opd_patient').' '.__('messages.common.updated_successfully'));
 
@@ -861,8 +861,8 @@ class OpdPatientDepartmentController extends AppBaseController
         Flash::success(('Dentel OPD Deleted Successfully'));
 
         return redirect(route('dentalopd.patient.index'));
-        
-        
+
+
     }
 
 
