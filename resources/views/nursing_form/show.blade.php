@@ -13,7 +13,7 @@
             <form action="{{route('nursing-form.store') }}" method="POST">
                 @csrf
                 <div class="card-body">
-                    <div class="row mb-5 mt-5">
+                    <div class="mt-5 mb-5 row">
                         <div class="col-md-6">
                             <label for="patient_mr_number" class="form-label">MR #<sup class="text-danger">*</sup></label>
                             <input class="form-control" value="{{$patients->MR}} - {{$patients->user->first_name}} {{$patients->user->last_name}}" disabled/>
@@ -21,6 +21,12 @@
                         <div class="col-md-6">
                             <label for="opd_id" class="form-label">OPD<sup class="text-danger">*</sup></label>
                             <input class="form-control" value="{{$nursing->opd_id}}" disabled/>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-5">
+                                <label for="patient_name" class="form-label">Patient Name</label>
+                                <input readonly type="text" name="patient_name" value="{{$nursing->patient_name}}" id="patient_name" disabled class="form-control">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -105,6 +111,31 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-5">
+                                <label for="fbs" class="form-label">FBS (mg/dL)<sup
+                                        class="text-danger">*</sup></label>
+                                <input type="text" value="{{ $nursing->fbs }}" name="fbs" id="fbs" disabled class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-5">
+                                <label for="rbs" class="form-label">RBS (mg/dL)<sup
+                                        class="text-danger">*</sup></label>
+                                <input type="text" value="{{ $nursing->rbs }}" name="rbs" id="rbs" disabled class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-5">
+                                <label for="pbs" class="form-label">SpO2 (%)<sup
+                                        class="text-danger">*</sup></label>
+                                <input type="text" value="{{ $nursing->spo_2 }}" name="spo_2" id="spo_2" disabled class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
                 <div class="card-body">
                         <h4>Current Medications:</h4>
@@ -170,14 +201,14 @@
                         </div>
                     </div>
 
-                    <div class="row mb-5 mt-5">
+                    <div class="mt-5 mb-5 row">
                         <div class="col-md-12">
                             <label for="signature" class="form-label">Signature</label>
                             <input class="form-control" value="{{$nursing->signature}}" disabled/>
                         </div>
                     </div>
 
-                    <div class="row text-center mb-5 mt-10">
+                    <div class="mt-10 mb-5 text-center row">
                         <div class="col-md-12">
                             <a href="/nursing-form" class="btn btn-secondary">Back</a>
                         </div>

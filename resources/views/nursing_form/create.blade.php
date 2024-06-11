@@ -12,7 +12,7 @@
             <form action="{{ route('nursing-form.store') }}" method="POST">
                 @csrf
                 <div class="card-body">
-                    <div class="row mb-5 mt-5">
+                    <div class="mt-5 mb-5 row">
                         <div class="col-md-6">
                             <label for="patient_mr_number" class="form-label">MR #<sup class="text-danger">*</sup></label>
                             <select class="form-control" name="patient_mr_number" id="patient_mr_number" required>
@@ -23,7 +23,7 @@
                                         data-heart_rate="{{ $patient->heart_rate }}"
                                         data-respiratory_rate="{{ $patient->respiratory_rate }}"
                                         data-temperature="{{ $patient->temperature }}" data-height="{{ $patient->height }}"
-                                        data-weight="{{ $patient->weight }}" data-bmi="{{ $patient->bmi }}">{{ $patient->MR }}
+                                        data-weight="{{ $patient->weight }}" data-bmi="{{ $patient->bmi }}" data-name="{{ $patient->user->full_name }}">{{ $patient->MR }}
                                         ~ {{ $patient->user->full_name }}</option>
                                 @endforeach
                             </select>
@@ -33,6 +33,13 @@
                             <select class="form-control" name="opd_id" id="opd_id" required>
                                 <option value="" selected disabled>select mr number first</option>
                             </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-5">
+                            <label for="patient_name" class="form-label">Patient Name</label>
+                            <input readonly type="text" name="patient_name" id="patient_name" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -131,13 +138,40 @@
                             </div>
                         </div>
                     </div>
+
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-5">
+                                <label for="fbs" class="form-label">FBS (mg/dL)<sup
+                                        class="text-danger">*</sup></label>
+                                <input type="text" name="fbs" id="fbs" required class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-5">
+                                <label for="rbs" class="form-label">RBS (mg/dL)<sup
+                                        class="text-danger">*</sup></label>
+                                <input type="text" name="rbs" id="rbs" required class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-5">
+                                <label for="pbs" class="form-label">SpO2 (%)<sup
+                                        class="text-danger">*</sup></label>
+                                <input type="text" name="spo_2" id="spo_2" required class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
                 </div>
                 <div class="card-body">
                     <h4>Current Medications:</h4>
                     <table class="table table-bordered">
                         <thead>
                             <div class="row">
-                                <div class="col-md-2 mb-5 mt-5">
+                                <div class="mt-5 mb-5 col-md-2">
                                     <button type="button" class="btn btn-primary" onclick="Addmore()"
                                         id="addmore-btn">Add More</button>
                                 </div>
@@ -168,7 +202,7 @@
                     <table class="table table-bordered">
                         <thead>
                             <div class="row ">
-                                <div class="col-md-2 mb-5 mt-5">
+                                <div class="mt-5 mb-5 col-md-2">
                                     <button type="button" class="btn btn-primary" onclick="addmoreallergy()"
                                         id="addmore-btn">Add More</button>
                                 </div>
@@ -203,7 +237,7 @@
                         </div>
                     </div>
 
-                    <div class="row mb-5 mt-5">
+                    <div class="mt-5 mb-5 row">
                         <div class="col-md-12">
                             <label for="signature" class="form-label">Signature</label>
                             <input type="text" placeholder="Enter Signature" name="signature" id="signature"
@@ -211,7 +245,7 @@
                         </div>
                     </div>
 
-                    <div class="row text-center mb-5 mt-10">
+                    <div class="mt-10 mb-5 text-center row">
                         <div class="col-md-12">
                             <button type="submit" id="save_Btn" class="btn btn-secondary">SUBMIT</button>
                         </div>
@@ -284,6 +318,7 @@
                     const Height = selectedOption.getAttribute('data-height');
                     const Weight = selectedOption.getAttribute('data-weight');
                     const BMI = selectedOption.getAttribute('data-bmi');
+                    const PatientName = selectedOption.getAttribute('data-name');
 
                     // Check if the data values are null and set the input field values accordingly
                     $("#patient_id").val(((PatientId !== null) ? PatientId : ``));
@@ -294,7 +329,7 @@
                     $("#height").val(((Height !== null) ? Height : ``));
                     $("#weight").val(((Weight !== null) ? Weight : ``));
                     $("#bmi").val(((BMI !== null) ? BMI : ``));
-                    console.log(BMI);
+                    $("#patient_name").val(((PatientName !== null) ? PatientName : ``));
 
 
 

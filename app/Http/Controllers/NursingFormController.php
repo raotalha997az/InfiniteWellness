@@ -77,7 +77,14 @@ class NursingFormController extends Controller
             'bmi' => $request->bmi,
         ]);
 
-        $nursingfrom = NursingForm::create($request->validated());
+        // $nursingfrom = NursingForm::create($request->validated());
+        $nursingfrom = NursingForm::create(array_merge($request->validated(), [
+            'patient_name' => $request->patient_name,
+            'fbs' => $request->fbs,
+            'rbs' => $request->rbs,
+            'spo_2' => $request->spo_2,
+        ]));
+
         foreach ($request->medications as $medication) {
             Medication::create([
                 'nursing_form_id' => $nursingfrom->id,

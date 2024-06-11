@@ -23,6 +23,10 @@ class NursingForm extends Model
         'height',
         'weight',
         'pain_level',
+        'patient_name',
+        'fbs',
+        'rbs',
+        'spo_2',
         'assessment_date',
         'nurse_name',
         'signature'
