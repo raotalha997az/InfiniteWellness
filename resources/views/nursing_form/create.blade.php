@@ -15,7 +15,7 @@
                     <div class="mt-5 mb-5 row">
                         <div class="col-md-6">
                             <label for="patient_mr_number" class="form-label">MR #<sup class="text-danger">*</sup></label>
-                            <select class="form-control" name="patient_mr_number" id="patient_mr_number" required>
+                            <select class="form-select" name="patient_mr_number" id="patient_mr_number" required>
                                 <option value="" selected disabled>select mr number</option>
                                 @foreach ($patients as $patient)
                                     <option value="{{ $patient->MR }}" data-blood_pressure="{{ $patient->blood_pressure }}"
@@ -47,79 +47,49 @@
                     <h4>VITAL SIGNS:</h4>
 
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="mb-5">
-                                <label for="blood_pressure" class="form-label">Blood Pressure<sup
+                                <label for="blood_pressure" class="form-label">Blood Pressure (mmHg)<sup
                                         class="text-danger">*</sup></label>
                                 <input type="text" name="blood_pressure" id="blood_pressure" required
                                     class="form-control">
                                     <input type="hidden" name="patient_id" id="patient_id">
                             </div>
                         </div>
-                        <div class="col-md-1">
-                            <div class="mt-5">
-                                mmHg
-                            </div>
-                        </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="mb-5">
-                                <label for="heart_rate" class="form-label">Heart Rate<sup
+                                <label for="heart_rate" class="form-label">Heart Rate (bpm)<sup
                                         class="text-danger">*</sup></label>
                                 <input type="text" name="heart_rate" id="heart_rate" required class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-1">
-                            <div class="mt-5">
-                                bpm
-                            </div>
-                        </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="mb-5">
-                                <label for="respiratory_rate" class="form-label">Respiratory Rate<sup
+                                <label for="respiratory_rate" class="form-label">Respiratory Rate (breaths/min)<sup
                                         class="text-danger">*</sup></label>
                                 <input type="text" name="respiratory_rate" id="respiratory_rate" required
                                     class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-1">
-                            <div class="mt-5">
-                                breaths/min
-                            </div>
-                        </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="mb-5">
-                                <label for="temperature" class="form-label">Temperature<sup
+                                <label for="temperature" class="form-label">Temperature (°C/°F)<sup
                                         class="text-danger">*</sup></label>
                                 <input type="text" name="temperature" id="temperature" required class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-1">
-                            <div class="mt-5">
-                                °C/°F
-                            </div>
-                        </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="mb-5">
-                                <label for="height" class="form-label">Height<sup class="text-danger">*</sup></label>
+                                <label for="height" class="form-label">Height (cm/in)<sup class="text-danger">*</sup></label>
                                 <input type="text" name="height" id="height" required class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-1">
-                            <div class="mt-5">
-                                cm/in
-                            </div>
-                        </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="mb-5">
-                                <label for="weight" class="form-label">Weight<sup class="text-danger">*</sup></label>
+                                <label for="weight" class="form-label">Weight (kg/lb)<sup class="text-danger">*</sup></label>
                                 <input type="text" name="weight" id="weight" required class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-1">
-                            <div class="mt-5">
-                                kg/lb
                             </div>
                         </div>
                     </div>
