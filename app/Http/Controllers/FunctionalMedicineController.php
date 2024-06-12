@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\FunctionalMedicine;
 use App\Models\Patient;
+use Illuminate\Support\Facades\Validator;
 
 class FunctionalMedicineController extends Controller
 {
     public function index()
     {
-        $FunctionalMedicine = FunctionalMedicine::all();
+        $FunctionalMedicine = FunctionalMedicine::paginate(10);
         return view("functionalMedicine.index", compact("FunctionalMedicine"));
     }
 
@@ -23,10 +24,14 @@ class FunctionalMedicineController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'patient_id' => 'required|exists:patients,id',
-            'details' => 'required|string',
+        $validator = Validator::make($request->all(), [
+            "patient_id"=> "required|exists:patients,id",
+            "details"=> "required|string",
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
         $functionalMedicine = FunctionalMedicine::create($request->all());
 
@@ -37,5 +42,38 @@ class FunctionalMedicineController extends Controller
     public function show(FunctionalMedicine $functionalMedicine)
     {
         return view('functionalMedicine.show', compact('functionalMedicine'));
+    }
+
+    public function edit(FunctionalMedicine $functionalMedicine)
+    {
+        $patients = Patient::all(); // Assuming you have a Patient model
+        return view('functionalMedicine.edit', compact('functionalMedicine', 'patients'));
+    }
+
+    public function update(Request $request, FunctionalMedicine $functionalMedicine)
+    {
+        $request->validate([
+            'patient_id' => 'required',
+            'details' => 'required',
+        ]);
+
+        $functionalMedicine->update([
+            'patient_id' => $request->patient_id,
+            'details' => $request->details,
+        ]);
+
+        return redirect()->route('functional-medicine.index')->with('success', 'Functional Medicine record updated successfully.');
+    }
+
+    public function destroy($id)
+    {
+        $functionalMedicine = FunctionalMedicine::findOrFail($id);
+        
+        // Perform additional checks if necessary before deletion
+
+        $functionalMedicine->delete();
+
+        return redirect()->route('functional-medicine.index')
+                         ->with('success', 'Functional medicine record deleted successfully.');
     }
 }

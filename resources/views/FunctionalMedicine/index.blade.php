@@ -16,7 +16,7 @@
                     <thead>
                         <tr>
                             <th>#.</th>
-                            <th>Paitent MR No.</th>
+                            <th>Paitent.</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
@@ -24,14 +24,28 @@
                         @foreach ($FunctionalMedicine as $data)
                             <tr>
                                 <td>{{ $data->id }}</td>
-                                <td>{{ $data->patient->MR }}</td>
+                                <td>{{ $data->patient->user->first_name }} {{ $data->patient->user->last_name }}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('functional-medicine.show', $data->id) }}" target="_blank"><button class="btn btn-primary">View</button></a>
+                                    <a href="{{ route('functional-medicine.show', $data->id) }}" target="_blank" class="me-1 ms-1 btn btn-sm btn-success">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a href="{{ route('functional-medicine.edit', $data->id) }}" target="_blank" class="me-1 ms-1 btn btn-sm btn-primary">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form action="{{ route('functional-medicine.destroy', $data->id) }}" method="POST" style="display: inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn me-1 ms-1 btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this item?')">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
                                 </td>
+                                
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+                {{ $FunctionalMedicine->links() }}
             </div>
         </div>
     </div>
