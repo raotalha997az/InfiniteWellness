@@ -60,6 +60,7 @@ class OpdPatientDepartment extends Model
     const PAYMENT_MODES = [
         1 => 'Cash',
         2 => 'Cheque',
+        3 => 'Card',
     ];
 
     public $fillable = [
