@@ -113,7 +113,7 @@ class PatientController extends AppBaseController
 
         //---------------------
 
-        $patientCase = PatientCase::create($data);
+        // $patientCase = PatientCase::create($data);
 
         //-------------------
 
@@ -186,7 +186,7 @@ class PatientController extends AppBaseController
             return view('patients.show', ['ignore_minify' => true], compact('data', 'patients', 'vaccinations', 'vaccinationPatients', 'forms', 'currentForm', 'dietdata', 'nursingData'));
         }
     }
-    
+
     public function dietitanShow($patientId)
     {
         $data = $this->patientRepository->getPatientAssociatedData($patientId);
@@ -215,20 +215,20 @@ class PatientController extends AppBaseController
 
             $patientMR = Patient::where('id', $patientId)->pluck('MR')->first();
             $nursingData = NursingForm::where('patient_mr_number', $patientMR)->with(['patient.user', 'Allergies', 'Medication'])->first();
-            
+
             return view('patients.dietitan.show', compact('data','patientMR', 'patients', 'vaccinations', 'vaccinationPatients', 'forms', 'currentForm', 'dietdata', 'nursingData'));
         }
     }
 
     public function formSubmit(Request $request)
-    { 
+    {
         $path = '';
         if ($request->hasFile('nutritionalInterventionFile')) {
             $file = $request->file('nutritionalInterventionFile');
             $fileName = 'NutritionalInterventionPlan' . date('Y-m-d') . '.'. $file->getClientOriginalExtension();
 
            $file->move(public_path('storage/Attachments'), $fileName);
-           $path =  $fileName; 
+           $path =  $fileName;
            $patientIds = DB::table('dietitianAssessment')->pluck('patient_id')->toArray();
            if (in_array($request->patient_id, $patientIds)) {
                // Patient ID already exists, so return a response indicating that it's a duplicate.
@@ -362,7 +362,7 @@ class PatientController extends AppBaseController
                    'Lunchpost' => $request->Lunchpost,
                    'Dinnerpost' => $request->Dinnerpost,
                    'Regimenpost' => $request->Regimenpost,
-                   'nutritionalInterventionFile' => $path,               
+                   'nutritionalInterventionFile' => $path,
                    'Protein' => $request->Protein,
                    'Carbohydrates' => $request->Carbohydrates,
                    'Fat' => $request->Fat,
@@ -406,8 +406,8 @@ class PatientController extends AppBaseController
                    'date42' => $request->date42,
                    'time42' => $request->time42,
                    'week42' => $request->week42,
-               ]); 
-   
+               ]);
+
                return response()->json(['message' => 'Success'], 200);
            }
         } else{
@@ -500,7 +500,7 @@ class PatientController extends AppBaseController
                    'date42' => $request->date42 ?? 0,
                    'time42' => $request->time42 ?? 0,
                    'week42' => $request->week42 ?? 0,
-   
+
                ]);
            } else {
                $insertedId = DB::table('dietitianAssessment')->insertGetId([
@@ -543,7 +543,7 @@ class PatientController extends AppBaseController
                    'Midmorningpost' => $request->Midmorningpost,
                    'Lunchpost' => $request->Lunchpost,
                    'Dinnerpost' => $request->Dinnerpost,
-                   'Regimenpost' => $request->Regimenpost,          
+                   'Regimenpost' => $request->Regimenpost,
                    'Protein' => $request->Protein,
                    'Carbohydrates' => $request->Carbohydrates,
                    'Fat' => $request->Fat,
@@ -587,9 +587,9 @@ class PatientController extends AppBaseController
                    'date42' => $request->date42,
                    'time42' => $request->time42,
                    'week42' => $request->week42,
-               ]); 
+               ]);
                return response()->json(['message' => 'Success'], 200);
-           } 
+           }
         }
         $path2 = '';
         if ($request->hasFile('patientFollowUpFile')) {
@@ -688,7 +688,7 @@ class PatientController extends AppBaseController
                    'time42' => $request->time42 ?? 0,
                    'week42' => $request->week42 ?? 0,
                    'patientFollowUpFile' => $path2 ?? 0,
-   
+
                ]);
            } else {
                $insertedId = DB::table('dietitianAssessment')->insertGetId([
@@ -731,7 +731,7 @@ class PatientController extends AppBaseController
                    'Midmorningpost' => $request->Midmorningpost,
                    'Lunchpost' => $request->Lunchpost,
                    'Dinnerpost' => $request->Dinnerpost,
-                   'Regimenpost' => $request->Regimenpost,          
+                   'Regimenpost' => $request->Regimenpost,
                    'Protein' => $request->Protein,
                    'Carbohydrates' => $request->Carbohydrates,
                    'Fat' => $request->Fat,
@@ -776,9 +776,9 @@ class PatientController extends AppBaseController
                    'time42' => $request->time42,
                    'week42' => $request->week42,
                    'patientFollowUpFile' => $path2,
-               ]); 
+               ]);
                return response()->json(['message' => 'Success'], 200);
-           } 
+           }
         }else{
             $patientIds = DB::table('dietitianAssessment')->pluck('patient_id')->toArray();
            if (in_array($request->patient_id, $patientIds)) {
@@ -869,7 +869,7 @@ class PatientController extends AppBaseController
                    'date42' => $request->date42 ?? 0,
                    'time42' => $request->time42 ?? 0,
                    'week42' => $request->week42 ?? 0,
-   
+
                ]);
            } else {
                $insertedId = DB::table('dietitianAssessment')->insertGetId([
@@ -912,7 +912,7 @@ class PatientController extends AppBaseController
                    'Midmorningpost' => $request->Midmorningpost,
                    'Lunchpost' => $request->Lunchpost,
                    'Dinnerpost' => $request->Dinnerpost,
-                   'Regimenpost' => $request->Regimenpost,          
+                   'Regimenpost' => $request->Regimenpost,
                    'Protein' => $request->Protein,
                    'Carbohydrates' => $request->Carbohydrates,
                    'Fat' => $request->Fat,
@@ -956,12 +956,12 @@ class PatientController extends AppBaseController
                    'date42' => $request->date42,
                    'time42' => $request->time42,
                    'week42' => $request->week42,
-               ]); 
+               ]);
                return response()->json(['message' => 'Success'], 200);
-           } 
+           }
         }
 
-       
+
     }
 
     /**
@@ -1040,7 +1040,7 @@ class PatientController extends AppBaseController
     }
 
     public function showForm(Request $request, $patient)
-    {        
+    {
         $patientID =  Patient::where('id', $patient)->pluck('MR')->first();
         $patientData =  Patient::where('id', $patient)->with('user')->first();
         $ageDifference = Carbon::parse($patientData->user->dob)->diff(Carbon::now());

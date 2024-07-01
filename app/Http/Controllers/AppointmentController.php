@@ -20,11 +20,12 @@ use App\Models\OpdPatientDepartment;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\View\Factory;
+use App\Models\DentalOpdPatientDepartment;
+use App\Http\Requests\CreatePatientRequest;
 use App\Repositories\AppointmentRepository;
 use Illuminate\Support\Facades\Mail as Email;
 use App\Http\Requests\CreateAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
-use App\Models\DentalOpdPatientDepartment;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 
@@ -61,13 +62,23 @@ class AppointmentController extends AppBaseController
      *
      * @return Factory|View
      */
+    public function addPatientappointment(Request $request){
+        dd($request->all());
+        $input = $request->all();
+        $input['status'] = isset($input['status']) ? 1 : 0;
+        $input['email'] =  null;
+        $userID = $this->patientRepository->store($input);
+        $this->patientRepository->createNotification($input);
+    }
     public function create()
     {
+
+        $bloodGroup = getBloodGroups();
         $patients = $this->appointmentRepository->getPatients();
         $departments = $this->appointmentRepository->getDoctorDepartments();
         $statusArr = Appointment::STATUS_PENDING;
 
-        return view('appointments.create',['ignore_minify' => true], compact('patients', 'departments', 'statusArr'));
+        return view('appointments.create',['ignore_minify' => true], compact('patients', 'departments', 'statusArr' ,'bloodGroup'));
         // return view('welcome', ['ignore_minify' => true]);
     }
 
@@ -99,7 +110,7 @@ class AppointmentController extends AppBaseController
         $this->appointmentRepository->create($input);
         $appoint_id = DB::getPdo()->lastInsertId();
         $this->appointmentRepository->createNotification($input);
-        
+
         //$case_id = PatientCase::where('patient_id',$input['patient_id'])->pluck('id');
         $caseID = PatientCase::where('patient_id', $input['patient_id'])->orderBy('id', 'desc')->first();
 
@@ -245,8 +256,8 @@ class AppointmentController extends AppBaseController
     }
 
     public function sendmail(){
-        
-        
+
+
         // $patient = Patient::where('id', $input['patient_id'])->with('user')->first();
         $receptions = Receptionist::with('user')->get();
 
@@ -260,7 +271,7 @@ class AppointmentController extends AppBaseController
         // Mail::send('emails.email', $data, function ($mes) use ($recipient, $subject) {
         //     $mes->to($recipient)
         //         ->subject($subject);
-               
+
         // });
 
         $mail = array(
@@ -269,7 +280,7 @@ class AppointmentController extends AppBaseController
             'message' =>'Your Appointment has been created',
             'attachments' => null,
         );
-        
+
         Email::to($recipient)
             ->send(new MarkdownMail('emails.email',
                 $mail['subject'], $mail));
@@ -280,21 +291,21 @@ class AppointmentController extends AppBaseController
                     $reception_mail = $reception->user->email;
                     $reception_array = [];
                     $reception_array[] = $reception_mail;
-        
-        
+
+
                     $mail = array(
                         'to' => $reception_array,
                         'subject' => $subject,
                         'message' => 'Appointment has been created of Dr.  to Patient  on this  Date ',
                         'attachments' => null,
                     );
-        
+
                     Email::to($reception_array)
                     ->send(new MarkdownMail('emails.email',
                         $mail['subject'], $mail));
                 }
 
-        
+
     }
 
 
@@ -307,7 +318,10 @@ class AppointmentController extends AppBaseController
     {
         return view('appointments.show')->with('appointment', $appointment);
     }
-
+    public function print(Appointment $appointment)
+    {
+        return view('appointments.print')->with('appointment', $appointment);
+    }
     /**
      * Show the form for editing the specified appointment.
      *
@@ -493,19 +507,19 @@ class AppointmentController extends AppBaseController
             $subject = 'Appointment Cancelled';
 
             if(!empty($patientEmail)){
-                
+
                 $data = array(
                     'message' => 'Appointment has been cancelled of ' . $doctor->user->full_name . ' to Patient ' . $patient->user->full_name . ' which is scheduled on ' . $appointment->opd_date . ' this Date & Time ',
                 );
-                
-                
+
+
                 $mail = array(
                 'to' => $recipient,
                 'subject' => $subject,
                 'message' => 'Appointment has been cancelled of ' . $doctor->user->full_name . ' to Patient ' . $patient->user->full_name . ' which is scheduled on ' . $appointment->opd_date . ' this Date & Time ',
                 'attachments' => null,
             );
-            
+
             Email::to($recipient)
             ->send(new MarkdownMail(
                 'emails.email',
@@ -518,14 +532,14 @@ class AppointmentController extends AppBaseController
             );
 
             $recipient = $doctorEmail;
-            
+
             $mail = array(
             'to' => $recipient,
             'subject' => $subject,
             'message' => 'Appointment has been cancelled of ' . $doctor->user->full_name . ' to Patient ' . $patient->user->full_name . ' which is scheduled on ' . $appointment->opd_date . ' this Date & Time ',
             'attachments' => null,
         );
-        
+
         Email::to($recipient)
         ->send(new MarkdownMail(
             'emails.email',

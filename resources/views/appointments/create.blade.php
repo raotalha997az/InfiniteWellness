@@ -21,19 +21,19 @@
                 </div>
             </div>
             <div class="card">
-                {{ Form::hidden('doctorDepartmentUrl', url('doctors-list'), ['class' => 'doctorDepartmentUrl']) }}
-                {{ Form::hidden('doctorScheduleList', url('doctor-schedule-list'), ['class' => 'doctorScheduleList']) }}
-                {{ Form::hidden('appointmentSaveUrl', route('appointments.store'), ['id' => 'saveAppointmentURLID']) }}
-                {{ Form::hidden('appointmentIndexPage', route('appointments.index'), ['class' => 'appointmentIndexPage']) }}
+                 {{ Form::hidden('doctorDepartmentUrl', url('doctors-list'), ['class' => 'doctorDepartmentUrl']) }}
+                 {{ Form::hidden('doctorScheduleList', url('doctor-schedule-list'), ['class' => 'doctorScheduleList']) }}
+                 {{ Form::hidden('appointmentSaveUrl', route('appointments.store'), ['id' => 'saveAppointmentURLID']) }}
+                 {{ Form::hidden('appointmentIndexPage', route('appointments.index'), ['class' => 'appointmentIndexPage']) }}
                 {{ Form::hidden('isEdit', false, ['class' => 'isEdit']) }}
                 {{ Form::hidden('isCreate', true, ['class' => 'isCreate']) }}
                 {{ Form::hidden('getBookingSlot', route('get.booking.slot'), ['class' => 'getBookingSlot']) }}
                 <div class="card-body p-12">
-                    {{ Form::open(['id' => 'appointmentForm']) }}
+                    {{-- {{ Form::open(['id' => 'appointmentForm']) }} --}}
 
                     @include('appointments.fields')
 
-                    {{ Form::close() }}
+                    {{-- {{ Form::close() }} --}}
                 </div>
             </div>
         </div>

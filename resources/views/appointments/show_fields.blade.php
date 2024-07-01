@@ -19,8 +19,8 @@
                                 <span class="fw-bolder fs-6 text-gray-800">{{$appointment->doctor->user->full_name}}</span>
                             </div>
                             <div class="col-lg-4 d-flex flex-column">
-                                <label class="fw-bold text-muted py-3">{{ __('messages.appointment.doctor_department').(':')  }}</label>
                                 <p>
+                                <label class="fw-bold text-muted py-3">{{ __('messages.appointment.doctor_department').(':')  }}</label>
                                     <span class="fw-bolder fs-6 text-gray-800">{{ $appointment->doctor->department->title }}</span>
                                 </p>
                             </div>
@@ -33,8 +33,8 @@
                                 <span class="fw-bolder fs-6 text-gray-800" data-placement="top"  data-bs-original-title="{{ date('jS M, Y', strtotime($appointment->updated_at)) }}">{{ $appointment->updated_at->diffForHumans() }}</span>
                             </div>
                             <div class="col-lg-4 d-flex flex-column">
-                                <label class="fw-bold text-muted py-3">{{ __('messages.common.status').(':')  }}</label>
                                 <p class="m-0">
+                                <label class="fw-bold text-muted py-3">{{ __('messages.common.status').(':')  }}</label>
                                     <span class="badge fs-6 bg-light-{{!empty($appointment->is_completed === \App\Models\Appointment::STATUS_COMPLETED) ? 'success' : 'danger'}}">{{ ($appointment->is_completed === \App\Models\Appointment::STATUS_COMPLETED) ? __('messages.appointment.completed') : __('messages.appointment.pending') }}</span>
                                 </p>
                             </div>

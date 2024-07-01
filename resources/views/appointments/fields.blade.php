@@ -1,3 +1,4 @@
+{{ Form::open(['id' => 'appointmentForm']) }}
 <div class="row">
     <!-- Patient Name Field -->
     @if(Auth::user()->hasRole('Patient'))
@@ -5,12 +6,15 @@
     @else
         <div class="mb-5 form-group col-sm-6">
             {{ Form::label('patient_name', __('messages.case.patient').':', ['class' => 'form-label']) }}
-            <span class="required"></span>
+            <span class="required"> </span>
+            <button type="button" class="btn btn-primary  btn-sm" data-toggle="modal" data-target="#patientModal">
+                Add Patient
+            </button>
             {{-- {{ Form::select('patient_id', $patients, null, ['class' => 'form-select','required','id' => 'appointmentPatientId','placeholder'=>'Select Patient', 'data-control' => 'select2']) }} --}}
-        <select name="patient_id"  id="appointmentPatientId" placeholder='Select Patient' class="form-select" required>
+        <select name="patient_id"  id="appointmentPatientId" placeholder='Select Patient' class="form-select" required >
             <option value="" selected disabled>Select Patient</option>
             @foreach ($patients as $patient)
-            <option value="{{$patient->id }}">({{$patient->MR}}) {{$patient->patientUser->full_name }}</option>                
+            <option value="{{$patient->id }}">({{$patient->MR}}) {{$patient->patientUser->full_name }}</option>
             @endforeach
         </select>
         </div>
@@ -44,14 +48,14 @@
             {{ Form::text('opd_date', isset($appointment) ? $appointment->opd_date->format('Y-m-d') : null, ['id'=>'appointmentOpdDate', 'class' => (getLoggedInUser()->thememode ? 'bg-light opdDate form-control' : 'bg-white opdDate form-control'), 'required', 'autocomplete'=>'off']) }}
         </div>
 
-        <div class="mb-5 form-group col-sm-6">
-            {{ Form::label('advance_amount', 'Advance Amount '.'(optional):', ['class' => 'form-label']) }}
+        {{-- <div class="mb-5 form-group col-sm-6">
+            {{ Form::label('advance_amount', 'Advance Amount '.'(optional):', ['class' => 'form-label']) }} --}}
             {{-- <span class="required"></span> --}}
             {{-- {{ Form::text('advance_amount' ['id'=>'appointmentAdvanceAmount', 'class' => (getLoggedInUser()->thememode ? 'bg-light opdDate form-control' : 'bg-white opdDate form-control'), , 'autocomplete'=>'off']) }} --}}
-            <input type="number" name="advance_amount" id="appointmentAdvanceAmount" class="form-control">
-        </div>
+            {{-- <input type="number" name="advance_amount" id="appointmentAdvanceAmount" class="form-control">
+        </div> --}}
 
-        <div class="mb-5 form-group col-sm-6">
+        {{-- <div class="mb-5 form-group col-sm-6">
             {{ Form::label('Payment Mode', __('Payment Mode ').':', ['class' => 'form-label']) }}
             <span class="required"></span>
             <select name="payment_mode" class="form-select" data-control="select2" id="payment_mode">
@@ -60,7 +64,7 @@
                 <option value="2">Cheque</option>
                 <option value="3">Card</option>
             </select>
-        </div>
+        </div> --}}
 
         <!-- Notes Field -->
         <div class="mb-5 form-group col-sm-6">
@@ -140,6 +144,89 @@
     </div>
 </div>
 
+{{ Form::close() }}
+
+<!-- Add Patients Modal -->
+<!-- Modal -->
+<div class="modal fade" id="patientModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Patient</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" id="patientForm">
+                    <div class="col-md-6">
+                        <div class="form-group mb-5">
+                            <label for="patientFirstName" class="form-label">First Name:</label>
+                            <span class="required"></span>
+                            <input type="text" name="first_name" class="form-control" required id="patientFirstName" tabindex="1">
+                        </div>
+                        <div class="form-group mb-5">
+                            <label for="patientLastName" class="form-label">Last Name:</label>
+                            <span class="required"></span>
+                            <input type="text" name="last_name" class="form-control" required tabindex="2">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-lg-6 mb-5">
+                            <label for="userCnic" class="form-label">CNIC:</label>
+                            <input type="text" name="CNIC" class="form-control" tabindex="3" id="userCnic">
+                        </div>
+                        <div class="form-group mb-5">
+                            <label for="patientBirthDate" class="form-label">Date of Birth:</label>
+                            <input type="date" name="dob" class="form-control" id="patientBirthDate" autocomplete="off" tabindex="4">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mobile-overlapping mb-5">
+                            <label for="patientPhoneNumber" class="form-label">Phone:</label>
+                            <span class="required"></span><br>
+                            <input type="tel" name="phone" class="form-control phoneNumber" id="patientPhoneNumber" required onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" tabindex="5">
+                            <input type="hidden" name="prefix_code" class="prefix_code">
+                            <span class="text-success valid-msg d-none fw-400 fs-small mt-2">✓ &nbsp; Valid</span>
+                            <span class="text-danger error-msg d-none fw-400 fs-small mt-2"></span>
+                        </div>
+                        <div class="form-group mb-5">
+                            <label class="form-label">Gender:</label>
+                            <span class="required"></span> &nbsp;<br>
+                            <span class="is-valid">
+                                <label class="form-label">Male</label>&nbsp;&nbsp;
+                                <input type="radio" name="gender" value="0" class="form-check-input" tabindex="6" id="patientMale" checked> &nbsp;
+                                <label class="form-label">Female</label>
+                                <input type="radio" name="gender" value="1" class="form-check-input" tabindex="7" id="patientFemale">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-5">
+                            <label for="patientBloodGroup" class="form-label">Blood Group:</label>
+                            <select name="blood_group" class="form-select" id="patientBloodGroup" data-control="select2" tabindex="9">
+                                <option value="" disabled selected>Select Blood Group</option>
+                                @foreach($bloodGroup as $blood_group)
+                                    <option value="{{ $blood_group }}" >{{ $blood_group }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <script>
     $(document).ready(function () {
         $("#appointmentPatientId").change(function () {
@@ -158,7 +245,7 @@
                         $("#appointmentPatientCaseId").append('<option value="" selected disabled>Select Case</option>');
                         for (var i = 0; i < response.length; i++) {
                             $("#appointmentPatientCaseId").append('<option value="' + response[i].id + '">' + response[i].case_id + '</option>');
-                        
+
                     }
                 }else{
                     $("#appointmentPatientCaseId").empty();
@@ -170,5 +257,33 @@
                 }
             })
         })
+        $('#patientForm').on('submit',function(event){
+            event.preventDefault(); // Prevent the default form submission
+            console.log( "Form submitted" );
+            $.ajax({
+                type: "POST",
+                url: "{{ route('add-patient-appointment') }}",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    patient_id: $('#appointmentPatientId').val(),
+                    case_id: $('#appointmentPatientCaseId').val(),
+                    patient_name: $('#patientName').val(),
+                    patient_email: $('#patientEmail').val(),
+                    patient_phone: $('#patientPhone').val(),
+                    patient_gender: $('input[name="gender"]:checked').val(),
+                    patient_blood_group: $('#patientBloodGroup').val(),
+                }
+                success: function (response) {
+                    console.log(response); // Handle the response from the server
+                    $('#patientModal').modal('hide'); // Hide the modal
+
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText); // Handle errors
+
+                }
+            });
+        });
     })
+
 </script>

@@ -361,8 +361,10 @@ Route::middleware(['auth', 'verified', 'xss', 'checkUserStatus'])->group(functio
     Route::middleware('role:Admin|Patient|Doctor|Receptionist|Nurse')->group(function () {
         Route::resource('appointments', AppointmentController::class);
         Route::post('get-patient-case',[AppointmentController::class ,'getPatientCase'])->name('appointments.patient-case');
+        Route::post('add-patient-appointment',[AppointmentController::class ,'addPatientappointment'])->name('add-patient-appointment');
         Route::get('appointments', [AppointmentController::class, 'index'])->name('appointments.index')->middleware('modules');
         Route::post('appointments/{appointment}', [AppointmentController::class, 'update']);
+        Route::get('appointments/print/{appointment}', [AppointmentController::class, 'print'])->name('appointments.print');
         Route::get('doctors-list', [AppointmentController::class, 'getDoctors']);
         Route::get('appointment-calendars', [AppointmentCalendarController::class, 'index'])->name('appointment-calendars.index');
         Route::get('calendar-list', [AppointmentCalendarController::class, 'calendarList']);
@@ -370,7 +372,7 @@ Route::middleware(['auth', 'verified', 'xss', 'checkUserStatus'])->group(functio
             [AppointmentCalendarController::class, 'getAppointmentDetails'])->name('appointment.details');
         Route::get('sendmail', [AppointmentController::class, 'sendmail'])->name('appointment.sendmail');
 
-            
+
         Route::post('appointments/{appointment}/status', [AppointmentController::class, 'status'])
             ->name('appointment.status');
         Route::post('appointments/{appointment}/cancel', [AppointmentController::class, 'cancelAppointment'])
@@ -811,8 +813,8 @@ Route::middleware(['auth', 'verified', 'xss', 'checkUserStatus'])->group(functio
         Route::get('/fast-medical-record/{id}/edit', [NursingFormController::class, 'fastMedicalRecordEdit'])->name('fast-medical-record.edit');
         Route::put('/fast-medical-record/{id}', [NursingFormController::class, 'fastMedicalupdate'])->name('fast-medical-record.update');
         Route::get('/fast-medical-record/{id}/print', [NursingFormController::class, 'fastMedicalprint'])->name('fast-medical-record.prints');
-        
-        
+
+
         Route::resource('functional-medicine', FunctionalMedicineController::class);
     });
 
@@ -1244,8 +1246,8 @@ Route::middleware(['auth', 'verified', 'xss', 'checkUserStatus'])->group(functio
         [OpdPatientDepartmentController::class, 'destroy'])->name('opd.patient.destroy');
         Route::get('get-doctor-opd-charge',
         [OpdPatientDepartmentController::class, 'getDoctorOPDCharge'])->name('getDoctor.OPDcharge');
-        
-        
+
+
         // Dental OPD Patient routes
         Route::get('dentalOpds',[OpdPatientDepartmentController::class, 'dentalIndex'])->name('dentalopd.patient.index');
         Route::get('dentalOpds/show/{opdPatientDepartment}',[OpdPatientDepartmentController::class, 'showdental'])->name('dentalOpds.patient.show');
