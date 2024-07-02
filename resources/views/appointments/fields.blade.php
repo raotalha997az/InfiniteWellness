@@ -21,14 +21,7 @@
             </select>
         </div>
     @endif
-    <div class="mb-5 form-group col-sm-6">
-        {{ Form::label('Patient Cases', __('Patient Cases ') . ':', ['class' => 'form-label']) }}
-        {{-- <span class="required"></span> --}}
-        <select name="patient_case_id" class="form-select" data-control="select2" id="appointmentPatientCaseId">
-            <option value="" selected disabled>Select Patient Case</option>
-        </select>
-        {{-- {{ Form::select('doctor_department_id',$departments, null, ['class' => 'form-select','required','id' => 'appointmentDepartmentId','placeholder'=>'Select Department', 'data-control' => 'select2']) }} --}}
-    </div>
+    
     <!-- Department Name Field -->
     <div class="mb-5 form-group col-sm-6">
         {{ Form::label('department_name', __('messages.appointment.doctor_department') . ':', ['class' => 'form-label']) }}
@@ -73,13 +66,30 @@
             {{ Form::label('problem', __('messages.appointment.description') . ':', ['class' => 'form-label']) }}
             {{ Form::textarea('problem', null, ['class' => 'form-control', 'rows' => '4']) }}
         </div>
-        <div class="mb-5 form-group col-sm-6">
+        <div class="mb-5 form-group col-sm-3">
             {{ Form::label('status', __('messages.common.status') . ':', ['class' => 'form-label']) }}
             <br>
             <div class="form-check form-switch">
                 <input class="form-check-input w-35px h-20px" name="status" type="checkbox" value="1" checked>
             </div>
         </div>
+        <div class="mb-5 form-group col-sm-3">
+            {{ Form::label('follow_up', __('Follow Up') . ':', ['class' => 'form-label']) }}
+            <br>
+            <div class="form-check form-switch">
+                <input class="form-check-input w-35px h-20px" name="follow_up" id="followUp" type="checkbox">
+            </div>
+        </div>
+
+        <div class="mb-5 form-group col-sm-6 d-none" id="patientCaseDiv">
+        {{ Form::label('Patient Cases', __('Patient Cases ') . ':', ['class' => 'form-label']) }}
+        {{-- <span class="required"></span> --}}
+        <select name="patient_case_id" class="form-select" data-control="select2" id="appointmentPatientCaseId">
+            <option value="" selected disabled>Select Patient Case</option>
+        </select>
+        {{-- {{ Form::select('doctor_department_id',$departments, null, ['class' => 'form-select','required','id' => 'appointmentDepartmentId','placeholder'=>'Select Department', 'data-control' => 'select2']) }} --}}
+    </div>
+    
         <div class="mb-5 form-group col-sm-6">
             <div class="doctor-schedule" style="display: none">
                 <i class="fas fa-calendar-alt"></i>
@@ -240,6 +250,15 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function() {
+        $("#followUp").change(function() {
+            if ($(this).is(":checked")) {
+                $("#patientCaseDiv").removeClass("d-none");
+            } else {
+                $("#patientCaseDiv").addClass("d-none");
+                $("#followUpDate").val("");
+            }
+        });
+
         $("#appointmentPatientId").change(function() {
             var patientId = $(this).val();
             console.log(patientId);

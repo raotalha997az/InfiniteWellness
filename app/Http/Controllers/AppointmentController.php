@@ -115,6 +115,8 @@ class AppointmentController extends AppBaseController
         //return $this->sendSuccess($input['patient_id']);
 
         $patient = Patient::where('id', $input['patient_id'])->with('user')->first();
+        $input['advance_amount'] = $input['advance_amount'] ?? 0;
+        $input['payment_mode'] = $input['payment_mode'] ?? 'Cash';
 
         $input['opd_date'] = $input['opd_date'].$input['time'];
         // $input['is_completed'] = isset($input['status']) ? Appointment::STATUS_COMPLETED : Appointment::STATUS_PENDING;
@@ -128,10 +130,10 @@ class AppointmentController extends AppBaseController
 
         //$case_id = PatientCase::where('patient_id',$input['patient_id'])->pluck('id');
         $caseID = PatientCase::where('patient_id', $input['patient_id'])->orderBy('id', 'desc')->first();
-
+        
         $standard_charge = DoctorOpdCharge::where('doctor_id', $input['doctor_id'])->first();
         $followup_charge = DoctorOpdCharge::where('doctor_id', $input['doctor_id'])->first();
-
+        
         if($request->doctor_department_id == 5){
             if($request->patient_case_id != null){
                 DentalOpdPatientDepartment::create([
