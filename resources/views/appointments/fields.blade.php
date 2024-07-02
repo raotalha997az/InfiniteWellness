@@ -301,26 +301,25 @@
                     _token: "{{ csrf_token() }}",
                     first_name: $('#patientFirstName').val(),
                     last_name: $('#patientLastName').val(),
-                    cnic: $('#userCnic').val(),
+                    CNIC: $('#userCnic').val(),
                     dob: $('#patientBirthDate').val(),
                     phone: $('#patientPhoneNumber').val(),
                     gender: $('input[name="gender"]:checked').val(),
-                    patient_blood_group: $('#patientBloodGroup').val(),
+                    blood_group: $('#patientBloodGroup').val(),
                     prefix_code: $('#prefixCode').val() || 'default_prefix_code'
                 },
                 success: function(response) {
-                    $('#patientForm').trigger("reset");
-                    $('#patientModal').modal('hide');
-                    console.log(response);
                     $("#appointmentPatientId").append(
                         '<option value="' + response.id + '">(' + response
                         .MR + ') ' + response.user.full_name + '</option>');
                     $("#appointmentPatientId").val(response.id);
+
+                    $('#patientForm').trigger("reset");
+                    $('#patientModal').modal('hide');
                 },
                 error: function(xhr, status, error) {
                     console.log("error");
                     console.log(xhr.responseText); // Handle errors
-
                 }
             });
         });

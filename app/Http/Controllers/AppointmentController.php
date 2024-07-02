@@ -29,6 +29,7 @@ use App\Http\Requests\UpdateAppointmentRequest;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use App\Repositories\PatientRepository;
 use App\Models\User;
+use App\Models\DoctorDepartment;
 
 
 /**
@@ -114,6 +115,27 @@ class AppointmentController extends AppBaseController
         $input = $request->all();
         //return $this->sendSuccess($input['patient_id']);
 
+        //Case Creation
+            if($request->follow_up !== "on"){
+
+                $new_case_id = mb_strtoupper(PatientCase::generateUniqueCaseId());
+                $doctorDepartment = DoctorDepartment::where('id', $input['doctor_department_id'])->first();
+            $departmentShortName = substr($doctorDepartment->title, 0, 5);
+            
+            $data = [
+                "case_id" => $departmentShortName . '-' . $new_case_id,
+                "currency_symbol" => "pkr",
+                "patient_id" => $input['patient_id'],
+                "date" => now(),
+                "phone" => null,
+                "prefix_code" => "92",
+                "status" => "1",
+                "description" => null
+            ];
+            $patientCase = PatientCase::create($data);
+        }
+        //Case Creation
+
         $patient = Patient::where('id', $input['patient_id'])->with('user')->first();
         $input['advance_amount'] = $input['advance_amount'] ?? 0;
         $input['payment_mode'] = $input['payment_mode'] ?? 'Cash';
@@ -130,7 +152,6 @@ class AppointmentController extends AppBaseController
 
         //$case_id = PatientCase::where('patient_id',$input['patient_id'])->pluck('id');
         $caseID = PatientCase::where('patient_id', $input['patient_id'])->orderBy('id', 'desc')->first();
-        
         $standard_charge = DoctorOpdCharge::where('doctor_id', $input['doctor_id'])->first();
         $followup_charge = DoctorOpdCharge::where('doctor_id', $input['doctor_id'])->first();
         
@@ -158,7 +179,7 @@ class AppointmentController extends AppBaseController
                     'appointment_id' => $appoint_id,
                     'doctor_id' => $input['doctor_id'],
                     'opd_number' => DentalOpdPatientDepartment::generateUniqueOpdNumber(),
-                    'case_id' => $caseID->id,
+                    'case_id' => $caseID->id ?? null,
                     'height' => $patient->height?$patient->height:'',
                     'weight' => $patient->weight?$patient->weight:'',
                     'bp' => $patient->blood_pressure?$patient->blood_pressure:'',
@@ -189,7 +210,7 @@ class AppointmentController extends AppBaseController
                     'patient_id' => $input['patient_id'],
                     'opd_number' => OpdPatientDepartment::generateUniqueOpdNumber(),
                     'appointment_date' => $input['opd_date'],
-                    'case_id' => $caseID->id,
+                    'case_id' => $caseID->id ?? null,
                     'appointment_id' => $appoint_id,
                     'doctor_id' => $input['doctor_id'],
                     'standard_charge' => $standard_charge->standard_charge,
