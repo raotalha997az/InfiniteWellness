@@ -1290,8 +1290,17 @@
                                     "#appointmentSlotTemplate",
                                     h
                                   );
+                                  if($(".isEdit").val() == 1){
+                                    console.log(a);
+                                    $(".available-slot").append(`
+                                    <div class="time-slot">
+                                    <span class="time-interval" data-id=${index}">${t[m]}</span>
+                                    </div>`);
+                                  }
                                 }
-                                $(".available-slot").append(_);
+                                  if($(".isCreate").val() == 1){
+                                    $(".available-slot").append(_);
+                                  }
                               }
                               "00:00:00" != i &&
                               "00:00:00" != a.data.scheduleDay[0].available_to &&
@@ -1331,6 +1340,7 @@
                         },
                         error: function (e) {
                           displayErrorMessage(e.responseJSON.message);
+
                         }
                       }),
                       $(".isCreate").val() || $(".isEdit").val())

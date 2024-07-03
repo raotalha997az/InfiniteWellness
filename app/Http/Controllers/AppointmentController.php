@@ -394,11 +394,11 @@ class AppointmentController extends AppBaseController
     public function edit(Appointment $appointment)
     {
         $patients = $this->appointmentRepository->getPatients();
-        $doctors = $this->appointmentRepository->getDoctors($appointment->department_id);
+        $doctors = $this->appointmentRepository->getDoctors($appointment->doctor_department_id);
         $departments = $this->appointmentRepository->getDoctorDepartments();
         $statusArr = $appointment->is_completed;
-
-        return view('appointments.edit', compact('appointment', 'patients', 'doctors', 'departments', 'statusArr'));
+        $bloodGroup = getBloodGroups();
+        return view('appointments.edit', compact('appointment', 'patients', 'doctors', 'departments', 'statusArr', 'bloodGroup'));
     }
 
     /**

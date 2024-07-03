@@ -31,8 +31,7 @@
                 {{ Form::hidden('appointmentUpdateUrl', route('appointments.update', ['appointment' => $appointment->id]), ['id' => 'appointmentUpdateUrl']) }}
                 <div class="card-body">
                     {{ Form::model($appointment, ['route' => ['appointments.update', $appointment->id], 'method' => 'patch', 'id' => 'editAppointmentForm']) }}
-
-                    @include('appointments.fields')
+                    @include('appointments.edit-fields')
 
                     {{ Form::close() }}
                 </div>
