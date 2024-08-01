@@ -83,6 +83,8 @@ class NursingFormController extends Controller
             'fbs' => $request->fbs,
             'rbs' => $request->rbs,
             'spo_2' => $request->spo_2,
+            'foc' => $request->foc,
+            'ac' => $request->ac,
         ]));
 
         foreach ($request->medications as $medication) {
@@ -199,7 +201,7 @@ class NursingFormController extends Controller
         FastMedicalRecord::create($request->all());
         return redirect()->route('fast-medical-record.index')->with('success', 'Fast Medical Record created!');
     }
-    
+
     // public function fastMedicalRecordstore(Request $request)
     // {
     //     // $validator = Validator::make($request->all(), ([
@@ -242,7 +244,7 @@ class NursingFormController extends Controller
             'Fast_Medical_Record' => FastMedicalRecord::where('id', $id)->first(),
         ]);
     }
-    
+
     public function fastMedicalRecordPrint()
     {
         return view('Fast-Medical-Record.print', [
@@ -257,7 +259,7 @@ class NursingFormController extends Controller
     }
     // update
     public function fastMedicalupdate(Request $request, $id)
-    {        
+    {
         $fastrecord = FastMedicalRecord::findOrFail($id);
         $fastrecord->update($request->all());
 
@@ -271,5 +273,5 @@ class NursingFormController extends Controller
             'fastrecord' => FastMedicalRecord::where('id', $id)->first(),
         ]);
     }
-    
+
 }

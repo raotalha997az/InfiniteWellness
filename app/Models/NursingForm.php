@@ -22,6 +22,8 @@ class NursingForm extends Model
         'temperature',
         'height',
         'weight',
+        'foc',
+        'ac',
         'pain_level',
         'patient_name',
         'fbs',
@@ -47,5 +49,5 @@ class NursingForm extends Model
     {
         return $this->hasMany(Medication::class);
     }
-    
+
 }

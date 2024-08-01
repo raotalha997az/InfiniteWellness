@@ -92,6 +92,18 @@
                                 <input type="text" name="weight" id="weight" required class="form-control">
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="mb-5">
+                                <label for="foc" class="form-label">Fronto Occipital Circumference (FOC)<sup class="text-danger">*</sup></label>
+                                <input type="text" name="foc" id="foc" required class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-5">
+                                <label for="ac" class="form-label">Abdominal circumference (AC)<sup class="text-danger">*</sup></label>
+                                <input type="text" name="ac" id="ac" required class="form-control">
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-3">
                         <div class="mb-5">
@@ -109,7 +121,7 @@
                         </div>
                     </div>
 
-                    
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-5">
@@ -133,8 +145,8 @@
                             </div>
                         </div>
                     </div>
-                    
-                    
+
+
                 </div>
                 <div class="card-body">
                     <h4>Current Medications:</h4>
@@ -362,7 +374,7 @@
         </script>
         <script>
             const heightInput = document.getElementById("height"); //height k inoput ki id
-            const weightInput = document.getElementById("weight"); //weigh k input ki id 
+            const weightInput = document.getElementById("weight"); //weigh k input ki id
             const bmiInput = document.getElementById("bmi"); // yhn p jonsi jagah p value show karani h whn ki id dedooo
 
             heightInput.addEventListener("input", calculateBMI);
