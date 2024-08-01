@@ -13,13 +13,13 @@ class FunctionalMedicineController extends Controller
     public function index()
     {
         $FunctionalMedicine = FunctionalMedicine::paginate(10);
-        return view("functionalMedicine.index", compact("FunctionalMedicine"));
+        return view("FunctionalMedicine.index", compact("FunctionalMedicine"));
     }
 
     public function create()
     {
         $patients = Patient::all();
-        return view("functionalMedicine.create", compact("patients"));
+        return view("FunctionalMedicine.create", compact("patients"));
     }
 
     public function store(Request $request)
@@ -41,13 +41,13 @@ class FunctionalMedicineController extends Controller
 
     public function show(FunctionalMedicine $functionalMedicine)
     {
-        return view('functionalMedicine.show', compact('functionalMedicine'));
+        return view('FunctionalMedicine.show', compact('functionalMedicine'));
     }
 
     public function edit(FunctionalMedicine $functionalMedicine)
     {
         $patients = Patient::all(); // Assuming you have a Patient model
-        return view('functionalMedicine.edit', compact('functionalMedicine', 'patients'));
+        return view('FunctionalMedicine.edit', compact('functionalMedicine', 'patients'));
     }
 
     public function update(Request $request, FunctionalMedicine $functionalMedicine)
@@ -68,7 +68,7 @@ class FunctionalMedicineController extends Controller
     public function destroy($id)
     {
         $functionalMedicine = FunctionalMedicine::findOrFail($id);
-        
+
         // Perform additional checks if necessary before deletion
 
         $functionalMedicine->delete();
