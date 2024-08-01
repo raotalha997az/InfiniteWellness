@@ -94,6 +94,7 @@ class NursingFormController extends Controller
                 'medication_name' => $medication['medication_name'],
                 'dosage' => $medication['dosage'],
                 'frequency' => $medication['frequency'],
+                'root' => $medication['root'],
                 'prescribing_physician' => $medication['prescribing_physician'],
             ]);
         }

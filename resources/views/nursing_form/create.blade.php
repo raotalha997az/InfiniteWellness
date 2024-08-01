@@ -163,6 +163,7 @@
                                 <td>Dosage </td>
                                 <td>Frequency </td>
                                 <td>Prescribing Physician</td>
+                                <td>Root</td>
                                 <td>Action</td>
                             </tr>
                         </thead>
@@ -172,6 +173,7 @@
                                 </td>
                                 <td><input type="text" class="form-control" name="medications[0][dosage]"></td>
                                 <td><input type="text" class="form-control" name="medications[0][frequency]"></td>
+                                <td><input type="text" class="form-control" name="medications[0][root]"></td>
                                 <td><input type="text" class="form-control"
                                         name="medications[0][prescribing_physician]"></td>
                             </tr>
@@ -278,6 +280,7 @@
                                 <td><input type="text" class="form-control" name="medications[${a}][dosage]"></td>
                                 <td><input type="text" class="form-control" name="medications[${a}][frequency]"></td>
                                 <td><input type="text" class="form-control" name="medications[${a}][prescribing_physician]"></td>
+                                <td><input type="text" class="form-control" name="medications[${a}][root]"></td>
                                 <td><button onclick="deleteRowCMT()"  class="btn-danger"><i class="fa fa-trash"></i></button></td>
 
                     </tr>
