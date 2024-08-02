@@ -2,16 +2,18 @@
 
 namespace App\Providers;
 
+use Blade;
+use Schema;
 use App\Models\Module;
 use App\Models\Setting;
+use App\Rules\ValidRecaptcha;
 use App\Observers\ModuleObserver;
 use App\Observers\SettingObserver;
-use App\Rules\ValidRecaptcha;
-use Blade;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Schema;
+use Illuminate\Support\Facades\Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,7 +24,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
     }
 
     /**
@@ -32,6 +33,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $setting = DB::table('settings')->get();
+        $applogo = $setting->where('key', 'app_logo')->first()->value;
+        $address = $setting->where('key', 'hospital_address')->first()->value;
+        $app_name = $setting->where('key', 'app_name')->first()->value;
+
+        View::share('applogo', $applogo);
+        View::share('address', $address);
+        View::share('app_name', $app_name);
         Paginator::useBootstrap();
         Module::observe(ModuleObserver::class);
         Setting::observe(SettingObserver::class);

@@ -19,6 +19,9 @@
     }
 </style>
 <center>
+    <img src="{{ asset('logo.png') }}" alt="logo" height="70" width="100">
+    <h2>{{ $app_name }}</h2>
+    <p>{{ $address }}</p>
     <h1 style="border: 1px solid black;">Fast Medical Record</h1>
 </center>
 <table>

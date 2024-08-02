@@ -20,6 +20,7 @@
     <div class="row">
         <center>
             <img src="{{ asset('images/8.png') }}" width="150px" alt="">
+           <p>{{ $address }}</p>
         </center>
         <div class="col-md-4 col-sm-6 co-12">
             <div class="image mb-7">

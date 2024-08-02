@@ -10,6 +10,7 @@
 
             <div style="margin-top: 25px !important; margin-bottom: 10px !important; margin-left: 20px !important">
                 <h2>Infinite Wellness PK</h2>
+                <p>{{ $address }}</p>
             </div>
         </center>
         <div class="card">

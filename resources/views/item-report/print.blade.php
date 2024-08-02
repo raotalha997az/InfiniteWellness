@@ -6,7 +6,7 @@
         <h2>InfinitewellnessPK</h2>
     </div>
     <div style="margin-bottom: 25px !important;">
-        <p>Plot No.35/135. CP & Berar Cooperative Housing Society, PECHS, Block 7/8, Karachi East.</p>
+        <p>{{ $address }}</p>
     </div>
 </center>
 
@@ -30,7 +30,7 @@
                 <td>{{ $product->return_qty }}</td>
                 <td>{{ $product->total_quantity }}</td>
             </tr>
-            
+
         @endforeach
     </tbody>
 </table>
