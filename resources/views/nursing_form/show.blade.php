@@ -9,7 +9,6 @@
                 <h3>Nursing Assessment Form</h3>
                 <a href="/nursing-form" class="btn btn-secondary">Back</a>
             </div>
-
             <form action="{{route('nursing-form.store') }}" method="POST">
                 @csrf
                 <div class="card-body">
@@ -135,7 +134,16 @@
                             </div>
                         </div>
                     </div>
-                    
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="mb-5">
+                                <label for="details" class="form-label">Details<sup
+                                        class="text-danger">*</sup></label>
+                                <p id="details">{!! $nursing->details !!}</p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="card-body">
                         <h4>Current Medications:</h4>

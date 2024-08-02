@@ -66,7 +66,6 @@ class NursingFormController extends Controller
      */
     public function store(NursingFormRequest $request)
     {
-        // dd($request);
         Patient::where('id', $request->patient_id)->update([
             'blood_pressure' => $request->blood_pressure,
             'heart_rate' => $request->heart_rate,
@@ -85,6 +84,7 @@ class NursingFormController extends Controller
             'spo_2' => $request->spo_2,
             'foc' => $request->foc,
             'ac' => $request->ac,
+            'details' => $request->details,
         ]));
 
         foreach ($request->medications as $medication) {

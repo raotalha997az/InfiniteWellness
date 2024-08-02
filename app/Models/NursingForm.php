@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class NursingForm extends Model
 {
     use HasFactory;
+    
     protected $fillable = [
         'patient_mr_number',
         'opd_id',
@@ -31,7 +32,8 @@ class NursingForm extends Model
         'spo_2',
         'assessment_date',
         'nurse_name',
-        'signature'
+        'signature',
+        'details'
     ];
 
 

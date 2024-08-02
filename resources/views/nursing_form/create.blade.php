@@ -19,11 +19,11 @@
                                 <option value="" selected disabled>select mr number</option>
                                 @foreach ($patients as $patient)
                                     <option value="{{ $patient->MR }}" data-blood_pressure="{{ $patient->blood_pressure }}"
-                                        data-patient_id="{{ $patient->id }}"
-                                        data-heart_rate="{{ $patient->heart_rate }}"
+                                        data-patient_id="{{ $patient->id }}" data-heart_rate="{{ $patient->heart_rate }}"
                                         data-respiratory_rate="{{ $patient->respiratory_rate }}"
                                         data-temperature="{{ $patient->temperature }}" data-height="{{ $patient->height }}"
-                                        data-weight="{{ $patient->weight }}" data-bmi="{{ $patient->bmi }}" data-name="{{ $patient->user->full_name }}">{{ $patient->MR }}
+                                        data-weight="{{ $patient->weight }}" data-bmi="{{ $patient->bmi }}"
+                                        data-name="{{ $patient->user->full_name }}">{{ $patient->MR }}
                                         ~ {{ $patient->user->full_name }}</option>
                                 @endforeach
                             </select>
@@ -53,7 +53,7 @@
                                         class="text-danger">*</sup></label>
                                 <input type="text" name="blood_pressure" id="blood_pressure" required
                                     class="form-control">
-                                    <input type="hidden" name="patient_id" id="patient_id">
+                                <input type="hidden" name="patient_id" id="patient_id">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -82,25 +82,29 @@
                         </div>
                         <div class="col-md-4">
                             <div class="mb-5">
-                                <label for="height" class="form-label">Height (cm/in)<sup class="text-danger">*</sup></label>
+                                <label for="height" class="form-label">Height (cm/in)<sup
+                                        class="text-danger">*</sup></label>
                                 <input type="text" name="height" id="height" required class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-5">
-                                <label for="weight" class="form-label">Weight (kg/lb)<sup class="text-danger">*</sup></label>
+                                <label for="weight" class="form-label">Weight (kg/lb)<sup
+                                        class="text-danger">*</sup></label>
                                 <input type="text" name="weight" id="weight" required class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-5">
-                                <label for="foc" class="form-label">Fronto Occipital Circumference (FOC)<sup class="text-danger">*</sup></label>
+                                <label for="foc" class="form-label">Fronto Occipital Circumference (FOC)<sup
+                                        class="text-danger">*</sup></label>
                                 <input type="text" name="foc" id="foc" required class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-5">
-                                <label for="ac" class="form-label">Abdominal circumference (AC)<sup class="text-danger">*</sup></label>
+                                <label for="ac" class="form-label">Abdominal circumference (AC)<sup
+                                        class="text-danger">*</sup></label>
                                 <input type="text" name="ac" id="ac" required class="form-control">
                             </div>
                         </div>
@@ -139,13 +143,21 @@
                         </div>
                         <div class="col-md-6">
                             <div class="mb-5">
-                                <label for="pbs" class="form-label">SpO2 (%)<sup
-                                        class="text-danger">*</sup></label>
+                                <label for="pbs" class="form-label">SpO2 (%)<sup class="text-danger">*</sup></label>
                                 <input type="text" name="spo_2" id="spo_2" required class="form-control">
                             </div>
                         </div>
                     </div>
 
+                    <div class="mb-3 row">
+                        <div class="col-md-12">
+                            <label for="details" class="form-label">Details</label>
+                            <textarea name="details" id="details" class="form-control"></textarea>
+                            @error('details')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
 
                 </div>
                 <div class="card-body">
@@ -242,8 +254,14 @@
 
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 
         <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                // Replace the textarea with CKEditor
+                CKEDITOR.replace('details');
+            });
+
             function deleteRowCMT() {
                 var table = document.querySelector("#current_medications_table");
                 var lastRow = table.lastElementChild;
@@ -415,6 +433,5 @@
                     bmiInput.value += " (" + bmiCategory + ")";
                 }
             }
-
         </script>
     @endsection
