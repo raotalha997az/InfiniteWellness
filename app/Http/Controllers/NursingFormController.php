@@ -31,21 +31,24 @@ class NursingFormController extends Controller
 
     public function opd(Request $request)
     {
-
         $getPatientID = Patient::where(['MR' => $request->patient_mr_number])->get();
 
-        if (count($getPatientID) > 0) {
+        if ($getPatientID) {
             return response()->json([
-                'data' => OpdPatientDepartment::where('patient_id', $getPatientID[0]->id)->with('patient.user', 'doctor.user')->get(),
-                'data2' => DentalOpdPatientDepartment::where('patient_id', $getPatientID[0]->id)->with('patient.user')->get(),
+                'data' => OpdPatientDepartment::where('patient_id', $getPatientID[0]->id)->with('patient.user', 'doctor.user')->latest()->first(),
+                'data2' => DentalOpdPatientDepartment::where('patient_id', $getPatientID[0]->id)->with('patient.user')->latest()->first(),
             ]);
         }
 
-
         return response()->json([
-            'data' => ''
+            'data' => null,
+            'data2' => null,
+            'success' => false,
+            'message' => 'No patient found with the given MR number'
         ]);
     }
+
+
     /**
      * Show the form for creating a new resource.
      *

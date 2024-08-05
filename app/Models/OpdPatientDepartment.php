@@ -179,8 +179,17 @@ class OpdPatientDepartment extends Model
     /**
      * @return mixed
      */
-    public function getPaymentModeNameAttribute()
+//     public function getPaymentModeNameAttribute()
+//     {
+//         return self::PAYMENT_MODES[$this->payment_mode];
+//     }
+public function getPaymentModeNameAttribute()
     {
-        return self::PAYMENT_MODES[$this->payment_mode];
+        if (array_key_exists($this->payment_mode, self::PAYMENT_MODES)) {
+            return self::PAYMENT_MODES[$this->payment_mode];
+        } else {
+            // Handle the case where the key does not exist
+            return 'N/A';
+        }
     }
 }

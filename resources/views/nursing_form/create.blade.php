@@ -130,19 +130,19 @@
                         <div class="col-md-6">
                             <div class="mb-5">
                                 <label for="fbs" class="form-label">FBS (mg/dL)</label>
-                                <input type="text" name="fbs" id="fbs"  class="form-control">
+                                <input type="text" name="fbs" id="fbs" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-5">
                                 <label for="rbs" class="form-label">RBS (mg/dL)</label>
-                                <input type="text" name="rbs" id="rbs"  class="form-control">
+                                <input type="text" name="rbs" id="rbs" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-5">
                                 <label for="pbs" class="form-label">SpO2 (%)</label>
-                                <input type="text" name="spo_2" id="spo_2"  class="form-control">
+                                <input type="text" name="spo_2" id="spo_2" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -334,6 +334,61 @@
 
 
 
+                    // $.ajax({
+                    //     type: "get",
+                    //     url: "/nursing-form/opd/list",
+                    //     data: {
+                    //         patient_mr_number: $(this).val()
+                    //     },
+                    //     dataType: "json",
+                    //     success: function(response) {
+                    //         $("#opd_id").empty();
+                    //         let isOPDavailabel = false;
+                    //         if (response.data.length !== 0) {
+                    //             isOPDavailabel = true;
+                    //             $('#opd_id').append(
+                    //                 `<option selected disabled>Select OPD </option>`);
+                    //             $.each(response.data, function(index, value) {
+                    //                 $("#opd_id").append(
+                    //                     `
+            // <option value="${value.opd_number}" data-doctor="${value.doctor.user.full_name}"  data-patient="${value.patient.user.full_name}" >
+            // ${value.opd_number}
+            // </option>`
+                    //                 );
+                    //             });
+                    //         }
+                    //         if (response.data2.length !== 0) {
+                    //             isOPDavailabel = true;
+                    //             $.each(response.data2, function(index, value2) {
+                    //                 // console.log(value2);
+                    //                 $("#opd_id").append(
+                    //                     `
+            // <option value="${value2.opd_number}" data-patient="${value2.patient.user.full_name}" >
+            // ${value2.opd_number}
+            // </option>`
+                    //                 );
+                    //             });
+                    //         }
+                    //         if (!isOPDavailabel) {
+                    //             $("#opd_id").html(
+                    //                 `<option value="" class="text-danger" selected disabled>No any opd found!</option>`
+                    //             );
+                    //         }
+                    //         // console.log(response.data2[0].patient.blood_pressure);
+                    //         // if(response.data2[0]) {
+                    //         //     $("#blood_pressure").val(response.data2[0].patient.blood_pressure);
+                    //         //     $("#heart_rate").val(response.data2[0].patient.heart_rate);
+                    //         //     $("#respiratory_rate").val(response.data2[0].patient.respiratory_rate);
+                    //         //     $("#temperature").val(response.data2[0].patient.temperature);
+                    //         //     $("#height").val(response.data2[0].patient.height);
+                    //         //     $("#weight").val(response.data2[0].patient.weight);
+                    //         //     $("#bmi").val(response.data2[0].patient.bmi);
+                    //         // }
+
+
+                    //     }
+                    // });
+
                     $.ajax({
                         type: "get",
                         url: "/nursing-form/opd/list",
@@ -344,50 +399,40 @@
                         success: function(response) {
                             $("#opd_id").empty();
                             let isOPDavailabel = false;
-                            if (response.data.length !== 0) {
+
+                            if (response.data) {
                                 isOPDavailabel = true;
                                 $('#opd_id').append(
                                     `<option selected disabled>Select OPD </option>`);
-                                $.each(response.data, function(index, value) {
-                                    $("#opd_id").append(
-                                        `
-                    <option value="${value.opd_number}" data-doctor="${value.doctor.user.full_name}"  data-patient="${value.patient.user.full_name}" >
-                    ${value.opd_number}
-                    </option>`
-                                    );
-                                });
+                                $("#opd_id").append(
+                                    `<option value="${response.data.opd_number}" data-doctor="${response.data.doctor.user.full_name}" data-patient="${response.data.patient.user.full_name}">
+                    ${response.data.opd_number}
+                </option>`
+                                );
                             }
-                            if (response.data2.length !== 0) {
+
+                            if (response.data2) {
                                 isOPDavailabel = true;
-                                $.each(response.data2, function(index, value2) {
-                                    // console.log(value2);
-                                    $("#opd_id").append(
-                                        `
-                    <option value="${value2.opd_number}" data-patient="${value2.patient.user.full_name}" >
-                    ${value2.opd_number}
-                    </option>`
-                                    );
-                                });
+                                $("#opd_id").append(
+                                    `<option value="${response.data2.opd_number}" data-patient="${response.data2.patient.user.full_name}">
+                    ${response.data2.opd_number}
+                </option>`
+                                );
                             }
+
                             if (!isOPDavailabel) {
                                 $("#opd_id").html(
                                     `<option value="" class="text-danger" selected disabled>No any opd found!</option>`
-                                );
+                                    );
                             }
-                            // console.log(response.data2[0].patient.blood_pressure);
-                            // if(response.data2[0]) {
-                            //     $("#blood_pressure").val(response.data2[0].patient.blood_pressure);
-                            //     $("#heart_rate").val(response.data2[0].patient.heart_rate);
-                            //     $("#respiratory_rate").val(response.data2[0].patient.respiratory_rate);
-                            //     $("#temperature").val(response.data2[0].patient.temperature);
-                            //     $("#height").val(response.data2[0].patient.height);
-                            //     $("#weight").val(response.data2[0].patient.weight);
-                            //     $("#bmi").val(response.data2[0].patient.bmi);
-                            // }
-
-
+                        },
+                        error: function() {
+                            $("#opd_id").html(
+                                `<option value="" class="text-danger" selected disabled>Error retrieving OPD data</option>`
+                                );
                         }
                     });
+
                 });
             });
         </script>
