@@ -129,22 +129,20 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-5">
-                                <label for="fbs" class="form-label">FBS (mg/dL)<sup
-                                        class="text-danger">*</sup></label>
-                                <input type="text" name="fbs" id="fbs" required class="form-control">
+                                <label for="fbs" class="form-label">FBS (mg/dL)</label>
+                                <input type="text" name="fbs" id="fbs"  class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-5">
-                                <label for="rbs" class="form-label">RBS (mg/dL)<sup
-                                        class="text-danger">*</sup></label>
-                                <input type="text" name="rbs" id="rbs" required class="form-control">
+                                <label for="rbs" class="form-label">RBS (mg/dL)</label>
+                                <input type="text" name="rbs" id="rbs"  class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-5">
-                                <label for="pbs" class="form-label">SpO2 (%)<sup class="text-danger">*</sup></label>
-                                <input type="text" name="spo_2" id="spo_2" required class="form-control">
+                                <label for="pbs" class="form-label">SpO2 (%)</label>
+                                <input type="text" name="spo_2" id="spo_2"  class="form-control">
                             </div>
                         </div>
                     </div>
