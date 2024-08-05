@@ -154,6 +154,7 @@
                                 <span
                                     class="text-gray-800 fs-5">{{ !empty($data->patientUser->phone) ? ($data->patientUser->gender != 1 ? __('messages.user.male') : __('messages.user.female')) : '' }}</span>
                             </p>
+                            <input type="hidden" name="gender" value="{{ $data->patientUser->gender }}" id="gender">
                         </div>
                         <div class="mb-5 col-sm-6 d-flex flex-column mb-md-10">
                             <label for="name"
@@ -1035,7 +1036,7 @@
                                             </td>
                                         </tr>
 
-{{-- 
+{{--
                                         <tr>
                                             <td>
                                                 <input type="date" name="date4" class="form-control"
@@ -1301,7 +1302,7 @@
 </script>
 
 
-<script>
+{{-- <script>
     // Add event listeners to the height and weight input fields
     const heightInput = document.getElementById("height");
     const weightInput = document.getElementById("weight");
@@ -1500,7 +1501,167 @@
 
 
     console.log("totallllll", TotalCalories)
+</script> --}}
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log("DOM loaded");
+        // Add event listeners to the height, weight, age, and gender input fields
+        const heightInput = document.getElementById("height");
+        const weightInput = document.getElementById("weight");
+        const ageInput = document.getElementById("age");
+        const genderInput = document.getElementById("gender");
+        const bmiInput = document.getElementById("bmi");
+        const ibwInput = document.getElementById("ibw");
+        const bmrInput = document.getElementById("BasalEnergy");
+        const fluidInput = document.getElementById("Fluid");
+        const proteinField = document.getElementById("Protein");
+        const carbohydratesField = document.getElementById("Carbohydrates");
+        const fatField = document.getElementById("Fat");
+
+        heightInput.addEventListener("input", updateCalculations);
+        weightInput.addEventListener("input", updateCalculations);
+        ageInput.addEventListener("input", updateCalculations);
+        genderInput.addEventListener("input", updateCalculations);
+        proteinField.addEventListener("input", updateNutrientCalculations);
+        carbohydratesField.addEventListener("input", updateNutrientCalculations);
+        fatField.addEventListener("input", updateNutrientCalculations);
+
+        // Function to update all calculations
+        function updateCalculations() {
+            calculateBMI();
+            calculateIBW();
+            calculateBMR();
+            calculateFluidRequirement();
+        }
+
+        // Function to calculate BMI
+        function calculateBMI() {
+            const weightKg = parseFloat(weightInput.value);
+            const heightCm = parseFloat(heightInput.value);
+
+            // Convert height to meters (1 meter = 100 cm)
+            const heightM = heightCm / 100;
+
+            // Calculate BMI
+            const bmi = (weightKg / (heightM * heightM)).toFixed(2);
+
+            // Update the BMI input field
+            bmiInput.value = isNaN(bmi) ? "" : bmi;
+
+            // Determine BMI category based on the calculated BMI
+            let bmiCategory = "";
+
+            if (bmi < 18.5) {
+                bmiCategory = "Underweight";
+            } else if (bmi >= 18.5 && bmi < 23) {
+                bmiCategory = "Normal";
+            } else if (bmi >= 23 && bmi < 27) {
+                bmiCategory = "Overweight";
+            } else if (bmi >= 27) {
+                bmiCategory = "Obese";
+            }
+
+            // Add the BMI category to the BMI input field
+            if (bmiCategory) {
+                bmiInput.value += " (" + bmiCategory + ")";
+            }
+        }
+
+        // Function to calculate IBW
+        function calculateIBW() {
+            // Get height in centimeters
+            const heightCm = parseFloat(heightInput.value);
+            const gender = genderInput.value; // Get gender from the input field
+
+            // Calculate IBW based on gender
+            let ibw;
+
+            // 0 = Male, 1 = Female
+            if (gender === 0) {
+                ibw = 50 + 2.3 * ((heightCm - 152.4) / 2.54); // Convert height from cm to inches
+            } else if (gender === 1) {
+                ibw = 45.5 + 2.3 * ((heightCm - 152.4) / 2.54); // Convert height from cm to inches
+            } else {
+                ibw = NaN; // Invalid gender
+            }
+
+            // Update the IBW input field with the calculated value
+            ibwInput.value = isNaN(ibw) ? "" : ibw.toFixed(2); // Display IBW with two decimal places
+        }
+
+        // Function to calculate BMR
+        function calculateBMR() {
+            const weightKg = parseFloat(weightInput.value);
+            const heightCm = parseFloat(heightInput.value);
+            const ageYears = parseInt(ageInput.value);
+            const gender = genderInput.value; // Get gender from the input field
+
+            let bmr;
+            // 0 = Male, 1 = Female
+            if (gender === 0) {
+                bmr = 10 * weightKg + 6.25 * heightCm - 5 * ageYears + 5;
+            } else if (gender === 1) {
+                bmr = 10 * weightKg + 6.25 * heightCm - 5 * ageYears - 161;
+            } else {
+                bmr = NaN; // Invalid gender
+            }
+
+            // Update the BMR input field
+            bmrInput.value = isNaN(bmr) ? "" : bmr.toFixed(2);
+        }
+
+        // Function to calculate Fluid Requirement
+        function calculateFluidRequirement() {
+            const weightKg = parseFloat(weightInput.value);
+            const ageYears = parseInt(ageInput.value);
+
+            let fluidRequirement;
+
+            if (ageYears >= 16 && ageYears <= 30) {
+                fluidRequirement = 40 * weightKg;
+            } else if (ageYears >= 31 && ageYears <= 55) {
+                fluidRequirement = 35 * weightKg;
+            } else if (ageYears >= 56 && ageYears <= 75) {
+                fluidRequirement = 30 * weightKg;
+            } else {
+                fluidRequirement = 0; // Default if age is not within specified ranges
+            }
+
+            // Update the Fluid input field
+            fluidInput.value = isNaN(fluidRequirement) ? "" : fluidRequirement.toFixed(2);
+        }
+
+        // Function to update nutrient-related fields
+        function updateNutrientCalculations() {
+            console.log("updateCalculations");
+            // Example nutrient calculation - this can be expanded based on requirements
+            const proteinPercent = parseFloat(proteinField.value);
+            const carbohydratesPercent = parseFloat(carbohydratesField.value);
+            const fatPercent = parseFloat(fatField.value);
+
+            // Calculate and update calorie values based on nutrient percentages
+            // This is a placeholder. You might need to adjust based on your requirements.
+            const totalCalories = 2000; // Example total calories
+
+            document.getElementById("Proteincaloriesval").value = ((proteinPercent / 100) * totalCalories).toFixed(2);
+            document.getElementById("Carbohydratescaloriesval").value = ((carbohydratesPercent / 100) * totalCalories).toFixed(2);
+            document.getElementById("Fatcaloriesval").value = ((fatPercent / 100) * totalCalories).toFixed(2);
+
+            // Calculate and update nutrient content in grams based on percentages
+            document.getElementById("ProteinNutrients").value = ((proteinPercent / 100) * totalCalories / 4).toFixed(2); // Protein: 4 calories/g
+            document.getElementById("CarbohydratesNutrients").value = ((carbohydratesPercent / 100) * totalCalories / 4).toFixed(2); // Carbohydrates: 4 calories/g
+            document.getElementById("FatNutrients").value = ((fatPercent / 100) * totalCalories / 9).toFixed(2); // Fat: 9 calories/g
+        }
+
+        // Initial calculations when the page loads
+        updateCalculations();
+    });
 </script>
+
+
+
 {{-- <script>
     $(document).ready(function() {
         $("#submitButton").click(function() {
