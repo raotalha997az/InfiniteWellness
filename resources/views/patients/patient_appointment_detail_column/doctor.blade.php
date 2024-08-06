@@ -12,7 +12,7 @@
             <span class="fs-6">{{$row->doctor->doctorUser->email}}</span>
         </div>
     @elseif(Auth::user()->hasRole('Admin'))
-        <a href="{{url('doctors/',$row->doctor->id)}}">
+        <a href="{{url('doctors',$row->doctor->id)}}">
             <div class="image image-circle image-mini me-3">
                 <img src="{{$row->doctor->doctorUser->imageUrl}}" alt="user" class="user-img">
             </div>
