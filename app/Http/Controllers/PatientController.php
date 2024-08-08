@@ -7,6 +7,7 @@ use App;
 use Flash;
 use Exception;
 use App\Models\Bill;
+use App\Models\Doctor;
 use App\Models\Invoice;
 use App\Models\Patient;
 use App\Models\BedAssign;
@@ -30,6 +31,7 @@ use Illuminate\Routing\Redirector;
 use App\Models\InvestigationReport;
 use App\Models\IpdPatientDepartment;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\View\Factory;
@@ -42,7 +44,6 @@ use App\Http\Requests\CreatePatientRequest;
 use App\Http\Requests\UpdatePatientRequest;
 use App\Repositories\PatientCaseRepository;
 use App\Repositories\AdvancedPaymentRepository;
-use Illuminate\Support\Facades\File;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class PatientController extends AppBaseController
@@ -1043,6 +1044,7 @@ class PatientController extends AppBaseController
     {
         $patientID =  Patient::where('id', $patient)->pluck('MR')->first();
         $patientData =  Patient::where('id', $patient)->with('user')->first();
+        $doctors = Doctor::with('user')->get();
         $ageDifference = Carbon::parse($patientData->user->dob)->diff(Carbon::now());
         $age = ($ageDifference->y > 0) ? ($ageDifference->y . ' Years') : (
             ($ageDifference->m > 0) ? ($ageDifference->m . ' Months') : ($ageDifference->d . ' Days')
@@ -1055,7 +1057,8 @@ class PatientController extends AppBaseController
             $formFile = DB::Table('form_type')->where('fileName', '!=', 'preTestForm')->where(['id' => $form_patientId->formID])->first();
             $fileName = $formFile->fileName;
             $formData = DB::Table('form_data')->where(['formID' => $request->formPatientID])->get();
-            return view('patients.' . $fileName, compact('formData', 'nursingData', 'patientData', 'DietData', 'age') ,['ignore_minify' => true],);
+
+            return view('patients.' . $fileName, compact('formData', 'nursingData', 'patientData', 'DietData', 'age','doctors') ,['ignore_minify' => true],);
         }
         return "fdsfasdf";
     }

@@ -220,7 +220,7 @@ $frontOfficeMGT = getMenuLinks(\App\Models\User::MAIN_FRONT_OFFICE)
            href="{{ $frontOfficeMGT }}">
                                                                     <span class="aside-menu-icon pe-3"><i
                                                                                 class="fa fa-dungeon"></i></span>
-            <span class="aside-menu-title">{{ __('messages.front_office') }}</span>
+            <span class="aside-menu-title">Visitors</span>
             <span class="d-none">{{ __('messages.call_logs') }}</span>
             <span class="d-none">{{ __('messages.visitors') }}</span>
             <span class="d-none">{{ __('messages.postal_receive') }}</span>
@@ -1625,7 +1625,7 @@ $vaccinationsPatient = getMenuLinks(\App\Models\User::MAIN_VACCINATION_MGT)
             <span class="aside-menu-title">{{ __('Transfer Request') }}</span>
         </a>
     </li>
-    
+
 
     @endrole
 
@@ -1638,7 +1638,7 @@ $vaccinationsPatient = getMenuLinks(\App\Models\User::MAIN_VACCINATION_MGT)
         </a>
     </li>
     @endrole
-    
+
     @role('Admin')
     <li class="nav-item">
         <a class="py-3 nav-link d-flex align-items-center"
