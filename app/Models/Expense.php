@@ -19,6 +19,7 @@ class Expense extends Model implements HasMedia
         4 => 'Power Generator Fuel Charge',
         6 => 'Telephone Bill',
         5 => 'Tea Expense',
+        5 => 'Others',
     ];
 
     const FILTER_EXPENSE_HEAD = [
@@ -29,6 +30,7 @@ class Expense extends Model implements HasMedia
         6 => 'Telephone Bill',
         4 => 'Power Generator Fuel Charge',
         5 => 'Tea Expense',
+        5 => 'Others',
     ];
 
     public $fillable = [
