@@ -1618,6 +1618,7 @@
             calculateBMR();
             calculateFluidRequirement();
             totalCalories();
+            updateNutrientCalculations();
         }
 
         // Function to calculate BMI
@@ -1759,31 +1760,36 @@
             console.log("totalCalories33", totalCalories);
         }
 
-        // Function to update nutrient-related fields
+
         function updateNutrientCalculations() {
             console.log("updateCalculations");
-            // Example nutrient calculation - this can be expanded based on requirements
+
+            // Get the input values
             const proteinPercent = parseFloat(proteinField.value);
             const carbohydratesPercent = parseFloat(carbohydratesField.value);
             const fatPercent = parseFloat(fatField.value);
 
-            // Calculate and update calorie values based on nutrient percentages
-            // This is a placeholder. You might need to adjust based on your requirements.
-            const totalCalories = 2000; // Example total calories
+            const totalCalories = document.getElementById("TotalCalories").value;
 
-            document.getElementById("Proteincaloriesval").value = ((proteinPercent / 100) * totalCalories)
-                .toFixed(2);
-            document.getElementById("Carbohydratescaloriesval").value = ((carbohydratesPercent / 100) *
-                totalCalories).toFixed(2);
-            document.getElementById("Fatcaloriesval").value = ((fatPercent / 100) * totalCalories).toFixed(2);
+            // Calculate and update the calorie values based on nutrient percentages
+            const proteinCalories = (totalCalories * (proteinPercent / 100)).toFixed(2);
+            const carbohydratesCalories = (totalCalories * (carbohydratesPercent / 100)).toFixed(2);
+            const fatCalories = (totalCalories * (fatPercent / 100)).toFixed(2);
 
-            // Calculate and update nutrient content in grams based on percentages
-            document.getElementById("ProteinNutrients").value = ((proteinPercent / 100) * totalCalories / 4)
-                .toFixed(2); // Protein: 4 calories/g
-            document.getElementById("CarbohydratesNutrients").value = ((carbohydratesPercent / 100) *
-                totalCalories / 4).toFixed(2); // Carbohydrates: 4 calories/g
-            document.getElementById("FatNutrients").value = ((fatPercent / 100) * totalCalories / 9).toFixed(
-                2); // Fat: 9 calories/g
+            // Update the calorie fields
+            document.getElementById("Proteincaloriesval").value = proteinCalories;
+            document.getElementById("Carbohydratescaloriesval").value = carbohydratesCalories;
+            document.getElementById("Fatcaloriesval").value = fatCalories;
+
+            // Calculate and update the nutrient content in grams
+            const proteinGrams = (proteinCalories / 4).toFixed(2);
+            const carbohydratesGrams = (carbohydratesCalories / 4).toFixed(2);
+            const fatGrams = (fatCalories / 9).toFixed(2);
+
+            // Update the nutrient fields
+            document.getElementById("ProteinNutrients").value = proteinGrams;
+            document.getElementById("CarbohydratesNutrients").value = carbohydratesGrams;
+            document.getElementById("FatNutrients").value = fatGrams;
         }
 
         // Initial calculations when the page loads
