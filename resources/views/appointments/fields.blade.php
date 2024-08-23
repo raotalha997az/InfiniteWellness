@@ -21,7 +21,7 @@
             </select>
         </div>
     @endif
-    
+
     <!-- Department Name Field -->
     <div class="mb-5 form-group col-sm-6">
         {{ Form::label('department_name', __('messages.appointment.doctor_department') . ':', ['class' => 'form-label']) }}
@@ -50,7 +50,7 @@
         {{-- <input type="number" name="advance_amount" id="appointmentAdvanceAmount" class="form-control">
         </div> --}}
 
-        {{-- <div class="mb-5 form-group col-sm-6">
+        <div class="mb-5 form-group col-sm-6">
             {{ Form::label('Payment Mode', __('Payment Mode ').':', ['class' => 'form-label']) }}
             <span class="required"></span>
             <select name="payment_mode" class="form-select" data-control="select2" id="payment_mode">
@@ -59,7 +59,7 @@
                 <option value="2">Cheque</option>
                 <option value="3">Card</option>
             </select>
-        </div> --}}
+        </div>
 
         <!-- Notes Field -->
         <div class="mb-5 form-group col-sm-6">
@@ -89,7 +89,7 @@
         </select>
         {{-- {{ Form::select('doctor_department_id',$departments, null, ['class' => 'form-select','required','id' => 'appointmentDepartmentId','placeholder'=>'Select Department', 'data-control' => 'select2']) }} --}}
     </div>
-    
+
         <div class="mb-5 form-group col-sm-6">
             <div class="doctor-schedule" style="display: none">
                 <i class="fas fa-calendar-alt"></i>
@@ -160,7 +160,7 @@
 
 <!-- Add Patients Modal -->
 <!-- Modal -->
-<div class="modal fade" id="patientModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+{{-- <div class="modal fade" id="patientModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -244,7 +244,198 @@
             </div>
         </div>
     </div>
+</div> --}}
+
+<div class="modal fade" id="patientModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Patient</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Tabs Navigation -->
+                <ul class="nav nav-tabs" id="patientTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="online-patient-tab" data-toggle="tab" href="#online-patient" role="tab" aria-controls="online-patient" aria-selected="true">Online Patient</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="walkin-patient-tab" data-toggle="tab" href="#walkin-patient" role="tab" aria-controls="walkin-patient" aria-selected="false">Walk-in Patient</a>
+                    </li>
+                </ul>
+
+                <!-- Tabs Content -->
+                <div class="tab-content" id="patientTabContent">
+                    <!-- Online Patient Form -->
+                    <div class="tab-pane fade show active" id="online-patient" role="tabpanel" aria-labelledby="online-patient-tab">
+                        <form action="" id="patientForm">
+                            <div class="col-md-12">
+                                <div class="form-group mb-5">
+                                    <label for="patientFirstName" class="form-label">First Name:</label>
+                                    <span class="required"></span>
+                                    <input type="text" name="first_name" class="form-control" required
+                                        id="patientFirstName" tabindex="1">
+                                </div>
+                                <div class="form-group mb-5">
+                                    <label for="patientLastName" class="form-label">Last Name:</label>
+                                    <span class="required"></span>
+                                    <input type="text" name="last_name" class="form-control" id="patientLastName"
+                                        required tabindex="2">
+                                </div>
+                            </div>
+                            {{-- <div class="col-md-12">
+                                <div class="form-group mb-5">
+                                    <label for="userCnic" class="form-label">CNIC:</label>
+                                    <input type="text" name="CNIC" class="form-control" tabindex="3"
+                                        id="userCnic">
+                                </div>
+                                <div class="form-group mb-5">
+                                    <label for="patientBirthDate" class="form-label">Date of Birth:</label>
+                                    <input type="date" name="dob" class="form-control" id="patientBirthDate"
+                                        autocomplete="off" tabindex="4">
+                                </div>
+                            </div> --}}
+                            <div class="col-md-12">
+                                <div class="form-group mobile-overlapping mb-5">
+                                    <label for="patientPhoneNumber" class="form-label">Phone:</label>
+                                    <span class="required"></span><br>
+                                    <input type="tel" name="phone" class="form-control phoneNumber"
+                                        id="patientPhoneNumber" required
+                                        onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')"
+                                        tabindex="5">
+                                    <input type="hidden" name="prefix_code" id="prefixCode" class="prefix_code">
+                                    <span class="text-success valid-msg d-none fw-400 fs-small mt-2">✓ &nbsp; Valid</span>
+                                    <span class="text-danger error-msg d-none fw-400 fs-small mt-2"></span>
+                                </div>
+
+                                {{-- <div class="form-group mb-5">
+                                    <label class="form-label">Gender:</label>
+                                    <span class="required"></span> &nbsp;<br>
+                                    <span class="is-valid">
+                                        <label class="form-label">Male</label>&nbsp;&nbsp;
+                                        <input type="radio" name="gender" value="0" class="form-check-input"
+                                            tabindex="6" id="patientMale" checked> &nbsp;
+                                        <label class="form-label">Female</label>
+                                        <input type="radio" name="gender" value="1" class="form-check-input"
+                                            tabindex="7" id="patientFemale">
+                                    </span>
+                                </div> --}}
+                            </div>
+                            {{-- <div class="col-md-12">
+                                <div class="form-group mb-5">
+                                    <label for="patientBloodGroup" class="form-label">Blood Group:</label>
+                                    <select name="blood_group" class="form-select" id="patientBloodGroup"
+                                        data-control="select2" tabindex="9">
+                                        <option value="" disabled selected>Select Blood Group</option>
+                                        @foreach ($bloodGroup as $blood_group)
+                                            <option value="{{ $blood_group }}">{{ $blood_group }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div> --}}
+                            <div class="modal-footer">
+                                {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
+                                <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Walk-in Patient Form -->
+                    <div class="tab-pane fade" id="walkin-patient" role="tabpanel" aria-labelledby="walkin-patient-tab">
+                        <form action="" id="patientForm2">
+                            <div class="col-md-12">
+                                <div class="form-group mb-5">
+                                    <label for="patientFirstName2" class="form-label">First Name:</label>
+                                    <span class="required"></span>
+                                    <input type="text" name="first_name" class="form-control" required
+                                        id="patientFirstName2" tabindex="1">
+                                </div>
+                                <div class="form-group mb-5">
+                                    <label for="patientLastName2" class="form-label">Last Name:</label>
+                                    <span class="required"></span>
+                                    <input type="text" name="last_name" class="form-control" id="patientLastName2"
+                                        required tabindex="2">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                {{-- <div class="form-group mb-5">
+                                    <label for="userCnic" class="form-label">CNIC:</label>
+                                    <input type="text" name="CNIC" class="form-control" tabindex="3"
+                                        id="userCnic">
+                                </div> --}}
+                                <div class="form-group mb-5">
+                                    <label for="patientBirthDate2" class="form-label">Date of Birth:</label>
+                                    <input type="date" name="dob" class="form-control" id="patientBirthDate2"
+                                        autocomplete="off" tabindex="4">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group mobile-overlapping mb-5">
+                                    <label for="patientPhoneNumber2" class="form-label">Contact:</label>
+                                    <span class="required"></span><br>
+                                    <input type="tel" name="phone" class="form-control phoneNumber"
+                                        id="patientPhoneNumber2" required
+                                        onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')"
+                                        tabindex="5">
+                                    <input type="hidden" name="prefix_code" id="prefixCode2" class="prefix_code">
+                                    <span class="text-success valid-msg d-none fw-400 fs-small mt-2">✓ &nbsp; Valid</span>
+                                    <span class="text-danger error-msg d-none fw-400 fs-small mt-2"></span>
+                                </div>
+                                <div class="form-group mobile-overlapping mb-5">
+                                    <label for="patientEmergencyPhoneNumber2" class="form-label">Emergency Contact:</label>
+                                    <span class="required"></span><br>
+                                    <input type="tel" name="emergencyPhone" class="form-control phoneNumber"
+                                        id="patientEmergencyPhoneNumber2" required
+                                        onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')"
+                                        tabindex="5">
+                                    <input type="hidden" name="prefix_code" id="prefixCode2" class="prefix_code">
+                                    <span class="text-success valid-msg d-none fw-400 fs-small mt-2">✓ &nbsp; Valid</span>
+                                    <span class="text-danger error-msg d-none fw-400 fs-small mt-2"></span>
+                                </div>
+
+                                <div class="form-group mb-5">
+                                    <label class="form-label">Gender:</label>
+                                    <span class="required"></span> &nbsp;<br>
+                                    <span class="is-valid">
+                                        <label class="form-label">Male</label>&nbsp;&nbsp;
+                                        <input type="radio" name="gender" value="0" class="form-check-input"
+                                            tabindex="6" id="patientMale2" checked> &nbsp;
+                                        <label class="form-label">Female</label>
+                                        <input type="radio" name="gender" value="1" class="form-check-input"
+                                            tabindex="7" id="patientFemale2">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group mb-5">
+                                    <label for="patientBloodGroup2" class="form-label">Blood Group:</label>
+                                    <select name="blood_group" class="form-select" id="patientBloodGroup2"
+                                        data-control="select2" tabindex="9">
+                                        <option value="" disabled selected>Select Blood Group</option>
+                                        @foreach ($bloodGroup as $blood_group)
+                                            <option value="{{ $blood_group }}">{{ $blood_group }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
+                                <button type="submit" class="btn btn-primary" id="btnSave2">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnClose" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                {{-- <button type="submit" class="btn btn-primary" id="btnSave">Save</button> --}}
+            </div>
+        </div>
+    </div>
 </div>
+
 
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -304,6 +495,7 @@
                     CNIC: $('#userCnic').val(),
                     dob: $('#patientBirthDate').val(),
                     phone: $('#patientPhoneNumber').val(),
+                    emergencyPhone: $('#patientEmergencyPhoneNumber').val(),
                     gender: $('input[name="gender"]:checked').val(),
                     blood_group: $('#patientBloodGroup').val(),
                     prefix_code: $('#prefixCode').val() || 'default_prefix_code'
@@ -316,6 +508,41 @@
 
                     $('#patientForm').trigger("reset");
                     $('#patientModal').modal('hide');
+                    $('#btnClose').trigger("click");
+                },
+                error: function(xhr, status, error) {
+                    console.log("error");
+                    console.log(xhr.responseText); // Handle errors
+                }
+            });
+        });
+        $('#patientForm2').on('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            console.log("Form submitted");
+            $.ajax({
+                type: "POST",
+                url: "{{ route('add-patient-appointment') }}",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    first_name: $('#patientFirstName2').val(),
+                    last_name: $('#patientLastName2').val(),
+                    CNIC: $('#userCnic2').val(),
+                    dob: $('#patientBirthDate2').val(),
+                    phone: $('#patientPhoneNumber2').val(),
+                    emergencyPhone: $('#patientEmergencyPhoneNumber2').val(),
+                    gender: $('input[name="gender"]:checked').val(),
+                    blood_group: $('#patientBloodGroup2').val(),
+                    prefix_code: $('#prefixCode2').val() || 'default_prefix_code'
+                },
+                success: function(response) {
+                    $("#appointmentPatientId").append(
+                        '<option value="' + response.id + '">(' + response
+                        .MR + ') ' + response.user.full_name + '</option>');
+                    $("#appointmentPatientId").val(response.id);
+
+                    $('#patientForm').trigger("reset");
+                    $('#patientModal').modal('hide');
+                    $('#btnClose').trigger("click");
                 },
                 error: function(xhr, status, error) {
                     console.log("error");

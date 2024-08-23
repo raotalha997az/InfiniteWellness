@@ -107,6 +107,7 @@ class PatientController extends AppBaseController
             "patient_id" => $userID,
             "date" => now(),
             "phone" => null,
+            "emergencyPhone" => null,
             "prefix_code" => "92",
             "status" => "1",
             "description" => null

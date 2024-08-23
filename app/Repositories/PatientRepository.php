@@ -56,10 +56,12 @@ class PatientRepository extends BaseRepository
     {
         try {
             $input['phone'] = preparePhoneNumber($input, 'phone');
+            $input['emergencyPhone'] = preparePhoneNumber($input, 'emergencyPhone');
             $input['department_id'] = Department::whereName('Patient')->first()->id;
             $input['password'] = Hash::make('infinitewellnesspk');
             $input['dob'] = (! empty($input['dob'])) ? $input['dob'] : null;
             $input['email'] =  null;
+            $input['reffer_by'] = $input['reffer_by'] ?? null;
             $user = User::create($input);
             if ($mail) {
                 $user->sendEmailVerificationNotification();
@@ -110,6 +112,7 @@ class PatientRepository extends BaseRepository
 
             /** @var Patient $patient */
             $input['phone'] = preparePhoneNumber($input, 'phone');
+            $input['emergencyPhone'] = preparePhoneNumber($input, 'emergencyPhone');
             $input['dob'] = (! empty($input['dob'])) ? $input['dob'] : null;
             $patient->patientUser->update($input);
             $patient->update($input);

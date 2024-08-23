@@ -38,6 +38,17 @@
             <span class="text-danger error-msg d-none fw-400 fs-small mt-2"></span>
         </div>
     </div>
+    <div class="col-md-6">
+        <div class="form-group mobile-overlapping  mb-5">
+            {{ Form::label('emergencyPhone', __('Emergency Phone').':', ['class' => 'form-label']) }}
+            <span class="required"></span><br>
+            {{ Form::tel('emergencyPhone', $patient->patientUser->emergencyPhone ?? getCountryCode(), ['class' => 'form-control phoneNumber', 'id' => 'editPatientEmergencyPhoneNumber', 'required', 'onkeyup' => 'if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,"")', 'tabindex' => '5']) }}
+            {{ Form::hidden('prefix_code',null,['class'=>'prefix_code']) }}
+            {{ Form::hidden('country_iso',null,['class'=>'country_iso']) }}
+            <span class="text-success valid-msg d-none fw-400 fs-small mt-2">✓ &nbsp; {{__('messages.valid')}}</span>
+            <span class="text-danger error-msg d-none fw-400 fs-small mt-2"></span>
+        </div>
+    </div>
     <div class="col-md-3">
         <div class="form-group mb-5">
             {{ Form::label('gender', __('messages.user.gender').':', ['class' => 'form-label']) }}
@@ -64,6 +75,13 @@
         <div class="form-group mb-5">
             {{ Form::label('blood_group', __('messages.user.blood_group').':', ['class' => 'form-label']) }}
             {{ Form::select('blood_group', $bloodGroup, null, ['class' => 'form-select', 'id' => 'editPatientBloodGroup', 'placeholder' => 'Select Blood Group', 'data-control' => 'select2', 'tabindex' => "9"]) }}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group mb-5">
+            {{ Form::label('reffer_by', __('Referred By').':', ['class' => 'form-label']) }}
+            <span class="required"></span>
+            {{ Form::text('reffer_by', null, ['class' => 'form-control', 'required', 'tabindex' => '3','id'=>'editPatientRefferBy']) }}
         </div>
     </div>
     <div class="form-group col-md-4">
