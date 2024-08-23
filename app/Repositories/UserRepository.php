@@ -6,6 +6,8 @@ use Auth;
 use Hash;
 use Exception;
 use Carbon\Carbon;
+use App\Models\CFR;
+use App\Models\CSR;
 use App\Models\Bill;
 use App\Models\User;
 use App\Models\Nurse;
@@ -205,6 +207,11 @@ class UserRepository extends BaseRepository
                 // $user->sendEmailVerificationNotification();
                 $ownerId = $PharmacistAdmin->id;
                 $ownerType = Pharmacist::class;
+            }elseif ($input['department_id'] == 14) {
+                $cfr = CSR::create(['user_id' => $user->id]);
+                // $user->sendEmailVerificationNotification();
+                $ownerId = $cfr->id;
+                $ownerType = CSR::class;
             }
 
 
@@ -215,9 +222,13 @@ class UserRepository extends BaseRepository
         } catch (Exception $e) {
             throw new UnprocessableEntityHttpException($e->getMessage());
         }
-
         return true;
     }
+
+
+
+
+
 
     /**
      * @return bool

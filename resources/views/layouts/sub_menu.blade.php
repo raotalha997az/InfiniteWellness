@@ -15,7 +15,7 @@
         </a>
     </li>
 @endrole
-@role('Admin|Doctor|Receptionist')
+@role('Admin|Doctor|Receptionist|CSR')
     {{-- @module('IPD Patients',$modules)
         <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('ipds*','opds*')) ? 'd-none' : '' }}">
             <a class="nav-link p-0 {{ Request::is('ipds*') ? 'active' : ''  }}"
@@ -275,7 +275,7 @@
 </li>
 @endmodule
 @endrole
-@role('Admin|Nurse|Doctor')
+@role('Admin|Nurse|Doctor|CSR')
 @module('Bed Assigns',$modules)
 <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('bed-types*','beds*','bed-assigns*','bulk-beds','bed-status')) ? 'd-none' : '' }}">
     <a class="nav-link p-0 {{ Request::is('bed-assigns*','bed-status') ? 'active' : '' }}"
@@ -366,7 +366,7 @@
 </li>
 @endmodule
 @endrole
-@role('Case Manager|Pharmacist|Lab Technician')
+@role('Case Manager|Pharmacist|Lab Technician|CSR')
 @module('Doctors',$modules)
 <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ !Request::is('employee/doctor*') ? 'd-none' : ''  }}">
     <a class="nav-link p-0 {{ Request::is('employee/doctor*') ? 'active' : '' }}" href="{{ url('employee/doctor') }}">
@@ -426,15 +426,16 @@
 </li>
 @endmodule
 @endrole
-@role('Admin|Receptionist|Accountant')
-@module('Services',$modules)
-<li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('insurances*','packages*','services*','ambulances*','ambulance-calls*')) ? 'd-none' : '' }}">
-    <a class="nav-link p-0 {{ Request::is('services*') ? 'active' : '' }}"
-       href="{{ route('services.index') }}">
-        {{ __('messages.services') }}
-    </a>
-</li>
-@endmodule
+
+@role('Admin|Receptionist|Accountant|CSR')
+    @module('Services', $modules)
+    <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('insurances*','packages*','services*','ambulances*','ambulance-calls*')) ? 'd-none' : '' }}">
+        <a class="nav-link p-0 {{ Request::is('services*') ? 'active' : '' }}"
+           href="{{ route('services.index') }}">
+            {{ __('messages.services') }}
+        </a>
+    </li>
+    @endmodule
 @endrole
 @role('Admin|Receptionist|Case Manager')
 @module('Ambulances',$modules)
@@ -456,9 +457,9 @@
 </li>
 @endmodule
 @endrole
-@role('Admin|Receptionist')
+@role('Admin|Receptionist|CSR')
 {{--<li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0">--}}
-    @role('Admin|Receptionist')
+    @role('Admin|Receptionist|CSR')
     @module('Doctors',$modules)
 <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('doctors*','doctor-departments*','schedules*','prescriptions*')) ? 'd-none' : '' }}">
     <a class="nav-link p-0 {{ Request::is('doctors*') ? 'active' : '' }}"
@@ -468,7 +469,7 @@
 </li>
 @endmodule
 @endrole
-@role('Admin')
+@role('Admin|CSR')
 @module('Doctor Departments',$modules)
 <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('doctors*','doctor-departments*','schedules*','prescriptions*')) ? 'd-none' : '' }}">
     <a class="nav-link p-0 {{ Request::is('doctor-departments*') ? 'active' : '' }}"
@@ -551,14 +552,16 @@
 </li>
 @endmodule
 @endrole
+{{-- @if(auth()->user()->hasRole(['CSR'])) --}}
 @module('Appointments',$modules)
 <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('appointments*','appointment-calendars')) ? 'd-none' : '' }}">
     <a class="nav-link p-0 {{ Request::is('appointments*') ? 'active' : '' }}"
-       href="{{ route('appointments.index') }}">
-        {{ __('messages.appointments') }}
-    </a>
+    href="{{ route('appointments.index') }}">
+    {{ __('messages.appointments') }}
+</a>
 </li>
 @endmodule
+{{-- @endif --}}
 @role('Admin|Doctor')
 @module('Birth Reports',$modules)
 <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('birth-reports*','death-reports*','investigation-reports*','operation-reports*')) ? 'd-none' : '' }}">
@@ -859,7 +862,7 @@
 </li>
 @endmodule
 @endrole
-@role('Admin|Receptionist')
+@role('Admin|Receptionist|CSR')
 @module('Charge Categories',$modules)
 <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('charge-categories*','charges*','doctor-opd-charges*')) ? 'd-none' : '' }}">
     <a class="nav-link p-0 {{ Request::is('charge-categories*') ? 'active' : '' }}"
@@ -869,7 +872,7 @@
 </li>
 @endmodule
 @endrole
-@role('Admin|Receptionist')
+@role('Admin|Receptionist|CSR')
 @module('Charges',$modules)
 <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('charge-categories*','charges*','doctor-opd-charges*')) ? 'd-none' : '' }}">
     <a class="nav-link p-0 {{ Request::is('charges*') ? 'active' : '' }}"
@@ -879,7 +882,7 @@
 </li>
 @endmodule
 @endrole
-@role('Admin|Receptionist')
+@role('Admin|Receptionist|CSR')
 @module('Doctor OPD Charges',$modules)
 <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('charge-categories*','charges*','doctor-opd-charges*')) ? 'd-none' : '' }}">
     <a class="nav-link p-0 {{ Request::is('doctor-opd-charges*') ? 'active' : '' }}"
@@ -1020,7 +1023,7 @@
 </li>
 @endmodule
 @endrole
-@role('Doctor')
+@role('Doctor|CSR')
 @module('Doctors',$modules)
 <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('employee/doctor*','prescriptions*','schedules*','doctors*')) ? 'd-none' : '' }}">
     <a class="nav-link p-0 {{ Request::is('employee/doctor*') ? 'active' : '' }}" href="{{ url('employee/doctor') }}">

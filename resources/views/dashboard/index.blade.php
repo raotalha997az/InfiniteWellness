@@ -80,21 +80,21 @@
                                 </a>
                             </div>
                         @endif
-                        @if($modules['Doctors'] == true)
-                            {{-- Doctors Widget --}}
-                            <div class="col-xxl-3 col-xl-4 col-sm-6 widget">
-                                <a href="{{ route('doctors.index') }}" class="text-decoration-none">
-                                    <div class="bg-secondary shadow-md rounded-10 p-xxl-10 px-5 py-10 d-flex align-items-center justify-content-between my-sm-3 my-2">
-                                        <div class="bg-gray-600 widget-icon rounded-10 me-2 d-flex align-items-center justify-content-center">
-                                            <i class="fa-solid fa-user fs-1-xl text-white"></i>
-                                        </div>
-                                        <div class="text-end text-white">
-                                            <h2 class="fs-1-xxl fw-bolder text-white">{{ $data['doctors'] }}</h2>
-                                            <h3 class="mb-0 fs-5 fw-light">{{ __('messages.dashboard.doctors') }}</h3>
-                                        </div>
+                        @if($modules['Doctors'])
+                    {{-- Doctors Widget --}}
+                        <div class="col-xxl-3 col-xl-4 col-sm-6 widget">
+                            <a href="{{ route('doctors.index') }}" class="text-decoration-none">
+                                <div class="bg-secondary shadow-md rounded-10 p-xxl-10 px-5 py-10 d-flex align-items-center justify-content-between my-sm-3 my-2">
+                                    <div class="bg-gray-600 widget-icon rounded-10 me-2 d-flex align-items-center justify-content-center">
+                                        <i class="fa-solid fa-user fs-1-xl text-white"></i>
                                     </div>
-                                </a>
-                            </div>
+                                    <div class="text-end text-white">
+                                        <h2 class="fs-1-xxl fw-bolder text-white">{{ $data['doctors'] }}</h2>
+                                        <h3 class="mb-0 fs-5 fw-light">{{ __('messages.dashboard.doctors') }}</h3>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
                         @endif
                         @if($modules['Patients'] == true)
                             {{-- Patients Widget --}}

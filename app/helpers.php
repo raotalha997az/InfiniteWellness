@@ -1,27 +1,29 @@
 <?php
 
-use App\Models\BloodBank;
-use App\Models\CurrencySetting;
-use App\Models\Department;
-use App\Models\Doctor;
-use App\Models\DoctorDepartment;
-use App\Models\FrontSetting;
-use App\Models\Invoice;
-use App\Models\Notification;
-use App\Models\Patient;
-use App\Models\PatientAdmission;
-use App\Models\PatientCase;
-use App\Models\Schedule;
-use App\Models\Setting;
+use Stripe\Stripe;
 use App\Models\User;
-use App\Models\VaccinatedPatients;
+use App\Models\Doctor;
+use App\Models\Invoice;
+use App\Models\Patient;
+use App\Models\Setting;
+use App\Models\Schedule;
 use Carbon\CarbonPeriod;
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\BloodBank;
+use App\Models\Department;
+use App\Models\PatientCase;
+use App\Models\FrontSetting;
+use App\Models\Notification;
+use App\Models\CurrencySetting;
+use App\Models\DoctorDepartment;
+use App\Models\PatientAdmission;
+use App\Models\CFR;
+use App\Models\VaccinatedPatients;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
+use Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\FileIsTooBig;
 use Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\DiskDoesNotExist;
 use Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\FileDoesNotExist;
-use Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\FileIsTooBig;
-use Stripe\Stripe;
 
 /**
  * @return int

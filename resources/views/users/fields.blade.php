@@ -68,7 +68,7 @@
             </div>
         </div>
     </div>
-    {{-- @if(!$isEdit)
+    @if(!$isEdit)
         <div class="col-lg-6 mb-5">
             {{ Form::label('password', __('messages.user.password').':', ['class' => 'form-label required']) }}
             {{ Form::password('password', ['class' => 'form-control', 'required','min' => '6','max' => '10', 'tabindex' => '8']) }}
@@ -80,7 +80,7 @@
             {{ Form::password('password_confirmation', ['class' => 'form-control','required','min' => '6','max' => '10', 'tabindex' => '9']) }}
         </div>
 @endif
-<!-- Facebook URL Field -->
+{{-- <!-- Facebook URL Field -->
     <div class="col-lg-6 mb-5">
         {{ Form::label('facebook_url', __('messages.facebook_url').':', ['class' => 'form-label']) }}
         {{ Form::text('facebook_url', null, ['class' => 'form-control','id'=>'userFacebookUrl', 'onkeypress' => 'return avoidSpace(event);']) }}

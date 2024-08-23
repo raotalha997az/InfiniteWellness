@@ -89,6 +89,7 @@ class Notification extends Model
 
     const SupplyChain = 'SupplyChain';
     const PharmacistAdmin = 'PharmacistAdmin';
+    const CSR = 'CSR';
 
     const NOTIFICATION_FOR = [
         self::ADMIN => 1,
@@ -103,6 +104,7 @@ class Notification extends Model
         self::DIETITIAN => 10,
         self::SupplyChain => 11,
         self::PharmacistAdmin => 13,
+        self::CSR => 14,
     ];
 
     const NOTIFICATION_TYPE = [

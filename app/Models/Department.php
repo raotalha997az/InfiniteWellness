@@ -41,6 +41,7 @@ class Department extends Model implements RoleContract
         11 => 'SupplyChain',
         12 => 'DoctorDietitian',
         13 => 'PharmacistAdmin',
+        14 => 'CSR',
     ];
 
     public static function boot()
