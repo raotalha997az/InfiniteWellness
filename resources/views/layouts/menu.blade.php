@@ -121,6 +121,12 @@
             <span class="aside-menu-title">Dietitan Assessment</span>
         </a>
     </li>
+    <li class="nav-item  {{ Request::is('discount*') ? 'active' : '' }}">
+        <a class="py-3 nav-link d-flex align-items-center" href="{{ route('discount.index') }}">
+            <span class="aside-menu-icon pe-3"><i class="fas fa-cash-register"></i></span>
+            <span class="aside-menu-title">Discounts</span>
+        </a>
+    </li>
 
 
 

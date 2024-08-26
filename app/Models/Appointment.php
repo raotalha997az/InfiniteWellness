@@ -14,7 +14,15 @@ class Appointment extends Model
         '1' => 'Completed',
         '3' => 'Cancelled',
     ];
-
+    const SERVICE = [
+        '1' =>    'Family Medicine Consultation',
+        '2' => 'Scaling and Polishing',
+        '3' => 'Dental Consultation',
+        '4' =>  'I/M Injection',
+        '5' =>  'Dietitian Consultation',
+        '6' =>  'Functional Medicine Consultation',
+        '7' =>  'Others',      
+    ];
     const STATUS_PENDING = 0;
 
     const STATUS_COMPLETED = 1;

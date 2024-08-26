@@ -107,6 +107,7 @@ use App\Http\Controllers\PatientDiagnosisTestController;
 use App\Http\Controllers\IpdConsultantRegisterController;
 use App\Http\Controllers\Purchase\GoodReceiveNoteController;
 use App\Http\Controllers\FunctionalMedicineController;
+use App\Http\Controllers\DiscountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -1664,6 +1665,15 @@ Route::middleware('role:Admin|Dietitian|Nurse|Doctor|CSR')->group(function () {
     Route::post('dietitian-form/{patientID}', [PatientController::class, 'formSubmit'])->name('dietitian-form.form.submit');
 
 });
+
+Route::middleware('role:Admin|Dietitian|Nurse|Doctor')->group(function () {
+    Route::get('discount', [DiscountController::class, 'index'])->name('discount.index');
+    Route::post('discount', [DiscountController::class, 'store'])->name('discount.store');
+    Route::get('discount/{discount}/edit', [DiscountController::class, 'edit'])->name('discount.edit');
+    Route::post('discount/{discount}', [DiscountController::class, 'update'])->name('discount.update');
+    Route::delete('discount/{discount}', [DiscountController::class, 'destroy'])->name('discount.destroy');
+});
+
 Route::get('hms-logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 
 Route::get('qr-scan', function () {

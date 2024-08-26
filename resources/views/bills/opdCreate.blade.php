@@ -31,7 +31,7 @@
     @include('bills.templates.templates')
     {{Form::hidden('billSaveUrl',route('bills.store'),['id'=>'createBillSaveUrl','class'=>'billSaveUrl'])}}
     {{Form::hidden('billUrl',route('bills.index'),['id'=>'createBillUrl','class'=>'billUrl'])}}
-    {{Form::hidden('associateMedicines',json_encode($associateMedicines),['id'=>'createBillAssociateMedicines','class'=>'associateMedicines'])}}
+    {{Form::hidden('associateMedicines',json_encode($data['associateMedicines']),['id'=>'createBillAssociateMedicines','class'=>'associateMedicines'])}}
     {{Form::hidden('uniqueId',2,['id'=>'createBillUniqueId','class'=>'uniqueId'])}}
     {{Form::hidden('patientAdmissionDetailUrl',url('patient-admission-details'),['id'=>'createBillPatientAdmissionDetailUrl','class'=>'patientAdmissionDetailUrl'])}}
     {{Form::hidden('isCreate',true,['id'=>'createBillIsCreate','class'=>'isCreate'])}}

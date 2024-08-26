@@ -91,6 +91,7 @@ class PatientCase extends Model
         'status',
         'description',
         'currency_symbol',
+        'service_description'
     ];
 
     /**

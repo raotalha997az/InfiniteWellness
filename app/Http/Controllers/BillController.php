@@ -16,6 +16,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Response;
+use App\Models\Discount;
 
 class BillController extends AppBaseController
 {
@@ -47,27 +48,26 @@ class BillController extends AppBaseController
      */
     public function create()
     {
-
-        //$data = $this->billRepository->getSyncList(false);
-
-        //return view('bills.create')->with($data);
-
+        $discout = Discount::where('active', 1)->get();
         $dd = DB::table('opd_patient_departments')->get();
         $dd2 = DB::table('dental_opd_patient_departments')->get();
+        $bills = Bill::PAYMENT_MODE;
         $db = [];
+    
         foreach ($dd as $d) {
             $db[$d->patient_id] = $d->opd_number;
         }
         foreach ($dd2 as $d) {
             $db[$d->patient_id] = $d->opd_number;
         }
-
+    
         $data = $this->billRepository->getSyncList(false);
         $data['opd'] = $db;
-
-        //return $data;
-        return view('bills.opdCreate')->with($data);
+        $data['discount'] = $discout;
+    
+        return view('bills.opdCreate', compact('data', 'bills'));
     }
+    
 
     public function opdCreate()
     {
@@ -133,8 +133,6 @@ class BillController extends AppBaseController
      */
     public function store(CreateBillRequest $request)
     {
-
-
         try {
             DB::beginTransaction();
 

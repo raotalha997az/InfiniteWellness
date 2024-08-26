@@ -4,7 +4,7 @@
         {{ Form::label('patient_opd_id', 'Patient OPD ID' . ':', ['class' => 'form-label']) }}
         <span class="required"></span>
 
-        {{ Form::select('patient_opd_id', $opd, null, ['class' => 'form-select', 'id' => 'patientOPDId', 'placeholder' => 'Select OPD Id', 'data-control' => 'select2', 'required']) }}
+        {{ Form::select('patient_opd_id', $data['opd'], null, ['class' => 'form-select', 'id' => 'patientOPDId', 'placeholder' => 'Select OPD Id', 'data-control' => 'select2', 'required']) }}
     </div>
     {{ Form::hidden('patient_admission_id', null, ['id' => 'pAdmissionId']) }}
     {{ Form::hidden('patient_id', null, ['id' => 'billsPatientId']) }}
@@ -72,11 +72,20 @@
     <div class="col-lg-3 col-md-4 col-sm-12 mb-5">
         {{ Form::label('payment', 'Payment Type' . ':', ['class' => 'form-label']) }}
         <select name="payment_type" class="form-control payment_type" required>
-            <option value="0">Cash</option>
-            <option value="1">Card</option>
+            @foreach ($bills as $key => $bill)
+                <option value="{{ $key }}">{{ $bill }}</option>
+            @endforeach
+        </select>
+        
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-12 mb-5">
+        {{ Form::label('discount_fetch', 'Payment Type' . ':', ['class' => 'form-label']) }}
+        <select name="discount_fetch" class="form-control discount_fetch" required>
+            @foreach ($data['discount'] as $discount)
+                <option value="{{ $discount->amount_per }}" id="dynamic_discount">{{ $discount->name }}</option>
+            @endforeach
         </select>
     </div>
-
 </div>
 
 <div class="com-sm-12">
@@ -101,8 +110,7 @@
                 </tr>
             </thead>
             <tbody class="bill-item-container text-gray-600 fw-bold" id="tableBody">
-                @if (isset($bill))
-                    {{ $bill }}
+                @if (isset($data['bill']))
                     @foreach ($bill->billItems as $billItem)
                         <tr>
                             <td class="text-center item-number">{{ $loop->iteration }}</td>

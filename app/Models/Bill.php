@@ -14,6 +14,12 @@ use Str;
 
 class Bill extends Model
 {
+    const PAYMENT_MODE = [
+        '0' => 'Cash',
+        '1' => 'Card',
+        '2' => 'Online',
+        '3' => 'Free',    
+    ];
     public $fillable = [
         'patient_admission_id',
         'patient_id',

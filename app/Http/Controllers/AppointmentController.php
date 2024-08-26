@@ -93,8 +93,9 @@ class AppointmentController extends AppBaseController
         $patients = $this->appointmentRepository->getPatients();
         $departments = $this->appointmentRepository->getDoctorDepartments();
         $statusArr = Appointment::STATUS_PENDING;
+        $service = Appointment::SERVICE;
 
-        return view('appointments.create',['ignore_minify' => true], compact('patients', 'departments', 'statusArr' ,'bloodGroup'));
+        return view('appointments.create',['ignore_minify' => true], compact('patients', 'departments', 'statusArr' ,'bloodGroup','service'));
         // return view('welcome', ['ignore_minify' => true]);
     }
 
@@ -130,6 +131,7 @@ class AppointmentController extends AppBaseController
                 "phone" => null,
                 "prefix_code" => "92",
                 "status" => "1",
+                "service_description" => $input['service_description'],
                 "description" => null
             ];
             $patientCase = PatientCase::create($data);

@@ -60,7 +60,17 @@
                 <option value="3">Card</option>
             </select>
         </div>
-
+        <div class="mb-5 form-group col-sm-6">
+            {{ Form::label('Service Description', __('Service Description').':', ['class' => 'form-label']) }}
+            <span class="required"></span>
+            <select name="service_description" class="form-select" data-control="select2" id="service_description">
+                <option value="" selected disabled>Select Service Description</option>
+                @foreach ($service as $id => $serviceName)
+                    <option value="{{ $serviceName }}">{{ $serviceName }}</option>
+                @endforeach
+            </select>
+        </div>
+        
         <!-- Notes Field -->
         <div class="mb-5 form-group col-sm-6">
             {{ Form::label('problem', __('messages.appointment.description') . ':', ['class' => 'form-label']) }}
@@ -251,7 +261,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Add Patient</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn btn-secondary close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
