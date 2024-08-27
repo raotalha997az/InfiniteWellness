@@ -22,7 +22,7 @@
             <div class="fs-5 text-gray-800">{{ $bill->patient->patientUser->email }}</div>
         </div>
     </div>
-    
+
     <div class="row g-5 mb-11">
         <div class="col-sm-4">
             <div class="pb-2 fs-5 text-gray-600">{{ __('messages.bill.patient_cell_no').':' }}</div>
@@ -59,7 +59,7 @@
     <!--        <div class="fs-5 text-gray-800">{{ !empty($bill->patientAdmission->insurance->name)?$bill->patientAdmission->insurance->name:'N/A' }}</div>-->
     <!--    </div>-->
     <!--</div>-->
-    
+
     <div class="row g-5 mb-11">
         <!--<div class="col-sm-3">-->
         <!--    <div class="pb-2 fs-5 text-gray-600">{{ __('messages.bill.total_days').':' }}</div>-->
@@ -114,7 +114,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-end flex-stack">
-                <div class="fw-bold pe-10 text-gray-600 fs-7">Discount Amount:</div>
+                <div class="fw-bold pe-10 text-gray-600 fs-7">Discount %:</div>
                 <div class="text-end fs-5 text-gray-800">
 {{--                    {{ checkValidCurrency($bill->currency_symbol ?? getCurrentCurrency()) ? moneyFormat($bill->amount, strtoupper($bill->currency_symbol ?? getCurrentCurrency())) : number_format($bill->amount).''.($bill->currency_symbol ?? getCurrencySymbol()) }}--}}
                     -{{ checkNumberFormat($bill->discount_amount, strtoupper($bill->currency_symbol ?? getCurrentCurrency())) }}
@@ -125,7 +125,7 @@
                 <div class="text-end fs-5 text-gray-800">
 {{--                    {{ checkValidCurrency($bill->currency_symbol ?? getCurrentCurrency()) ? moneyFormat($bill->amount, strtoupper($bill->currency_symbol ?? getCurrentCurrency())) : number_format($bill->amount).''.($bill->currency_symbol ?? getCurrencySymbol()) }}--}}
                     -{{ checkNumberFormat(($bill->advance_amount) ? $bill->advance_amount : 0, strtoupper($bill->currency_symbol ?? getCurrentCurrency())) }}
-                </div>  
+                </div>
             </div>
             <div class="d-flex justify-content-end flex-stack">
                 <div class="fw-bold pe-10 text-gray-600 fs-7">{{ __('messages.bill.total_amount').(':') }}</div>

@@ -630,7 +630,7 @@ Route::middleware(['auth', 'verified', 'xss', 'checkUserStatus'])->group(functio
         Route::get('brands/{brand}', [BrandController::class, 'show'])->name('brands.show');
     });
 
-    Route::middleware('role:Admin|Doctor|Case Manager|Patient|Receptionist|Nurse')->group(function () {
+    Route::middleware('role:Admin|Doctor|Case Manager|Patient|Receptionist|Nurse|CSR')->group(function () {
         Route::get(
             'patient-admissions',
             [PatientAdmissionController::class, 'index']
@@ -1033,7 +1033,7 @@ Route::middleware(['auth', 'verified', 'xss', 'checkUserStatus'])->group(functio
         )->name('pathology.test.standard.charge');
     });
 
-    Route::middleware('role:Admin|Receptionist')->group(function () {
+    Route::middleware('role:Admin|Receptionist|CSR')->group(function () {
 
         //insurance routes
         Route::get('insurances', [InsuranceController::class, 'index'])->name('insurances.index')->middleware('modules');

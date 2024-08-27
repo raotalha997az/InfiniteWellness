@@ -53,21 +53,21 @@ class BillController extends AppBaseController
         $dd2 = DB::table('dental_opd_patient_departments')->get();
         $bills = Bill::PAYMENT_MODE;
         $db = [];
-    
+
         foreach ($dd as $d) {
             $db[$d->patient_id] = $d->opd_number;
         }
         foreach ($dd2 as $d) {
             $db[$d->patient_id] = $d->opd_number;
         }
-    
+
         $data = $this->billRepository->getSyncList(false);
         $data['opd'] = $db;
         $data['discount'] = $discout;
-    
+
         return view('bills.opdCreate', compact('data', 'bills'));
     }
-    
+
 
     public function opdCreate()
     {
@@ -90,12 +90,12 @@ class BillController extends AppBaseController
         if(count($docID) == 0){
             $docID = DB::table('dental_opd_patient_departments')->where(['opd_number' => $request->opdID])->get();
         }
-        
+
         $patientData = DB::table('users')->where(['owner_id' => $docID[0]->patient_id])->where('owner_type', 'LIKE', '%Patient%')->first();
-        
+
         $docData = DB::table('users')->where(['owner_id' => $docID[0]->doctor_id])->where('owner_type', 'LIKE', '%Doctor%')->first();
         $patientData->doctor = $docData;
-        
+
         if($docID[0]->is_old_patient){
             if($docID[0]->standard_charge == 0){
                 $patientData->followup_charge = $docID[0]->followup_charge;
@@ -120,7 +120,7 @@ class BillController extends AppBaseController
         if (count($docID) > 0 && isset($docID[0]->service_id)) {
             $patientData->service_id = $docID[0]->service_id;
         }
-        
+
         return $patientData;
     }
 

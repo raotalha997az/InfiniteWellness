@@ -70,19 +70,18 @@
         {{ Form::text('followUpCharge', null, ['class' => 'form-control', 'id' => 'followUpCharge', 'readonly']) }}
     </div>
     <div class="col-lg-3 col-md-4 col-sm-12 mb-5">
-        {{ Form::label('payment', 'Payment Type' . ':', ['class' => 'form-label']) }}
+        {{ Form::label('payment', 'Mode of Payment' . ':', ['class' => 'form-label']) }}
         <select name="payment_type" class="form-control payment_type" required>
             @foreach ($bills as $key => $bill)
                 <option value="{{ $key }}">{{ $bill }}</option>
             @endforeach
         </select>
-        
     </div>
     <div class="col-lg-3 col-md-4 col-sm-12 mb-5">
-        {{ Form::label('discount_fetch', 'Payment Type' . ':', ['class' => 'form-label']) }}
+        {{ Form::label('discount_fetch', 'Available Discount' . ':', ['class' => 'form-label']) }}
         <select name="discount_fetch" class="form-control discount_fetch" required>
             @foreach ($data['discount'] as $discount)
-                <option value="{{ $discount->amount_per }}" id="dynamic_discount">{{ $discount->name }}</option>
+                <option value="{{ $discount->amount_per }}" id="dynamic_discount" onchange="discount_amount()">{{ $discount->name }}</option>
             @endforeach
         </select>
     </div>
@@ -174,7 +173,7 @@
                         <input name="advance_amount" type="hidden" id="advance_amount2">
                     </td>
                     <td class="text-right pe-4">
-                        <label class="form-label text-right" for="discount">Discount</label>
+                        <label class="form-label text-right" for="discount">Discount %</label>
                         <input name="discount_amount" type="text" class="form-control" id="discount"
                             onkeyup="calculateTotal()">
                         <input name="total_amount" type="hidden" id="total_amounts">
@@ -208,7 +207,25 @@
 </div>
 
 <script>
+    // discount_amount fetch
+    function discount_amount() {
+        var paymentTypeDropdown = document.querySelector('.discount_fetch');
+
+        paymentTypeDropdown.addEventListener('change', function() {
+            var selectedValue = paymentTypeDropdown.value;
+            console.log('Selected Payment Type Value: ' + selectedValue);
+
+            // Append the selected value to the discount input field
+            var discountInput = document.getElementById('discount');
+            discountInput.value = selectedValue;
+
+            // Optionally, recalculate the total after updating the discount
+            calculateTotal();
+        });
+    }
+
     $(document).ready(function() {
+        discount_amount();
         $("#patientOPDId").change(function() {
             $("#tableBody tr.itemList:not(:first-child)").remove();
         });
@@ -357,11 +374,11 @@
             if (advance_amount.value.length == 0) {
                 advance_amount.value = 0.00;
             }
-            var amounts = totalAmount - parseFloat(dis.value) - parseFloat(advance_amount.value);
+            var amounts = totalAmount - parseFloat(dis.value * totalAmount / 100) - parseFloat(advance_amount.value);
             // console.log('Ha' +  amounts);
             totalPrices.value = amounts;
             total_amounts.value = amounts;
-            total.value = totalAmount;
+            total.value = amounts;
             // console.log('Ha' +  amounts);
         }, 100);
     }
@@ -375,9 +392,9 @@
                 <td class="text-center item-number">${a + 1}</td>
                     <td class="table__item-desc">
                         {{ Form::text('item_name[]', null, ['class' => 'form-control itemName', 'required']) }}
-                    </td> 
+                    </td>
                     <td>
-                        
+
                         <input name="price[]" type="text" class="form-control price" required onkeyup="calculateTotal()">
                     </td>
                     <td class="amount text-right itemTotal">
@@ -393,6 +410,7 @@
             `);
 
     }
+
 </script>
 <style>
     #billTbl tr>*:nth-child(3) {

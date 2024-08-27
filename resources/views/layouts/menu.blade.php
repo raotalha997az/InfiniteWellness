@@ -1,4 +1,138 @@
 @php($modules = App\Models\Module::cacheFor(now()->addDays())->toBase()->get())
+{{-- For CSR Role --}}
+@if (auth()->user()->hasRole('CSR'))
+    {{-- Doctors --}}
+    @module('Doctors', $modules)
+        <li class="nav-item  {{ Request::is('doctors*') ? 'active' : '' }}">
+            <a class="py-3 nav-link d-flex align-items-center" href="{{ route('doctors.index') }}">
+                <span class="aside-menu-icon pe-3"><i class="fa fa-user-md"></i></span>
+                <span class="aside-menu-title">{{ __('messages.doctors') }}</span>
+            </a>
+        </li>
+    @endmodule
+
+    @module('Appointments', $modules)
+        <li class="nav-item {{ Request::is('appointment*') ? 'active' : '' }}">
+            <a class="py-3 nav-link d-flex align-items-center" href="{{ route('appointments.index') }}">
+                <span class="aside-menu-icon pe-3"><i class="fas fa-calendar-check"></i></span>
+                <span class="aside-menu-title">{{ __('messages.appointments') }}</span>
+            </a>
+        </li>
+    @endmodule
+    {{-- Front office --}}
+    <?php
+    $frontReceptionistOfficeMGT = getMenuLinks(\App\Models\User::MAIN_FRONT_OFFICE);
+    ?>
+    @if ($frontReceptionistOfficeMGT)
+        <li class="nav-item {{ Request::is('call-logs*', 'visitor*', 'receives*', 'dispatches*') ? 'active' : '' }}">
+            <a href="{{ $frontReceptionistOfficeMGT }}" class="py-3 nav-link d-flex align-items-center">
+                <span class="aside-menu-icon pe-3"><i class="fa fa-dungeon"></i></span>
+                <span class="aside-menu-title">{{ __('messages.front_office') }}</span>
+                <span class="d-none">{{ __('messages.call_logs') }}</span>
+                <span class="d-none">{{ __('messages.visitors') }}</span>
+                <span class="d-none">{{ __('messages.postal_receive') }}</span>
+                <span class="d-none">{{ __('messages.postal_dispatch') }}</span>
+            </a>
+        </li>
+    @endif
+
+    {{-- Hospital Charges --}}
+    <?php
+    $hospitalCharge = getMenuLinks(\App\Models\User::MAIN_HOSPITAL_CHARGE);
+    ?>
+    @if ($hospitalCharge)
+        <li
+            class="nav-item  {{ Request::is('charge-categories*', 'charges*', 'doctor-opd-charges*') ? 'active' : '' }}">
+            <a class="py-3 nav-link d-flex align-items-center" href="{{ $hospitalCharge }}">
+                <span class="aside-menu-icon pe-3"><i class="fas fa-coins"></i></span>
+                <span class="aside-menu-title">Charges List</span>
+                <span class="d-none">{{ __('messages.charge_categories') }}</span>
+                <span class="d-none">{{ __('messages.charges') }}</span>
+                <span class="d-none">{{ __('messages.doctor_opd_charges') }}</span>
+            </a>
+        </li>
+    @endif
+
+    {{-- Cases Mgt --}}
+    <?php
+    $patientCaseMgt = getMenuLinks(\App\Models\User::MAIN_PATIENT_CASE);
+    ?>
+    @if ($patientCaseMgt)
+        <li
+            class="nav-item  {{ Request::is('patients*', 'patient-cases*', 'case-handlers*', 'patient-admissions*') ? 'active' : '' }}">
+            <a class="py-3 nav-link d-flex align-items-center" href="{{ $patientCaseMgt }}">
+                <span class="aside-menu-icon pe-3">
+                    <i class="fas fa-user-injured"></i>
+                </span>
+                <span class="aside-menu-title">{{ __('messages.patients') }}</span>
+                <span class="d-none">{{ __('messages.cases') }}</span>
+                <span class="d-none">{{ __('messages.case_handlers') }}</span>
+                <span class="d-none">{{ __('messages.patient_admissions') }}</span>
+            </a>
+        </li>
+    @endif
+
+    @module('Patient Admissions', $modules)
+        <li class="nav-item  {{ Request::is('employee/patient-admissions*') ? 'active' : '' }}">
+            <a class="py-3 nav-link d-flex align-items-center" href="{{ url('employee/patient-admissions') }}">
+                <span class="aside-menu-icon pe-3"><i class="fas fa-history"></i></span>
+                <span class="aside-menu-title">{{ __('messages.patient_admissions') }}</span>
+            </a>
+        </li>
+    @endmodule
+
+
+    {{-- ipds/opds --}}
+    <?php
+    $ipdOPD = getMenuLinks(\App\Models\User::MAIN_IPD_OPD);
+    ?>
+    @if ($ipdOPD)
+        <li class="nav-item  {{ Request::is('ipds*', 'opds*') ? 'active' : '' }}">
+            <a class="py-3 nav-link d-flex align-items-center" href="{{ route('opd.patient.index') }}"
+                title="{{ __('messages.ipd_opd') }}">
+                <span class="aside-menu-icon pe-3">
+                    <i class="fas fa-notes-medical"></i>
+                </span>
+                <span class="aside-menu-title">OPD</span>
+                <span class="d-none">{{ __('messages.ipd_patients') }}</span>
+                <span class="d-none">{{ __('messages.opd_patients') }}</span>
+            </a>
+        </li>
+    @endif
+
+    <li class="nav-item  {{ Request::is('dentalOpds*') ? 'active' : '' }}">
+        <a class="py-3 nav-link d-flex align-items-center" href="{{ route('dentalopd.patient.index') }}"
+            title="{{ __('messages.ipd_opd') }}">
+            <span class="aside-menu-icon pe-3">
+                <i class="fas fa-notes-medical"></i>
+            </span>
+            <span class="aside-menu-title">Dental OPD</span>
+            <span class="d-none">{{ __('messages.ipd_patients') }}</span>
+            <span class="d-none">{{ __('messages.opd_patients') }}</span>
+        </a>
+    </li>
+
+
+    {{-- Services dropdown --}}
+    <?php
+    $receptionistServiceMgt = getMenuLinks(\App\Models\User::MAIN_SERVICE);
+    ?>
+    @if ($receptionistServiceMgt)
+        <li
+            class="nav-item {{ Request::is('insurances*', 'packages*', 'services*', 'ambulances*', 'ambulance-calls*') ? 'active' : '' }}">
+            <a class="py-3 nav-link d-flex align-items-center" href="{{ $receptionistServiceMgt }}">
+                <span class="aside-menu-icon pe-3"><i class="fas fa-box"></i></span>
+                <span class="aside-menu-title">{{ __('messages.services') }}</span>
+                <span class="d-none">{{ __('messages.insurances') }}</span>
+                <span class="d-none">{{ __('messages.packages') }}</span>
+                <span class="d-none">{{ __('messages.services') }}</span>
+                <span class="d-none">{{ __('messages.ambulances') }}</span>
+                <span class="d-none">{{ __('messages.ambulance_calls') }}</span>
+            </a>
+        </li>
+    @endif
+
+@endif
 {{-- <div class="mx-3 mt-2 mb-5 position-relative sidebar-search-box"> --}}
 {{--    <span class="svg-icon svg-icon-1 svg-icon-primary position-absolute top-50 translate-middle ms-9"> --}}
 {{--                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" --}}
@@ -238,13 +372,13 @@
 
     {{-- Hospital Charges --}}
     <?php
-    $hospitalCharge = getMenuLinks(\App\Models\User::MAIN_HOSPITAL_CHARGE);
+    $ReceptionisthospitalCharge = getMenuLinks(\App\Models\User::MAIN_HOSPITAL_CHARGE);
     ?>
-    @if ($hospitalCharge)
+    @if ($ReceptionisthospitalCharge)
         <li class="nav-item  {{ Request::is('charge-categories*', 'charges*', 'doctor-opd-charges*') ? 'active' : '' }}">
-            <a class="py-3 nav-link d-flex align-items-center" href="{{ $hospitalCharge }}">
+            <a class="py-3 nav-link d-flex align-items-center" href="{{ $ReceptionisthospitalCharge }}">
                 <span class="aside-menu-icon pe-3"><i class="fas fa-coins"></i></span>
-                <span class="aside-menu-title">Charges List</span>
+                <span class="aside-menu-title">{{ __('messages.hospital_charges') }}</span>
                 <span class="d-none">{{ __('messages.charge_categories') }}</span>
                 <span class="d-none">{{ __('messages.charges') }}</span>
                 <span class="d-none">{{ __('messages.doctor_opd_charges') }}</span>
@@ -300,6 +434,7 @@
     @endif
 
     {{-- Lab Technician --}}
+
     @module('Lab Technicians', $modules)
         <li class="nav-item  {{ Request::is('lab-technicians*') ? 'active' : '' }}">
             <a class="py-3 nav-link d-flex align-items-center" href="{{ route('lab-technicians.index') }}">
@@ -308,6 +443,8 @@
             </a>
         </li>
     @endmodule
+
+
 
     {{-- Live Consultation --}}
     <?php
@@ -1165,7 +1302,7 @@
             </li>
         @endif
 
-        @module('Doctors', $modules)
+        @module('Doctors|CSR', $modules)
             <li class="nav-item {{ Request::is('employee/doctor*') ? 'active' : '' }}">
                 <a class="py-3 nav-link d-flex align-items-center" href="{{ url('employee/doctor') }}">
                     <span class="aside-menu-icon pe-3"><i class="fa fa-user-md"></i></span>

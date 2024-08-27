@@ -29,7 +29,7 @@
     </div>
 @endsection
 @section('scripts')
-    
+
     {{--        asset('assets/js/plugins/daterangepicker.js >--}}
     {{--    @if(Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Doctor'))--}}
     {{--        assets/js/appointments/appointments.js --}}

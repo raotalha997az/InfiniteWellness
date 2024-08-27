@@ -122,7 +122,7 @@ class AppointmentController extends AppBaseController
                 $new_case_id = mb_strtoupper(PatientCase::generateUniqueCaseId());
                 $doctorDepartment = DoctorDepartment::where('id', $input['doctor_department_id'])->first();
             $departmentShortName = substr($doctorDepartment->title, 0, 5);
-            
+
             $data = [
                 "case_id" => $departmentShortName . '-' . $new_case_id,
                 "currency_symbol" => "pkr",
@@ -131,7 +131,7 @@ class AppointmentController extends AppBaseController
                 "phone" => null,
                 "prefix_code" => "92",
                 "status" => "1",
-                "service_description" => $input['service_description'],
+                "service_description" => $input['`service_description`'],
                 "description" => null
             ];
             $patientCase = PatientCase::create($data);
@@ -156,7 +156,7 @@ class AppointmentController extends AppBaseController
         $caseID = PatientCase::where('patient_id', $input['patient_id'])->orderBy('id', 'desc')->first();
         $standard_charge = DoctorOpdCharge::where('doctor_id', $input['doctor_id'])->first();
         $followup_charge = DoctorOpdCharge::where('doctor_id', $input['doctor_id'])->first();
-        
+
         if($request->doctor_department_id == 5){
             if($request->patient_case_id != null){
                 DentalOpdPatientDepartment::create([
