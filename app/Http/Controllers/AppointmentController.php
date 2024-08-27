@@ -131,7 +131,7 @@ class AppointmentController extends AppBaseController
                 "phone" => null,
                 "prefix_code" => "92",
                 "status" => "1",
-                "service_description" => $input['`service_description`'],
+                "service_description" => $input['service_description'],
                 "description" => null
             ];
             $patientCase = PatientCase::create($data);
