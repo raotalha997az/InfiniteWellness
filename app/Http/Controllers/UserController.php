@@ -106,7 +106,7 @@ class UserController extends AppBaseController
     {
         $roles = Department::orderBy('name')->pluck('name', 'id')->toArray();
         $status = User::STATUS_ARR;
-        
+
 
         return view('users.index', compact('roles', 'status'));
     }
@@ -114,7 +114,7 @@ class UserController extends AppBaseController
     public function create()
     {
         $isEdit = false;
-        $role = Department::orderBy('name')->pluck('name', 'id')->toArray();     
+        $role = Department::orderBy('name')->pluck('name', 'id')->toArray();
         $doctorDepartments = DoctorDepartment::pluck('title', 'id')->toArray();
 
         return view('users.create', compact('isEdit', 'role', 'doctorDepartments'));
@@ -129,7 +129,6 @@ class UserController extends AppBaseController
      */
     public function store(CreateUserRequest $request)
     {
-        // dd($request->all());
         try {
             DB::beginTransaction();
             $input = $request->all();

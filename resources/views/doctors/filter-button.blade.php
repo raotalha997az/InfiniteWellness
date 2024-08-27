@@ -1,3 +1,4 @@
+@if(Auth::user()->hasRole('Admin|Receptionist'))   
 <div class="ms-0 ms-md-2" wire:ignore>
     <div class="dropdown d-flex align-items-center me-4 me-md-5">
         <button
@@ -23,4 +24,4 @@
         </div>
     </div>
 </div>
-
+@endif

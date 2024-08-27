@@ -71,7 +71,24 @@ class DoctorTable extends LivewireTableComponent
                 'doctorUser.qualification')->sortable()->hideIf(1);
         }
 
-        return [
+        $status = Auth::user()->hasRole('CSR');
+
+        if($status == true){
+            return [
+
+                Column::make(__('messages.case.doctor'), 'doctorUser.first_name')
+                    ->view('doctors.templates.columns.name')
+                    ->searchable()
+                    ->sortable(),
+                Column::make(__('messages.doctor.specialist'), 'specialist')
+                    ->searchable()
+                    ->sortable(),
+                $qualification,
+            ];
+        }else{
+
+
+            return [
 
             Column::make(__('messages.case.doctor'), 'doctorUser.first_name')
                 ->view('doctors.templates.columns.name')
@@ -85,6 +102,7 @@ class DoctorTable extends LivewireTableComponent
                 ->view('doctors.templates.columns.status'),
             $actionBtn,
         ];
+    }
     }
 
     public function builder(): Builder

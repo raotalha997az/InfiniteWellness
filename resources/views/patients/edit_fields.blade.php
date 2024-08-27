@@ -80,8 +80,8 @@
     <div class="col-md-6">
         <div class="form-group mb-5">
             {{ Form::label('reffer_by', __('Referred By').':', ['class' => 'form-label']) }}
-            <span class="required"></span>
-            {{ Form::text('reffer_by', null, ['class' => 'form-control', 'required', 'tabindex' => '3','id'=>'editPatientRefferBy']) }}
+            <span class=""></span>
+            {{ Form::text('reffer_by', null, ['class' => 'form-control', 'tabindex' => '3','id'=>'editPatientRefferBy']) }}
         </div>
     </div>
     <div class="form-group col-md-4">

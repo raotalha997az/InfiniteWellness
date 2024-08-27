@@ -126,6 +126,13 @@ class OpdPatientTable extends LivewireTableComponent
                 ->whereHas('doctor')
                 ->with(['patient.patientUser', 'doctor.doctorUser', 'patient.opd']);
         }
+        else if ($role->name == "CSR") {
+            $query = OpdPatientDepartment::query()
+                ->select('opd_patient_departments.*')
+                ->whereHas('patient')
+                ->whereHas('doctor')
+                ->with(['patient.patientUser', 'doctor.doctorUser', 'patient.opd']);
+        }
         return $query;
 
         //        return Patient::whereHas('opd')->with(['opd','opd.doctor.user'])->withCount('opd');
