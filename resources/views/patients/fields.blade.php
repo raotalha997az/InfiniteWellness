@@ -29,7 +29,8 @@
     <div class="col-md-6">
         <div class="form-group mb-5">
             {{ Form::label('dob', __('messages.user.dob').':', ['class' => 'form-label']) }}
-            {{ Form::text('dob', null, ['class' => (getLoggedInUser()->thememode ? 'bg-light patientBirthDate form-control' : 'bg-white patientBirthDate form-control'), 'id' => 'patientBirthDate', 'autocomplete' => 'off', 'tabindex' => '4']) }}
+            <span class="required"></span>
+            {{ Form::text('dob', null, ['class' => (getLoggedInUser()->thememode ? 'bg-light patientBirthDate form-control' : 'bg-white patientBirthDate form-control'), 'id' => 'patientBirthDate', 'autocomplete' => 'off', 'tabindex' => '4','required']) }}
         </div>
     </div>
     <div class="col-md-6">
@@ -45,8 +46,7 @@
     <div class="col-md-6">
         <div class="form-group mobile-overlapping  mb-5">
             {{ Form::label('phone', __('Emergency Phone').':', ['class' => 'form-label']) }}
-            <span class="required"></span><br>
-            {{ Form::tel('emergencyPhone', getCountryCode(), ['class' => 'form-control phoneNumber', 'id' => 'patientEmergencyPhoneNumber', 'required', 'onkeyup' => 'if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,"")', 'tabindex' => '5']) }}
+            {{ Form::tel('emergencyPhone', getCountryCode(), ['class' => 'form-control phoneNumber', 'id' => 'patientEmergencyPhoneNumber', 'onkeyup' => 'if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,"")', 'tabindex' => '5']) }}
             {{ Form::hidden('prefix_code',null,['class'=>'prefix_code']) }}
             <span class="text-success valid-msg d-none fw-400 fs-small mt-2">✓ &nbsp; {{__('messages.valid')}}</span>
             <span class="text-danger error-msg d-none fw-400 fs-small mt-2"></span>
