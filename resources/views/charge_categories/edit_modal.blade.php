@@ -38,3 +38,9 @@
         </div>
     </div>
 </div>
+<script>
+    $("#editChargeCategorySave").click(function() {
+        $("#edit_charge_categories_modal").modal('hide');
+        Livewire.emit('refreshLivewireDatatable');
+    });
+</script>
