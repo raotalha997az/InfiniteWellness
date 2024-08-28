@@ -58,7 +58,7 @@ class PatientTable extends LivewireTableComponent
 
     public function columns(): array
     {
-        if(getLoggedInUser()->hasRole(['Admin'])){
+        if(getLoggedInUser()->hasRole(['Admin']) || getLoggedInUser()->hasRole(['CSR'])) {
             return [
                 Column::make(__('messages.patients'), 'patientUser.first_name')->view('patients.columns.patient')
                     ->sortable()->searchable(),
@@ -82,7 +82,7 @@ class PatientTable extends LivewireTableComponent
                     ->sortable()->searchable(),
                 Column::make(__('messages.user.blood_group'), 'patientUser.blood_group')->view('patients.columns.blood_group')
                     ->sortable()->searchable(),
-              
+
             ];
         }
     }
