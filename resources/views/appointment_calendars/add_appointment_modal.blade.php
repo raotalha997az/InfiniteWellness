@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2>{{ __('messages.appointment.new_appointment') }}</h2>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="closeModal('addAppointmentModal')"
                         aria-label="Close"></button>
             </div>
             {{ Form::open(['id'=>'calenderAppointmentForm']) }}
@@ -58,7 +58,7 @@
                             <div class="color-information d-none">
                             <span><i class="fa fa-circle fa-xs" aria-hidden="true"> </i> {{ __('messages.appointment.no_available') }}</span>
                         </div>
-                        
+
                     </div>
                     <div class="form-group col-sm-12 mb-5">
                         {{ Form::label('problem', __('messages.appointment.description').(':'),['class' => 'form-label']) }}
