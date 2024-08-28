@@ -1,21 +1,41 @@
 @php($modules = App\Models\Module::cacheFor(now()->addDays())->toBase()->get())
 {{-- For CSR Role --}}
 @if (auth()->user()->hasRole('CSR'))
+@module('Appointments', $modules)
+        <li class="nav-item {{ Request::is('appointment*') ? 'active' : '' }}">
+            <a class="py-3 nav-link d-flex align-items-center" href="{{ route('appointments.index') }}">
+                <span class="aside-menu-icon pe-3"><i class="fas fa-calendar-check"></i></span>
+                <span class="aside-menu-title">{{ __('messages.appointments') }}</span>
+            </a>
+        </li>
+    @endmodule
+    
+{{-- Billing --}}
+<?php
+    $billingMGT = getMenuLinks(\App\Models\User::MAIN_BILLING_MGT);
+    ?>
+    @if ($billingMGT)
+        <li
+            class="nav-item  {{ Request::is('accounts*', 'employee-payrolls*', 'invoices*', 'payments*', 'payment-reports*', 'advanced-payments*', 'bills*', 'pos*') ? 'active' : '' }}">
+            <a class="py-3 nav-link d-flex align-items-center" href="{{ $billingMGT }}">
+                <span class="aside-menu-icon pe-3"><i class="fas fa-file-invoice-dollar"></i></span>
+                <span class="aside-menu-title">{{ __('messages.billing') }}</span>
+                <span class="d-none">{{ __('messages.employee_payrolls') }}</span>
+                <span class="d-none">{{ __('messages.invoices') }}</span>
+                <span class="d-none">{{ __('messages.payments') }}</span>
+                <span class="d-none">{{ __('messages.payment_reports') }}</span>
+                <span class="d-none">{{ __('messages.advanced_payments') }}</span>
+                <span class="d-none">{{ __('messages.bills') }}</span>
+                <span class="d-none">{{ __('messages.pos') }}</span>
+            </a>
+        </li>
+    @endif
     {{-- Doctors --}}
     @module('Doctors', $modules)
         <li class="nav-item  {{ Request::is('doctors*') ? 'active' : '' }}">
             <a class="py-3 nav-link d-flex align-items-center" href="{{ route('doctors.index') }}">
                 <span class="aside-menu-icon pe-3"><i class="fa fa-user-md"></i></span>
                 <span class="aside-menu-title">{{ __('messages.doctors') }}</span>
-            </a>
-        </li>
-    @endmodule
-
-    @module('Appointments', $modules)
-        <li class="nav-item {{ Request::is('appointment*') ? 'active' : '' }}">
-            <a class="py-3 nav-link d-flex align-items-center" href="{{ route('appointments.index') }}">
-                <span class="aside-menu-icon pe-3"><i class="fas fa-calendar-check"></i></span>
-                <span class="aside-menu-title">{{ __('messages.appointments') }}</span>
             </a>
         </li>
     @endmodule

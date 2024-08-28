@@ -50,7 +50,7 @@
         {{-- <input type="number" name="advance_amount" id="appointmentAdvanceAmount" class="form-control">
         </div> --}}
 
-        <div class="mb-5 form-group col-sm-6">
+        {{-- <div class="mb-5 form-group col-sm-6">
             {{ Form::label('Payment Mode', __('Payment Mode ').':', ['class' => 'form-label']) }}
             <span class="required"></span>
             <select name="payment_mode" class="form-select" data-control="select2" id="payment_mode">
@@ -59,7 +59,7 @@
                 <option value="2">Cheque</option>
                 <option value="3">Card</option>
             </select>
-        </div>
+        </div> --}}
         <div class="mb-5 form-group col-sm-6">
             {{ Form::label('Service Description', __('Service Description').':', ['class' => 'form-label']) }}
             <span class="required"></span>
@@ -376,8 +376,11 @@
                                         id="userCnic">
                                 </div> --}}
                                 <div class="form-group mb-5">
-                                    <label for="patientBirthDate2" class="form-label">Date of Birth:</label>
-                                    <input type="date" name="dob" class="form-control" id="patientBirthDate2"
+                                    <label for="patientBirthDate2" class="form-label">
+                                        Date of Birth:
+                                        <span class="required"></span>
+                                    </label>
+                                    <input type="date" name="dob" required class="form-control" id="patientBirthDate2"
                                         autocomplete="off" tabindex="4">
                                 </div>
                             </div>
@@ -395,9 +398,8 @@
                                 </div>
                                 <div class="form-group mobile-overlapping mb-5">
                                     <label for="patientEmergencyPhoneNumber2" class="form-label">Emergency Contact:</label>
-                                    <span class="required"></span><br>
                                     <input type="tel" name="emergencyPhone" class="form-control phoneNumber"
-                                        id="patientEmergencyPhoneNumber2" required
+                                        id="patientEmergencyPhoneNumber2"
                                         onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')"
                                         tabindex="5">
                                     <input type="hidden" name="prefix_code" id="prefixCode2" class="prefix_code">
@@ -418,7 +420,7 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            {{-- <div class="col-md-12">
                                 <div class="form-group mb-5">
                                     <label for="patientBloodGroup2" class="form-label">Blood Group:</label>
                                     <select name="blood_group" class="form-select" id="patientBloodGroup2"
@@ -429,7 +431,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="modal-footer">
                                 {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
                                 <button type="submit" class="btn btn-primary" id="btnSave2">Save</button>
