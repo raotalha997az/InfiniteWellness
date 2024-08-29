@@ -12,7 +12,7 @@ class MedicationAdministrationController extends Controller
 {
     public function index()
     {
-        $medication = MedicattionAdministration::paginate(10);
+        $medication = MedicattionAdministration::orderBy('id', 'desc')->paginate(10);
         return view('medication_administration.index',compact('medication'));
     }
     public function create()
