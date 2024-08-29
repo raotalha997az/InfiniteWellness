@@ -9,7 +9,7 @@
             </a>
         </li>
     @endmodule
-    
+
 {{-- Billing --}}
 <?php
     $billingMGT = getMenuLinks(\App\Models\User::MAIN_BILLING_MGT);
@@ -502,6 +502,12 @@
             <span class="aside-menu-title">Nursing Form </span>
         </a>
     </li>
+    <li class="nav-item  {{ Request::is('medication-administration*') ? 'active' : '' }}">
+        <a class="py-3 nav-link d-flex align-items-center" href="{{ route('medication.index') }}">
+            <span class="aside-menu-icon pe-3"><i class="fa fa-user-nurse"></i></span>
+            <span class="aside-menu-title">Medication Administration</span>
+        </a>
+    </li>
 
     @role('Admin|Pharmacist|Receptionist|Nurse|Doctor|Dietitian')
         <li class="nav-item  {{ Request::is('fast-medical-record*') ? 'active' : '' }}">
@@ -780,6 +786,12 @@
             <a class="py-3 nav-link d-flex align-items-center" href="{{ route('nursing.index') }}">
                 <span class="aside-menu-icon pe-3"><i class="fa fa-user-nurse"></i></span>
                 <span class="aside-menu-title">Nursing Form </span>
+            </a>
+        </li>
+        <li class="nav-item  {{ Request::is('medication-administration*') ? 'active' : '' }}">
+            <a class="py-3 nav-link d-flex align-items-center" href="{{ route('medication.index') }}">
+                <span class="aside-menu-icon pe-3"><i class="fa fa-user-nurse"></i></span>
+                <span class="aside-menu-title">Medication Administration</span>
             </a>
         </li>
 
@@ -1302,6 +1314,12 @@
                 <span class="aside-menu-title">Nursing Form </span>
             </a>
         </li>
+        <li class="nav-item  {{ Request::is('medication-administration*') ? 'active' : '' }}">
+            <a class="py-3 nav-link d-flex align-items-center" href="{{ route('medication.index') }}">
+                <span class="aside-menu-icon pe-3"><i class="fa fa-user-nurse"></i></span>
+                <span class="aside-menu-title">Medication Administration</span>
+            </a>
+        </li>
     @endrole
 
     @role('Lab Technician')
@@ -1715,6 +1733,12 @@
             <a class="py-3 nav-link d-flex align-items-center" href="{{ route('nursing.index') }}">
                 <span class="aside-menu-icon pe-3"><i class="fa fa-user-nurse"></i></span>
                 <span class="aside-menu-title">Nursing Form </span>
+            </a>
+        </li>
+        <li class="nav-item  {{ Request::is('medication-administration*') ? 'active' : '' }}">
+            <a class="py-3 nav-link d-flex align-items-center" href="{{ route('medication.index') }}">
+                <span class="aside-menu-icon pe-3"><i class="fa fa-user-nurse"></i></span>
+                <span class="aside-menu-title">Medication Administration</span>
             </a>
         </li>
 

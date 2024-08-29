@@ -7,24 +7,30 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <h3>Nursing Assessment Form</h3>
-                <a href="/nursing-form" class="btn btn-secondary">Back</a>
+                <a href="/medication-administration" class="btn btn-secondary">Back</a>
             </div>
-            <form action="{{route('nursing-form.store') }}" method="POST">
+            <form action="{{route('medication.store') }}" method="POST">
                 @csrf
                 <div class="card-body">
                     <div class="mt-5 mb-5 row">
+                        <div class="col-md-6">
+                            <label for="date" class="form-label">Date</label>
+                            <input class="form-control" value="{{$medication->date}}" disabled/>
+                        </div>
                         <div class="col-md-6">
                             <label for="patient_mr_number" class="form-label">MR #</label>
                             <input class="form-control" value="{{$patients->MR}} - {{$patients->user->first_name}} {{$patients->user->last_name}}" disabled/>
                         </div>
                         <div class="col-md-6">
-                            <label for="opd_id" class="form-label">OPD</label>
-                            <input class="form-control" value="{{$nursing->opd_id}}" disabled/>
+                            <div class="mb-5 mt-5">
+                                <label for="time" class="form-label">Time</label>
+                                <input readonly type="text" name="time" value="{{$medication->time}}" id="time" disabled class="form-control">
+                            </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="mb-5">
+                            <div class="mb-5 mt-5">
                                 <label for="patient_name" class="form-label">Patient Name</label>
-                                <input readonly type="text" name="patient_name" value="{{$nursing->patient_name}}" id="patient_name" disabled class="form-control">
+                                <input readonly type="text" name="patient_name" value="{{$medication->patient_name}}" id="patient_name" disabled class="form-control">
                             </div>
                         </div>
                     </div>
@@ -36,7 +42,7 @@
                         <div class="col-md-3">
                             <div class="mb-5">
                                 <label for="blood_pressure" class="form-label">Blood Pressure</label>
-                                <input class="form-control" value="{{$nursing->blood_pressure}}" disabled/>
+                                <input class="form-control" value="{{$medication->bp}}" disabled/>
                             </div>
                         </div>
                         <div class="col-md-1">
@@ -47,7 +53,7 @@
                         <div class="col-md-3">
                             <div class="mb-5">
                                 <label for="heart_rate" class="form-label">Heart Rate</label>
-                                <input class="form-control" value="{{$nursing->heart_rate}}" disabled/>
+                                <input class="form-control" value="{{$medication->heart_rate}}" disabled/>
                             </div>
                         </div>
                         <div class="col-md-1">
@@ -58,7 +64,7 @@
                         <div class="col-md-3">
                             <div class="mb-5">
                                 <label for="respiratory_rate" class="form-label">Respiratory Rate</label>
-                                <input class="form-control" value="{{$nursing->respiratory_rate}}" disabled/>
+                                <input class="form-control" value="{{$medication->respiratory_rate}}" disabled/>
                             </div>
                         </div>
                         <div class="col-md-1">
@@ -68,169 +74,70 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="mb-5">
                                 <label for="temperature" class="form-label">Temperature</label>
-                                <input class="form-control" value="{{$nursing->temperature}}" disabled/>
+                                <input class="form-control" value="{{$medication->temperature}}" disabled/>
                             </div>
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-2">
                             <div class="mt-5">
                                 °C/°F
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="mb-5">
                                 <label for="pbs" class="form-label">SpO2</label>
-                                <input type="text" value="{{ $nursing->spo_2 }}" name="spo_2" id="spo_2" disabled class="form-control">
+                                <input type="text" value="{{ $medication->spo_2 }}" name="spo_2" id="spo_2" disabled class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-2">
                             <div class="mt-5">
                                 %
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="mb-5">
-                                <label for="height" class="form-label">Height</label>
-                                <input class="form-control" value="{{$nursing->height}}" disabled/>
-                            </div>
-                        </div>
-                        <div class="col-md-1">
-                            <div class="mt-5">
-                                cm/in
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="mb-5">
-                                <label for="weight" class="form-label">Weight</label>
-                                <input class="form-control" value="{{$nursing->weight}}" disabled/>
-                            </div>
-                        </div>
-                        <div class="col-md-1">
-                            <div class="mt-5">
-                                kg/lb
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-5">
-                                <label for="foc" class="form-label">Fronto Occipital Circumference (FOC)</label>
-                                <input type="text" name="foc" value="{{ $nursing->foc }}" disabled id="foc" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-5">
-                                <label for="ac" class="form-label">Abdominal circumference (AC)</label>
-                                <input type="text" name="ac" value="{{ $nursing->ac }}" disabled id="ac" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-5">
-                                <label for="pain_level" class="form-label">Pain Level (0-10)</label>
-                                <input class="form-control" value="{{$nursing->blood_pressure}}" disabled/>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-5">
-                                <label for="fbs" class="form-label">FBS (mg/dL)</label>
-                                <input type="text" value="{{ $nursing->fbs }}" name="fbs" id="fbs" disabled class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-5">
-                                <label for="rbs" class="form-label">RBS (mg/dL)</label>
-                                <input type="text" value="{{ $nursing->rbs }}" name="rbs" id="rbs" disabled class="form-control">
                             </div>
                         </div>
 
                     </div>
 
                 </div>
-                {{-- <div class="card-body">
+                <div class="card-body">
                         <h4>Current Medications:</h4>
 
                     <table class="table table-bordered">
                         <thead>
 
                             <tr>
-                                <td>Medication Name</td>
-                                <td>Dosage </td>
-                                <td>Frequency </td>
-                                <td>Prescribing Physician</td>
+                                <td>Drug Name</td>
+                                <td>Dose</td>
+                                <td>Route </td>
+                                <td>Staff Name</td>
 
                             </tr>
                         </thead>
                         <tbody id="current_medications_table" >
-                            @foreach ($medication as $med)
+                            @foreach ($medication_details as $med)
                                 <tr>
-                                    <td><input class="form-control" value="{{$med->medication_name}}" disabled/></td>
-                                    <td><input class="form-control" value="{{$med->dosage}}" disabled/></td>
-                                    <td><input class="form-control" value="{{$med->frequency}}" disabled/></td>
-                                    <td><input class="form-control" value="{{$med->prescribing_physician}}" disabled/></td>
+                                    <td><input class="form-control" value="{{$med->drug_name}}" disabled/></td>
+                                    <td><input class="form-control" value="{{$med->dose}}" disabled/></td>
+                                    <td><input class="form-control" value="{{$med->route}}" disabled/></td>
+                                    <td><input class="form-control" value="{{$med->staff_name}}" disabled/></td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                </div> --}}
+                </div>
 
                 <div class="card-body">
-                        <h4>Allergies:</h4>
-                    <table class="table table-bordered">
-                        <thead>
-
-                            <tr>
-                                <td>Allergen</td>
-                                <td>Reaction</td>
-                                <td>Severity</td>
-
-                            </tr>
-                        </thead>
-                        <tbody id="allergies_table">
-                            @foreach ($allergies as $alle)
-                            <tr>
-                                <td><input class="form-control" value="{{$alle->allergen}}" disabled/></td>
-                                <td><input class="form-control" value="{{$alle->reaction}}" disabled/></td>
-                                <td><input class="form-control" value="{{$alle->severity}}" disabled/></td>
-                            </tr>
-                            @endforeach
-
-                        </tbody>
-                    </table>
 
                     <div class="col-md-12">
                         <div class="col-md-6">
                             <div class="mb-5 mt-5">
                                 <h2>Nursing Notes</h2>
                                 {{-- <label for="details" class="form-label">Details</label> --}}
-                                <p id="details">{!! $nursing->details !!}</p>
+                                <p id="details">{!! $medication->note !!}</p>
                             </div>
                         </div>
                     </div>
-
-
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="assessment_date" class="form-label">Assessment Date</label>
-                            <input class="form-control" value="{{$nursing->assessment_date}}" disabled/>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="nurse_name" class="form-label">Nurse's Name</label>
-                            <input class="form-control" value="{{$nursing->nurse_name}}" disabled/>
-                        </div>
-                    </div>
-
-                    {{-- <div class="mt-5 mb-5 row">
-                        <div class="col-md-12">
-                            <label for="signature" class="form-label">Signature</label>
-                            <input class="form-control" value="{{$nursing->signature}}" disabled/>
-                        </div>
-                    </div> --}}
 
                     <div class="mt-10 mb-5 text-center row">
                         <div class="col-md-12">

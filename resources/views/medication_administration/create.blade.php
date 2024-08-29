@@ -1,21 +1,28 @@
 @extends('layouts.app3')
 @section('title')
-    Nursing From List
+    Medication Administration
 @endsection
 @section('content')
     <div class="container-fluid">
         <div class="card">
             <div class="card-header d-flex justify-content-between">
-                <h3>Nursing Assessment Form</h3>
-                <a href="{{ route('nursing.index') }}" class="btn btn-secondary">Back</a>
+                <h3>Medication Administration Form</h3>
+                <a href="{{ route('medication.index') }}" class="btn btn-secondary">Back</a>
             </div>
-            <form action="{{ route('nursing-form.store') }}" method="POST">
+            <form action="{{ route('medication.store') }}" method="POST">
                 @csrf
                 <div class="card-body">
                     <div class="mt-5 mb-5 row">
                         <div class="col-md-6">
+                            <div class="mb-5">
+                                <label for="date" class="form-label">Date</label>
+                                <input type="date" name="date" id="date" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
                             <label for="patient_mr_number" class="form-label">MR #<sup class="text-danger">*</sup></label>
-                            <select class="form-select" name="patient_mr_number" id="patient_mr_number" required>
+                            <select class="form-select" name="mr_number" id="patient_mr_number" required>
                                 <option value="" selected disabled>select mr number</option>
                                 @foreach ($patients as $patient)
                                     <option value="{{ $patient->MR }}" data-blood_pressure="{{ $patient->blood_pressure }}"
@@ -28,20 +35,24 @@
                                 @endforeach
                             </select>
                         </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-md-6">
-                            <label for="opd_id" class="form-label">OPD<sup class="text-danger">*</sup></label>
-                            <select class="form-control" name="opd_id" id="opd_id" required>
-                                <option value="" selected disabled>select mr number first</option>
-                            </select>
+                            <div class="mb-5">
+                                <label for="time" class="form-label">Time</label>
+                                <input type="time" name="time" id="time" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-5">
+                                <label for="patient_name" class="form-label">Patient Name</label>
+                                <input readonly type="text" name="patient_name" id="patient_name" class="form-control">
+                            </div>
+
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="mb-5">
-                            <label for="patient_name" class="form-label">Patient Name</label>
-                            <input readonly type="text" name="patient_name" id="patient_name" class="form-control">
-                        </div>
-                    </div>
                 </div>
                 <div class="card-body">
                     <h4>VITAL SIGNS:</h4>
@@ -50,7 +61,7 @@
                         <div class="col-md-4">
                             <div class="mb-5">
                                 <label for="blood_pressure" class="form-label">Blood Pressure (mmHg)</label>
-                                <input type="text" name="blood_pressure" id="blood_pressure"
+                                <input type="text" name="bp" id="blood_pressure"
                                     class="form-control">
                                 <input type="hidden" name="patient_id" id="patient_id">
                             </div>
@@ -70,78 +81,30 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="mb-5">
                                 <label for="temperature" class="form-label">Temperature (°C/°F)</label>
                                 <input type="text" name="temperature" id="temperature" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="mb-5">
                                 <label for="pbs" class="form-label">SpO2 (%)</label>
                                 <input type="text" name="spo_2" id="spo_2" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="mb-5">
-                                <label for="height" class="form-label">Height (cm/in)</label>
-                                <input type="text" name="height" id="height" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-5">
-                                <label for="weight" class="form-label">Weight (kg/lb)</label>
-                                <input type="text" name="weight" id="weight" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-5">
-                                <label for="foc" class="form-label">Fronto Occipital Circumference (FOC)</label>
-                                <input type="text" name="foc" id="foc" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-5">
-                                <label for="ac" class="form-label">Abdominal circumference (AC)</label>
-                                <input type="text" name="ac" id="ac" class="form-control">
-                            </div>
-                        </div>
                     </div>
-                    <div class="col-md-3">
+                    {{-- <div class="col-md-3">
                         <div class="mb-5">
                             <label for="bmi" class="form-label">BMI</label>
                             <input readonly type="text" name="bmi" id="bmi" class="form-control">
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-5">
-                                <label for="pain_level" class="form-label">Pain Level (0-10)</label>
-                                <input type="text" name="pain_level" id="pain_level" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-5">
-                                <label for="fbs" class="form-label">FBS (mg/dL)</label>
-                                <input type="text" name="fbs" id="fbs" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-5">
-                                <label for="rbs" class="form-label">RBS (mg/dL)</label>
-                                <input type="text" name="rbs" id="rbs" class="form-control">
-                            </div>
-                        </div>
-                    </div>
+                    </div> --}}
 
                 </div>
 
 
-                {{-- <div class="card-body">
+                <div class="card-body">
                     <h4>Current Medications:</h4>
                     <table class="table table-bordered">
                         <thead>
@@ -152,87 +115,36 @@
                                 </div>
                             </div>
                             <tr>
-                                <td>Medication Name</td>
-                                <td>Dosage </td>
-                                <td>Frequency </td>
-                                <td>Prescribing Physician</td>
-                                <td>Root</td>
+                                <td>Drug Name</td>
+                                <td>Dose</td>
+                                <td>Route</td>
+                                <td>Staff Name</td>
                                 <td>Action</td>
                             </tr>
                         </thead>
                         <tbody id="current_medications_table">
                             <tr>
-                                <td><input type="text" name="medications[0][medication_name]" class="form-control">
-                                </td>
-                                <td><input type="text" class="form-control" name="medications[0][dosage]"></td>
-                                <td><input type="text" class="form-control" name="medications[0][frequency]"></td>
-                                <td><input type="text" class="form-control" name="medications[0][root]"></td>
-                                <td><input type="text" class="form-control"
-                                        name="medications[0][prescribing_physician]"></td>
+                                <td><input type="text" name="medications[0][drug_name]" class="form-control"></td>
+                                <td><input type="text" class="form-control" name="medications[0][dose]"></td>
+                                <td><input type="text" class="form-control" name="medications[0][route]"></td>
+                                <td><input type="text" class="form-control" name="medications[0][staff_name]"></td>
                             </tr>
                         </tbody>
                     </table>
-                </div> --}}
+                </div>
 
                 <div class="card-body">
-                    <h4>Allergies:</h4>
-                    <table class="table table-bordered">
-                        <thead>
-                            <div class="row ">
-                                <div class="mt-5 mb-5 col-md-2">
-                                    <button type="button" class="btn btn-primary" onclick="addmoreallergy()"
-                                        id="addmore-btn">Add More</button>
-                                </div>
-                            </div>
-                            <tr>
-                                <td>Allergen</td>
-                                <td>Reaction</td>
-                                <td>Severity</td>
-                                <td>Action</td>
-                            </tr>
-                        </thead>
-                        <tbody id="allergies_table">
-                            <tr>
-                                <td><input type="text" class="form-control" name="allergies[0][allergen]"></td>
-                                <td><input type="text" class="form-control" name="allergies[0][reaction]"></td>
-                                <td><input type="text" class="form-control" name="allergies[0][severity]"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
 
                     <div class="row">
                         <div class="col-md-12 mt-5 mb-5">
-                            <h2>Nursing Notes</h2>
+                            <h2>Nursing Note</h2>
                             {{-- <label for="details" class="form-label">Nursing Notes</label> --}}
-                            <textarea name="details" id="details" class="form-control"></textarea>
+                            <textarea name="note" id="details" class="form-control"></textarea>
                             @error('details')
                                 <p class="text-danger">{{ $message }}</p>
                             @enderror
                         </div>
                     </div>
-
-
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="assessment_date" class="form-label">Assessment Date</label>
-                            <input type="date" name="assessment_date" id="assessment_date" class="form-control">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="nurse_name" class="form-label">Nurse's Name</label>
-                            <input type="text" placeholder="Enter Nurse's Name" name="nurse_name" id="nurse_name"
-                                class="form-control">
-                        </div>
-                    </div>
-
-                    {{-- <div class="mt-5 mb-5 row">
-                        <div class="col-md-12">
-                            <label for="signature" class="form-label">Signature</label>
-                            <input type="text" placeholder="Enter Signature" name="signature" id="signature"
-                                class="form-control">
-                        </div>
-                    </div> --}}
 
                     <div class="mt-10 mb-5 text-center row">
                         <div class="col-md-12">
@@ -286,16 +198,14 @@
                 var a = tableRow.rows.length;
                 console.log('AAA ' + a);
                 $('#current_medications_table').append(`
-            <tr id="medicine-row${a}">
-                                <td><input type="text" name="medications[${a}][medication_name]" class="form-control"></td>
-                                <td><input type="text" class="form-control" name="medications[${a}][dosage]"></td>
-                                <td><input type="text" class="form-control" name="medications[${a}][frequency]"></td>
-                                <td><input type="text" class="form-control" name="medications[${a}][prescribing_physician]"></td>
-                                <td><input type="text" class="form-control" name="medications[${a}][root]"></td>
-                                <td><button onclick="deleteRowCMT()"  class="btn-danger"><i class="fa fa-trash"></i></button></td>
-
+                    <tr id="medicine-row${a}">
+                        <td><input type="text" name="medications[${a}][drug_name]" class="form-control"></td>
+                        <td><input type="text" class="form-control" name="medications[${a}][dose]"></td>
+                        <td><input type="text" class="form-control" name="medications[${a}][route]"></td>
+                        <td><input type="text" class="form-control" name="medications[${a}][staff_name]"></td>
+                        <td><button onclick="deleteRowCMT()"  class="btn-danger"><i class="fa fa-trash"></i></button></td>
                     </tr>
-            `);
+                `);
             }
 
 
@@ -327,62 +237,6 @@
                     $("#bmi").val(((BMI !== null) ? BMI : ``));
                     $("#patient_name").val(((PatientName !== null) ? PatientName : ``));
 
-
-
-                    // $.ajax({
-                    //     type: "get",
-                    //     url: "/nursing-form/opd/list",
-                    //     data: {
-                    //         patient_mr_number: $(this).val()
-                    //     },
-                    //     dataType: "json",
-                    //     success: function(response) {
-                    //         $("#opd_id").empty();
-                    //         let isOPDavailabel = false;
-                    //         if (response.data.length !== 0) {
-                    //             isOPDavailabel = true;
-                    //             $('#opd_id').append(
-                    //                 `<option selected disabled>Select OPD </option>`);
-                    //             $.each(response.data, function(index, value) {
-                    //                 $("#opd_id").append(
-                    //                     `
-            // <option value="${value.opd_number}" data-doctor="${value.doctor.user.full_name}"  data-patient="${value.patient.user.full_name}" >
-            // ${value.opd_number}
-            // </option>`
-                    //                 );
-                    //             });
-                    //         }
-                    //         if (response.data2.length !== 0) {
-                    //             isOPDavailabel = true;
-                    //             $.each(response.data2, function(index, value2) {
-                    //                 // console.log(value2);
-                    //                 $("#opd_id").append(
-                    //                     `
-            // <option value="${value2.opd_number}" data-patient="${value2.patient.user.full_name}" >
-            // ${value2.opd_number}
-            // </option>`
-                    //                 );
-                    //             });
-                    //         }
-                    //         if (!isOPDavailabel) {
-                    //             $("#opd_id").html(
-                    //                 `<option value="" class="text-danger" selected disabled>No any opd found!</option>`
-                    //             );
-                    //         }
-                    //         // console.log(response.data2[0].patient.blood_pressure);
-                    //         // if(response.data2[0]) {
-                    //         //     $("#blood_pressure").val(response.data2[0].patient.blood_pressure);
-                    //         //     $("#heart_rate").val(response.data2[0].patient.heart_rate);
-                    //         //     $("#respiratory_rate").val(response.data2[0].patient.respiratory_rate);
-                    //         //     $("#temperature").val(response.data2[0].patient.temperature);
-                    //         //     $("#height").val(response.data2[0].patient.height);
-                    //         //     $("#weight").val(response.data2[0].patient.weight);
-                    //         //     $("#bmi").val(response.data2[0].patient.bmi);
-                    //         // }
-
-
-                    //     }
-                    // });
 
                     $.ajax({
                         type: "get",

@@ -36,6 +36,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\NewStockController;
@@ -99,15 +100,15 @@ use App\Http\Controllers\Inventory\ProductController;
 use App\Http\Controllers\PathologyCategoryController;
 use App\Http\Controllers\RadiologyCategoryController;
 use App\Http\Controllers\VaccinatedPatientController;
+use App\Http\Controllers\FunctionalMedicineController;
 use App\Http\Controllers\AppointmentCalendarController;
 use App\Http\Controllers\InvestigationReportController;
 use App\Http\Controllers\IpdPatientDepartmentController;
 use App\Http\Controllers\OpdPatientDepartmentController;
 use App\Http\Controllers\PatientDiagnosisTestController;
 use App\Http\Controllers\IpdConsultantRegisterController;
+use App\Http\Controllers\MedicationAdministrationController;
 use App\Http\Controllers\Purchase\GoodReceiveNoteController;
-use App\Http\Controllers\FunctionalMedicineController;
-use App\Http\Controllers\DiscountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -912,6 +913,12 @@ Route::middleware(['auth', 'verified', 'xss', 'checkUserStatus'])->group(functio
         Route::post('nursing-form/store', [NursingFormController::class, 'store'])->name('nursing-form.store');
         Route::get('nursing-form/{formID}', [NursingFormController::class, 'showForm']);
         Route::get('nursing-form/opd/list', [NursingFormController::class, 'opd']);
+
+        //MEDICATION ADMINISTRATION
+        Route::get('medication-administration', [MedicationAdministrationController::class, 'index'])->name('medication.index');
+        Route::get('medication-administration/create', [MedicationAdministrationController::class, 'create'])->name('medication.create');
+        Route::post('medication-administration/store', [MedicationAdministrationController::class, 'store'])->name('medication.store');
+        Route::get('medication-administration/{formID}', [MedicationAdministrationController::class, 'showForm'])->name('medication-show');
 
         //fast-medical-record
         Route::get('fast-medical-record', [NursingFormController::class, 'fastMedicalRecord'])->name('fast-medical-record.index');

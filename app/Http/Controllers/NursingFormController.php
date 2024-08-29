@@ -90,16 +90,18 @@ class NursingFormController extends Controller
             'details' => $request->details,
         ]));
 
-        foreach ($request->medications as $medication) {
-            Medication::create([
-                'nursing_form_id' => $nursingfrom->id,
-                'patient_mr_number' => $request->patient_mr_number,
-                'medication_name' => $medication['medication_name'],
-                'dosage' => $medication['dosage'],
-                'frequency' => $medication['frequency'],
-                'root' => $medication['root'],
-                'prescribing_physician' => $medication['prescribing_physician'],
-            ]);
+        if($request->medications){
+            foreach ($request->medications as $medication) {
+                    Medication::create([
+                    'nursing_form_id' => $nursingfrom->id,
+                    'patient_mr_number' => $request->patient_mr_number,
+                    'medication_name' => $medication['medication_name'],
+                    'dosage' => $medication['dosage'],
+                    'frequency' => $medication['frequency'],
+                    'root' => $medication['root'],
+                    'prescribing_physician' => $medication['prescribing_physician'],
+                ]);
+            }
         }
 
         foreach ($request->allergies as $allergie) {
