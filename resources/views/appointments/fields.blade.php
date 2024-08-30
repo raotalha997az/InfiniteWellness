@@ -43,23 +43,7 @@
             {{ Form::text('opd_date', isset($appointment) ? $appointment->opd_date->format('Y-m-d') : null, ['id' => 'appointmentOpdDate', 'class' => getLoggedInUser()->thememode ? 'bg-light opdDate form-control' : 'bg-white opdDate form-control', 'required', 'autocomplete' => 'off']) }}
         </div>
 
-        {{-- <div class="mb-5 form-group col-sm-6">
-            {{ Form::label('advance_amount', 'Advance Amount '.'(optional):', ['class' => 'form-label']) }} --}}
-        {{-- <span class="required"></span> --}}
-        {{-- {{ Form::text('advance_amount' ['id'=>'appointmentAdvanceAmount', 'class' => (getLoggedInUser()->thememode ? 'bg-light opdDate form-control' : 'bg-white opdDate form-control'), , 'autocomplete'=>'off']) }} --}}
-        {{-- <input type="number" name="advance_amount" id="appointmentAdvanceAmount" class="form-control">
-        </div> --}}
 
-        {{-- <div class="mb-5 form-group col-sm-6">
-            {{ Form::label('Payment Mode', __('Payment Mode ').':', ['class' => 'form-label']) }}
-            <span class="required"></span>
-            <select name="payment_mode" class="form-select" data-control="select2" id="payment_mode">
-                <option value="" selected disabled>Select Payment Method</option>
-                <option value="1">Cash</option>
-                <option value="2">Cheque</option>
-                <option value="3">Card</option>
-            </select>
-        </div> --}}
         <div class="mb-5 form-group col-sm-6">
             {{ Form::label('Service Description', __('Service Description').':', ['class' => 'form-label']) }}
             <span class="required"></span>
@@ -70,7 +54,7 @@
                 @endforeach
             </select>
         </div>
-        
+
         <!-- Notes Field -->
         <div class="mb-5 form-group col-sm-6">
             {{ Form::label('problem', __('messages.appointment.description') . ':', ['class' => 'form-label']) }}
@@ -269,7 +253,7 @@
                 <!-- Tabs Navigation -->
                 <ul class="nav nav-tabs" id="patientTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="online-patient-tab" data-toggle="tab" href="#online-patient" role="tab" aria-controls="online-patient" aria-selected="true">Online Patient</a>
+                        <a class="nav-link active" id="online-patient-tab" data-toggle="tab" href="#online-patient" role="tab" aria-controls="online-patient" aria-selected="true">On Call Patient</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="walkin-patient-tab" data-toggle="tab" href="#walkin-patient" role="tab" aria-controls="walkin-patient" aria-selected="false">Walk-in Patient</a>
@@ -319,7 +303,18 @@
                                     <span class="text-success valid-msg d-none fw-400 fs-small mt-2">✓ &nbsp; Valid</span>
                                     <span class="text-danger error-msg d-none fw-400 fs-small mt-2"></span>
                                 </div>
-
+                                <div class="form-group mb-5">
+                                    <label class="form-label">Gender:</label>
+                                    <span class="required"></span> &nbsp;<br>
+                                    <span class="is-valid">
+                                        <label class="form-label">Male</label>&nbsp;&nbsp;
+                                        <input type="radio" name="gender" value="0" class="form-check-input"
+                                            tabindex="6" id="patientMale2" checked> &nbsp;
+                                        <label class="form-label">Female</label>
+                                        <input type="radio" name="gender" value="1" class="form-check-input"
+                                            tabindex="7" id="patientFemale2">
+                                    </span>
+                                </div>
                                 {{-- <div class="form-group mb-5">
                                     <label class="form-label">Gender:</label>
                                     <span class="required"></span> &nbsp;<br>
@@ -406,7 +401,6 @@
                                     <span class="text-success valid-msg d-none fw-400 fs-small mt-2">✓ &nbsp; Valid</span>
                                     <span class="text-danger error-msg d-none fw-400 fs-small mt-2"></span>
                                 </div>
-
                                 <div class="form-group mb-5">
                                     <label class="form-label">Gender:</label>
                                     <span class="required"></span> &nbsp;<br>

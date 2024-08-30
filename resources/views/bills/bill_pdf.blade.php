@@ -136,6 +136,7 @@
             </table>
         </td>
     </tr>
+   
     <tr>
         <td style="width: 30%"></td>
         <td>
@@ -147,14 +148,14 @@
                 </tr>
                 <tr>
                     <td class="font-weight-bold">Discount:</td>
-                    <td>{{ checkNumberFormat($bill->discount_amount, strtoupper($bill['currency_symbol'] ?? getCurrentCurrency())) }}
+                    <td>{{ checkNumberFormat($bill->discount_amount * $bill->amount / 100, strtoupper($bill['currency_symbol'] ?? getCurrentCurrency())) }}
                     </td>
                 </tr>
-                <tr>
+                {{-- <tr>
                     <td class="font-weight-bold">Advance:</td>
                     <td>{{ checkNumberFormat(($bill->advance_amount) ? $bill->advance_amount : 0, strtoupper($bill['currency_symbol'] ?? getCurrentCurrency())) }}
                     </td>
-                </tr>
+                </tr> --}}
                 <tr>
                     <td class="font-weight-bold">Total Amount:</td>
                     <td>{{ checkNumberFormat($bill->total_amount - $bill->advance_amount, strtoupper($bill['currency_symbol'] ?? getCurrentCurrency())) }}
