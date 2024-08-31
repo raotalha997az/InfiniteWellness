@@ -5,6 +5,7 @@
         <span class="required"></span>
 
         {{ Form::select('patient_opd_id', $data['opd'], null, ['class' => 'form-select', 'id' => 'patientOPDId', 'placeholder' => 'Select OPD Id', 'data-control' => 'select2', 'required']) }}
+
     </div>
     {{ Form::hidden('patient_admission_id', null, ['id' => 'pAdmissionId']) }}
     {{ Form::hidden('patient_id', null, ['id' => 'billsPatientId']) }}
@@ -347,14 +348,16 @@
     input.onchange = function() {
         var selectedText = input.value;
         let txt = input.options[input.selectedIndex].innerHTML;
-        console.log('Selected Text:', selectedText);
+        console.log('Selected Texts:', selectedText);
+        const opid =txt.split(" ");
+        console.log("sdf",opid[0]);
 
         $.ajax({
             url: '/bills/opd/getPatient',
             method: 'GET',
             data: {
                 patientID: selectedText,
-                opdID: txt
+                opdID: opid[0]
             },
             success: function(response) {
                 // Handle the successful response here

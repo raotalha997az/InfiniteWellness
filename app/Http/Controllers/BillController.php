@@ -49,16 +49,21 @@ class BillController extends AppBaseController
     public function create()
     {
         $discout = Discount::where('active', 1)->get();
-        $dd = DB::table('opd_patient_departments')->get();
-        $dd2 = DB::table('dental_opd_patient_departments')->get();
+
+        // $dd = DB::table('opd_patient_departments')->get();
+        // $dd2 = DB::table('dental_opd_patient_departments')->get();
+
+        $dd = DB::select('select * from opd_patient_departments inner join patients on patients.id = opd_patient_departments.patient_id inner join users on users.id = patients.user_id');
+        $dd2 = DB::select('select * from dental_opd_patient_departments inner join patients on patients.id = dental_opd_patient_departments.patient_id inner join users on users.id = patients.user_id');
+
         $bills = Bill::PAYMENT_MODE;
         $db = [];
 
         foreach ($dd as $d) {
-            $db[$d->patient_id] = $d->opd_number;
+            $db[$d->patient_id] = $d->opd_number . ' - ' . $d->first_name . ' ' . $d->last_name . ' - ' . $d->phone;
         }
         foreach ($dd2 as $d) {
-            $db[$d->patient_id] = $d->opd_number;
+            $db[$d->patient_id] = $d->opd_number . ' - ' . $d->first_name . ' ' . $d->last_name . ' - ' . $d->phone;
         }
 
         $data = $this->billRepository->getSyncList(false);
