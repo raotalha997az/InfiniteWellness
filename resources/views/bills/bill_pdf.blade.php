@@ -76,12 +76,12 @@
                             {{ $bill->patient->MR }}
                         </td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <td class="font-weight-bold ">{{ __('messages.bill.cell_no') }}:</td>
                         <td class="">
                             {{ !empty($bill->patient->user->phone) ? $bill->patient->user->phone : 'N/A' }}
                         </td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <td class="font-weight-bold ">{{ __('messages.user.gender') }}:</td>
                         <td class="">

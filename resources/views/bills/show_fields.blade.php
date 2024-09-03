@@ -24,10 +24,10 @@
     </div>
 
     <div class="row g-5 mb-11">
-        <div class="col-sm-4">
+        {{-- <div class="col-sm-4">
             <div class="pb-2 fs-5 text-gray-600">{{ __('messages.bill.patient_cell_no').':' }}</div>
             <div class="fs-5 text-gray-800">{{ !empty($bill->patient->patientUser->phone) ? $bill->patient->patientUser->phone : __('messages.common.n/a') }}</div>
-        </div>
+        </div> --}}
         <div class="col-sm-4">
             <div class="pb-2 fs-5 text-gray-600">{{ __('messages.bill.patient_gender').':' }}</div>
             <div class="fs-5 text-gray-800">{{ (!$bill->patient->patientUser->gender) ? __('messages.user.male') : __('messages.user.female') }}</div>
