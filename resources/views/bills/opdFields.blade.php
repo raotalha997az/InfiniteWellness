@@ -353,110 +353,82 @@
         console.log("sdf",opid[0]);
 
         $.ajax({
-            url: '/bills/opd/getPatient',
-            method: 'GET',
-            data: {
-                patientID: selectedText,
-                opdID: opid[0]
-            },
-            success: function(response) {
-                // Handle the successful response here
-                let data = response;
-                console.log('Response:', data);
-                console.log(data['service_id']);
+    url: '/bills/opd/getPatient',
+    method: 'GET',
+    data: {
+        patientID: selectedText,
+        opdID: opid[0]
+    },
+    success: function(response) {
+        // Handle the successful response here
+        let data = response;
+        console.log('Response:', data);
+        console.log('gender : ', data['gender']);
 
-                if (data['service_id'] != null) {
-                    var service = data['service_id'];
-                    var lastRowNumber = $("#tableBody tr.itemList").length;
-                    service = JSON.parse(service);
-                    $.each(service, function(index, item) {
-                        $("#tableBody").append(`
-                        <tr id="billrow${lastRowNumber + index}" class="itemList">
-                            <td class="text-center item-number">${lastRowNumber + index + 1}</td>
-                            <td class="table__item-desc">
-                                <input type="text" name="item_name[]" readonly class="form-control itemName" required value="${item.service}">
-                            </td>
-                            <td>
-                                <input name="price[]" type="text" readonly value="${item.amount}" onkeyup="calculateTotal()" class="form-control price" required>
-                            </td>
-                            <td class="amount text-right itemTotal" id='amountTotal0'>
-                                ${item.amount}
-                            </td>
-                            <td class="table__qty">
-                            {{ Form::hidden('qty[]', 1, ['class' => 'form-control qty quantity', 'required']) }}
-                        </td>
-                        </tr>
-                        `);
-                    });
-                    calculateTotal();
+        // Reset both radio buttons
+        document.getElementById('genderMale').checked = false;
+        document.getElementById('genderFemale').checked = false;
 
-                }
+        // Set the correct radio button based on the gender
+        if (data['gender'] == 0) {
+            document.getElementById('genderMale').checked = true;
+        } else if (data['gender'] == 1) {
+            document.getElementById('genderFemale').checked = true;
+        }
 
-                document.getElementById('billsPatientId').value = selectedText;
-                document.getElementById('pAdmissionId').value = txt;
-                document.getElementById('name').value = data['first_name'] + " " + data['last_name'];
-                document.getElementById('userEmail').value = data['email'];
-                document.getElementById('userPhone').value = data['phone'];
-                document.getElementById('dob').value = data['dob'];
-                document.getElementById('billDoctorId').value = data['doctor']["first_name"] + " " +
-                    data['doctor']["last_name"];
-                document.getElementById('opdDate').value = data['created_at'];
-                // document.getElementById('totalPrice').innerHTML = "Rs " + data['charges'];
-                if (data['charges'] != null) {
-                    document.getElementById('followUpCharge').value = '';
-                    document.getElementById('opdCharge').value = data['charges'];
-                    document.getElementById('total').value = data['charges'];
-                    document.getElementById('totalPrices').value = data['charges'] - data[
-                        'advance_amount'];
-                    document.getElementById('totalPrices2').value = data['charges'] - data[
-                        'advance_amount'];
-                } else {
-                    document.getElementById('opdCharge').value = '';
-                    document.getElementById('followUpCharge').value = data['followup_charge'];
-                    document.getElementById('total').value = data['followup_charge'];
-                    document.getElementById('totalPrices').value = data['followup_charge'] - data[
-                        'advance_amount'];
-                    document.getElementById('totalPrices2').value = data['followup_charge'] - data[
-                        'advance_amount'];
-                }
-                document.getElementById('advance_amount').value = data['advance_amount'];
-                document.getElementById('advance_amount2').value = data['advance_amount'];
+        // Continue handling other data
+        document.getElementById('billsPatientId').value = selectedText;
+        document.getElementById('pAdmissionId').value = txt;
+        document.getElementById('name').value = data['first_name'] + " " + data['last_name'];
+        document.getElementById('userEmail').value = data['email'];
+        document.getElementById('userPhone').value = data['phone'];
+        document.getElementById('dob').value = data['dob'];
+        document.getElementById('billDoctorId').value = data['doctor']["first_name"] + " " +
+            data['doctor']["last_name"];
+        document.getElementById('opdDate').value = data['created_at'];
 
+        if (data['charges'] != null) {
+            document.getElementById('followUpCharge').value = '';
+            document.getElementById('opdCharge').value = data['charges'];
+            document.getElementById('total').value = data['charges'];
+            document.getElementById('totalPrices').value = data['charges'] - data['advance_amount'];
+            document.getElementById('totalPrices2').value = data['charges'] - data['advance_amount'];
+        } else {
+            document.getElementById('opdCharge').value = '';
+            document.getElementById('followUpCharge').value = data['followup_charge'];
+            document.getElementById('total').value = data['followup_charge'];
+            document.getElementById('totalPrices').value = data['followup_charge'] - data['advance_amount'];
+            document.getElementById('totalPrices2').value = data['followup_charge'] - data['advance_amount'];
+        }
 
+        if (data['service_id'] != null) {
+            var service = data['service_id'];
+            var lastRowNumber = $("#tableBody tr.itemList").length;
+            service = JSON.parse(service);
+            $.each(service, function(index, item) {
+                $("#tableBody").append(`
+                <tr id="billrow${lastRowNumber + index}" class="itemList">
+                    <td class="text-center item-number">${lastRowNumber + index + 1}</td>
+                    <td class="table__item-desc">
+                        <input type="text" name="item_name[]" readonly class="form-control itemName" required value="${item.service}">
+                    </td>
+                    <td>
+                        <input name="price[]" type="text" readonly value="${item.amount}" onkeyup="calculateTotal()" class="form-control price" required>
+                    </td>
+                    <td class="amount text-right itemTotal" id='amountTotal0'>
+                        ${item.amount}
+                    </td>
+                    <td class="table__qty">
+                        {{ Form::hidden('qty[]', 1, ['class' => 'form-control qty quantity', 'required']) }}
+                    </td>
+                </tr>
+                `);
+            });
+            calculateTotal();
+        }
+    }
+});
 
-
-                document.getElementById('discount').addEventListener("keyup", () => {
-
-                    var diccount = document.getElementById('discount').value;
-                    var totalPrices = document.getElementById('totalPrices2').value;
-                    var discount_amount = (diccount * totalPrices) / 100;
-                    $('#totalPrices').val(totalPrices - discount_amount - data[
-                        'advance_amount']);
-                    $('#totalPrices2').val(totalPrices - discount_amount - data[
-                        'advance_amount']);
-
-                })
-
-
-                if (data['charges'] != null) {
-                    document.getElementsByClassName('itemName')[0].value = "OPD";
-                } else if (data['followup_charge'] != null) {
-                    document.getElementsByClassName('itemName')[0].value = "OPD Follow Up";
-                }
-                // document.getElementsByClassName('quantity')[0].value = "1";
-                if (data['charges'] != null) {
-                    document.getElementsByClassName('price')[0].value = data['charges'];
-                    document.getElementsByClassName('itemTotal')[0].innerHTML = data['charges'];
-                } else {
-                    document.getElementsByClassName('price')[0].value = data['followup_charge'];
-                    document.getElementsByClassName('itemTotal')[0].innerHTML = data['followup_charge'];
-                }
-            },
-            error: function(xhr, status, error) {
-                // Handle any errors that occurred during the request
-                console.error('Error:', error);
-            }
-        });
     };
 
 

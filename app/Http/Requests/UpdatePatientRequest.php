@@ -25,7 +25,7 @@ class UpdatePatientRequest extends FormRequest
     public function rules()
     {
         $rules = Patient::$rules;
-        $rules['email'] = 'required|email:filter|unique:users,email,'.$this->route('patient')->patientUser->id;
+        $rules['email'] = 'nullable|email:filter|unique:users,email,'.$this->route('patient')->patientUser->id;
         $rules['image'] = 'mimes:jpeg,jpg,png,gif';
 
         return $rules;

@@ -17,8 +17,7 @@
     <div class="col-md-6">
         <div class="form-group mb-5">
             {{ Form::label('email', __('messages.user.email').':', ['class' => 'form-label']) }}
-            <span class="required"></span>
-            {{ Form::text('email', null, ['class' => 'form-control', 'required', 'tabindex' => '3','id'=>'editPatientEmail']) }}
+            {{ Form::text('email', null, ['class' => 'form-control', 'tabindex' => '3','id'=>'editPatientEmail']) }}
         </div>
     </div>
     <div class="col-md-6">
