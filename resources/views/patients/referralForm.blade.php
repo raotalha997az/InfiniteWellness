@@ -9,10 +9,10 @@
 <div class="container my-3">
         <form action="{{request()->url()}}" method="POST" enctype="multipart/form-data">
             @csrf
-            
+
             <div class="row">
                 <div class="col-12">
-                    <h2 class="text-center">Referral Form - Functional Medicine Clinic</h2>
+                    <h2 class="text-center">Referral Form</h2>
                 </div>
                 <br><br>
                 <div class="col-12">
@@ -59,17 +59,17 @@
                     >
                 </div>
 {{-- {{dd($patientData->user->email) }} --}}
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                {{-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
                     <div class="form-group">
                         <label for="exampleInputPhone">Phone Number</label>
                         <input name="PhoneNumber" type="text" class="form-control" readonly value="{{$patientData->user->phone}}" id="exampleInputPhone" aria-describedby="emailHelp"
                             >
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
                     <div class="form-group">
-                        <label for="date_of_referral">Date of Refferal</label>
+                        <label for="date_of_referral">Date of Referral</label>
                         <input name="date_of_referral" type="text" class="form-control" readonly value="{{now() }}" id="exampleInputPhone" aria-describedby="emailHelp"
                             >
                     </div>
@@ -324,7 +324,7 @@
                                 @endif
                             @endforeach
                             >
-                            <input type="hidden" name="oldreferralFormAttachment" 
+                            <input type="hidden" name="oldreferralFormAttachment"
                             @foreach($formData as $item)
                                 @if($item->fieldName == 'referralFormAttachment')
                                     value="{{trim($item->fieldValue)}}"
@@ -340,14 +340,14 @@
                     <br>
                         @foreach($formData as $item)
                         @if($item->fieldName == 'referralFormAttachment')
-                        <a href="/storage/Attachments/{{ trim($item->fieldValue) }} 
+                        <a href="/storage/Attachments/{{ trim($item->fieldValue) }}
                             " target="_blank">Show Attachment</a>
                             @break
                         @endif
                     @endforeach
                 </div>
 
-                
+
                 {{-- <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <label for="signature"> Signature</small>
                         <!-- <input type="email" class="form-control " id="textAreaExample18" aria-describedby="emailHelp"
@@ -363,11 +363,11 @@
 
                 </div> --}}
 
-               
+
             <hr>
 
 
-          
+
 
             @role('Admin|Doctor')
 <input class="btn btn-primary" type="submit" value="SAVE" />
