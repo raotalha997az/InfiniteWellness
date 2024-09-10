@@ -347,7 +347,7 @@
 </li>
 @endmodule
 @endrole
-@role('Admin|Receptionist')
+@role('Admin|Receptionist|Doctor')
 {{-- @module('Case Handlers',$modules)
 <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0  {{ (!Request::is('patients*','patient-cases*','case-handlers*','patient-admissions*')) ? 'd-none' : '' }}">
     <a class="nav-link p-0 {{ Request::is('case-handlers*') ? 'active' : '' }}"
@@ -356,6 +356,14 @@
     </a>
 </li>
 @endmodule --}}
+@module('Prescriptions',$modules)
+<li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('patients*','doctor-departments*','schedules*','prescriptions*')) ? 'd-none' : '' }}">
+    <a class="nav-link p-0 {{ Request::is('prescriptions*') ? 'active' : '' }}"
+       href="{{ route('prescriptions.index') }}">
+        {{ __('messages.prescriptions') }}
+    </a>
+</li>
+@endmodule
 @endrole
 @role('Admin|Receptionist|Doctor|Case Manager')
 @module('Patient Admissions',$modules)
@@ -490,16 +498,7 @@
 </li>
 @endmodule
 @endrole
-@role('Admin')
-@module('Prescriptions',$modules)
-<li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('doctors*','doctor-departments*','schedules*','prescriptions*')) ? 'd-none' : '' }}">
-    <a class="nav-link p-0 {{ Request::is('prescriptions*') ? 'active' : '' }}"
-       href="{{ route('prescriptions.index') }}">
-        {{ __('messages.prescriptions') }}
-    </a>
-</li>
-@endmodule
-@endrole
+
 @endrole
 @role('Admin')
 @module('Accountants',$modules)

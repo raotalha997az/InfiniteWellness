@@ -1062,14 +1062,13 @@ class PatientController extends AppBaseController
             $fileName = $formFile->fileName;
             $formData = DB::Table('form_data')->where(['formID' => $request->formPatientID])->get();
 
-            return view('patients.' . $fileName, compact('formData', 'nursingData', 'patientData', 'DietData', 'age','doctors','medication') ,['ignore_minify' => true],);
+            return view('patients.' . $fileName, compact('formData', 'nursingData', 'patientData', 'DietData', 'age','doctors','medication'),['ignore_minify' => true],);
         }
         return "fdsfasdf";
     }
 
     public function submitForm(Request $request)
     {
-        // dd($request->all());
         if ($request->BloodPressure != null) {
             Patient::where('id', $request->patient_id)->update([
                 'blood_pressure' => $request->BloodPressure,
@@ -1115,10 +1114,10 @@ class PatientController extends AppBaseController
         foreach ($reqArray as $fieldName => $fieldValue) {
             if ($fieldValue != null) {
                 DB::table('form_data')
-                    ->where('fieldName', $fieldName)->where('formID', $request->formPatientID) // Specify the condition for the update
-                    ->update([
-                        'fieldValue' => $fieldValue, // Update the fieldValue column with the new value
-                    ]);
+                ->where('fieldName', $fieldName)->where('formID', $request->formPatientID) // Specify the condition for the update
+                ->update([
+                    'fieldValue' => $fieldValue, // Update the fieldValue column with the new value
+                ]);
             } else {
                 DB::table('form_data')
                     ->where('fieldName', $fieldName)->where('formID', $request->formPatientID) // Specify the condition for the update
@@ -1270,13 +1269,31 @@ class PatientController extends AppBaseController
             $this->insertDentalData($insertedId, (int) $req->patientID);
         } elseif ($formName == 'Progress Form') {
             $this->insertProgressForm($insertedId, (int) $req->patientID);
+        }elseif ($formName == 'Medical Certificate') {
+            $this->insertMedicalCertificate($insertedId, (int) $req->patientID);
         }
 
         return redirect(route('patients.show', ['patient' => $req->patientID]));
 
         return 'working';
     }
+   public function  insertMedicalCertificate($formID, $patientID){
+    $data = [
+        ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'drName', 'fieldValue' => ''],
+        ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'patient_name', 'fieldValue' => ''],
+        ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'age', 'fieldValue' => ''],
+        ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'gender', 'fieldValue' => ''],
+        ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'suffering_from', 'fieldValue' => ''],
+        ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'advise', 'fieldValue' => ''],
+        ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'until', 'fieldValue' => ''],
+        ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'remarks', 'fieldValue' => ''],
+        ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'date', 'fieldValue' => ''],
+        ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'signature', 'fieldValue' => ''],
 
+    ];
+
+    DB::table('form_data')->insert($data);
+   }
     public function insertNutritientData($formID, $patientID)
     {
         $data = [
@@ -1926,6 +1943,7 @@ class PatientController extends AppBaseController
             ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'painScore', 'fieldValue' => ''],
             ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'allergy', 'fieldValue' => ''],
             ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'sign', 'fieldValue' => ''],
+            ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'desciption', 'fieldValue' => ''],
             ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'progressFormAttachment', 'fieldValue' => ''],
         ];
 
@@ -2037,7 +2055,8 @@ class PatientController extends AppBaseController
             ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'ConsultantDr', 'fieldValue' => ''],
             ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'ServiceSpeciality', 'fieldValue' => ''],
             ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'ReasonForReferral', 'fieldValue' => ''],
-            ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'PatientsMedicalHistory', 'fieldValue' => ''],
+            // ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'PatientsMedicalHistory', 'fieldValue' => ''], remove by dr fariha
+            ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'drSignature', 'fieldValue' => ''],
             ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'referralFormAttachment', 'fieldValue' => ''],
             // ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'signature', 'fieldValue' => ''],
 

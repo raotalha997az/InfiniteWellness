@@ -4,7 +4,6 @@
 @endsection
 
 @section('content')
-    {{--  {{dd($nursingData) }}  --}}
     <div class="container my-3">
         <form action="{{ request()->url() }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -17,10 +16,10 @@
                         <tr>
                             <td>Date</td>
                             <td>Time</td>
-                            <td>Location</td>
+                            {{-- <td>Location</td> --}}
                             <td>Wt</td>
                             <td>Ht</td>
-                            <td>FOC</td>
+                            {{-- <td>FOC</td> --}}
                             <td>Temp</td>
                             <td>B.P</td>
                             <td>Pulse</td>
@@ -45,7 +44,7 @@
                                     @break
                                 @endif @endforeach>
                             </td>
-                            <td>
+                            {{-- <td>
                                 <input type="text" name="location" class="form-control" id="location"
                                     placeholder="ENTER TEXT HERE"
                                     @foreach ($formData as $item)
@@ -53,13 +52,14 @@
                                     value="{{ trim($item->fieldValue) }}"
                                     @break
                                 @endif @endforeach>
-                            </td>
+                            </td> --}}
                             <td>
                                 <input type="text" name="weight" class="form-control" id="weight"
                                     placeholder="ENTER TEXT HERE"
                                     @foreach ($formData as $item)
                                 @if ($item->fieldName == 'weight')
-                                    value="{{ trim($item->fieldValue) }}"
+                                value="{{ trim($item->fieldValue) ? trim($item->fieldValue) : (isset($nursingData) && $nursingData->weight ? $nursingData->weight : '') }}"
+
                                     @break
                                 @endif @endforeach>
                             </td>
@@ -68,11 +68,11 @@
                                     placeholder="ENTER TEXT HERE"
                                     @foreach ($formData as $item)
                                 @if ($item->fieldName == 'height')
-                                    value="{{ trim($item->fieldValue) }}"
+                                    value="{{ trim($item->fieldValue) ? trim($item->fieldValue) :(isset($nursingData) && $nursingData->height ? $nursingData->height : '') }}"
                                     @break
                                 @endif @endforeach>
                             </td>
-                            <td>
+                            {{-- <td>
                                 <input type="text" name="foc" class="form-control" id="foc"
                                     placeholder="ENTER TEXT HERE"
                                     @foreach ($formData as $item)
@@ -80,13 +80,13 @@
                                     value="{{ trim($item->fieldValue) }}"
                                     @break
                                 @endif @endforeach>
-                            </td>
+                            </td> --}}
                             <td>
                                 <input type="text" name="temp" class="form-control" id="temp"
                                     placeholder="ENTER TEXT HERE"
                                     @foreach ($formData as $item)
                                 @if ($item->fieldName == 'temp')
-                                    value="{{ trim($item->fieldValue) }}"
+                                    value="{{ trim($item->fieldValue) ? trim($item->fieldValue) : (isset($nursingData) && $nursingData->temperature ? $nursingData->temperature : '')  }}"
                                     @break
                                 @endif @endforeach>
                             </td>
@@ -95,7 +95,7 @@
                                     placeholder="ENTER TEXT HERE"
                                     @foreach ($formData as $item)
                                 @if ($item->fieldName == 'bp')
-                                    value="{{ trim($item->fieldValue) }}"
+                                    value="{{ trim($item->fieldValue) ? trim($item->fieldValue) : (isset($nursingData) && $nursingData->blood_pressure ? $nursingData->blood_pressure : '') }}"
                                     @break
                                 @endif @endforeach>
                             </td>
@@ -104,7 +104,7 @@
                                     placeholder="ENTER TEXT HERE"
                                     @foreach ($formData as $item)
                                 @if ($item->fieldName == 'pulse')
-                                    value="{{ trim($item->fieldValue) }}"
+                                    value="{{ trim($item->fieldValue) ? trim($item->fieldValue) :  (isset($nursingData) && $nursingData->pulse ? $nursingData->pulse : '')}}"
                                     @break
                                 @endif @endforeach>
                             </td>
@@ -113,7 +113,7 @@
                                     placeholder="ENTER TEXT HERE"
                                     @foreach ($formData as $item)
                                 @if ($item->fieldName == 'res')
-                                    value="{{ trim($item->fieldValue) }}"
+                                    value="{{ trim($item->fieldValue) ? trim($item->fieldValue) : (isset($nursingData) && $nursingData->respiratory_rate ? $nursingData->respiratory_rate : '')}}"
                                     @break
                                 @endif @endforeach>
                             </td>
@@ -130,20 +130,21 @@
                                 @endif @endforeach> --}}
                     <select name="drsName" id="drsName" class="form-control">
                         @php
-                        $docOldname = '';
-                        foreach ($formData as $item) {
-                            if ($item->fieldName == 'drsName') {
-                                $formData[0]->fieldValue = trim($item->fieldValue);
-                                $docOldname = trim($item->fieldValue);
-                                break;
+                            $docOldname = '';
+                            foreach ($formData as $item) {
+                                if ($item->fieldName == 'drsName') {
+                                    $formData[0]->fieldValue = trim($item->fieldValue);
+                                    $docOldname = trim($item->fieldValue);
+                                    break;
+                                }
                             }
-                        }
                         @endphp
 
                         @foreach ($doctors as $dc)
                             @if ($dc->user)
                                 <option value="{{ $dc->user->first_name . ' ' . $dc->user->last_name }}"
-                                    class="form-control" {{ ($dc->user->first_name . ' ' . $dc->user->last_name == $docOldname) ? 'selected' : '' }}>
+                                    class="form-control"
+                                    {{ $dc->user->first_name . ' ' . $dc->user->last_name == $docOldname ? 'selected' : '' }}>
                                     {{ $dc->user->first_name . ' ' . $dc->user->last_name }}
                                 </option>
                             @else
@@ -152,12 +153,13 @@
                         @endforeach
                     </select>
                 </div>
+
                 <div class="col-md-3">
                     Pain Score
                     <input type="text" name="painScore" class="form-control" id="painScore" placeholder="ENTER TEXT HERE"
                         @foreach ($formData as $item)
                                 @if ($item->fieldName == 'painScore')
-                                    value="{{ trim($item->fieldValue) }}"
+                                    value="{{ trim($item->fieldValue) ? trim($item->fieldValue) : (isset($nursingData) && $nursingData->pain_level ? $nursingData->pain_level : '') }}"
                                     @break
                                 @endif @endforeach>
                 </div>
@@ -170,15 +172,16 @@
                                     @break
                                 @endif @endforeach>
                 </div>
-                <div class="col-md-3">
+                {{-- <div class="col-md-3">
+
                     Sign
                     <input type="text" name="sign" class="form-control" id="sign" placeholder="ENTER TEXT HERE"
                         @foreach ($formData as $item)
                                 @if ($item->fieldName == 'sign')
-                                    value="{{ trim($item->fieldValue) }}"
+                                    value="{{ trim($item->fieldValue) ? trim($item->fieldValue) : $nursingData->signature }}"
                                     @break
                                 @endif @endforeach>
-                </div>
+                </div> --}}
             </div>
 
 
@@ -215,9 +218,20 @@
             </div>
 
         </div>
-
+        <div class="row">
+            <div class="col-md-12">
+                <label for="desciption" class="form-label mt-5">Description</label>
+                <textarea name="desciption" class="form-control" id="desciption" placeholder="ENTER TEXT HERE" rows="5" >
+                    @foreach ($formData as $item)
+                    @if ($item->fieldName == 'desciption')
+                        {{ trim($item->fieldValue) }}
+                        @break
+                    @endif
+                    @endforeach
+                </textarea>
+            </div>
+        </div>
         <hr>
-
         @role('Admin|Doctor')
             <input class="btn btn-primary mt-5" type="submit" value="SAVE" />
         @endrole
@@ -288,5 +302,21 @@
     for (let index = 0; index < allInput2.length; index++) {
         allInput2[index].value = allInput2[index].value.trim();
     }
+</script>
+<!-- jQuery and CKEditor scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
+
+<script>
+    $(document).ready(function() {
+        ClassicEditor
+            .create(document.querySelector('#desciption'))
+            .then(editor => {
+                console.log('Editor initialized successfully.');
+            })
+            .catch(error => {
+                console.error('CKEditor error:', error);
+            });
+    });
 </script>
 @endsection
