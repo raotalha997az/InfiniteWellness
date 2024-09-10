@@ -105,6 +105,8 @@ class Prescription extends Model
         'others',
         'medical_history',
         'current_medication',
+        'TestsandConsultations',
+        'PatientEducation',
         'female_pregnancy',
         'breast_feeding',
         'health_insurance',

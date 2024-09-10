@@ -711,6 +711,7 @@ Route::middleware(['auth', 'verified', 'xss', 'checkUserStatus'])->group(functio
         // Route for Prescription
         Route::resource('prescriptions', PrescriptionController::class);
         Route::get('prescriptions/{id}/view', [PrescriptionController::class, 'prescriptionsView']);
+        Route::get('get-prescription-formData/{id}', [PrescriptionController::class, 'getFormData']);
         Route::get('prescription-pdf/{id}', [PrescriptionController::class, 'convertToPDF'])->name('prescriptions.pdf');
         Route::post('prescription-medicine', [PrescriptionController::class, 'prescreptionMedicineStore'])->name('prescription.medicine.store');
         Route::get(

@@ -97,7 +97,7 @@
                 <div class="col-lx-6 col-lg-6 col-md-6 col-sm-12 col-12">
                     <br>
                     <label for="exampleInput3">Blood Pressure</label>
-                    <input type="text" class="form-control " id="exampleInput3" placeholder="patient blood pressure" name="BloodPressure" 
+                    <input type="text" class="form-control " id="exampleInput3" placeholder="patient blood pressure" name="BloodPressure"
                     @foreach($formData as $item)
                                 @if($item->fieldName == 'BloodPressure')
                                     value="{{trim($item->fieldValue)}}"
@@ -109,7 +109,7 @@
                 <div class="col-lx-6 col-lg-6 col-md-6 col-sm-12 col-12">
                     <br>
                     <label for="exampleInput3">Heart Rate</label>
-                    <input type="text" class="form-control " id="exampleInput3" placeholder="patient heart rate" name="HeartRate" 
+                    <input type="text" class="form-control " id="exampleInput3" placeholder="patient heart rate" name="HeartRate"
                     @foreach($formData as $item)
                                 @if($item->fieldName == 'HeartRate')
                                     value="{{trim($item->fieldValue)}}"
@@ -121,7 +121,7 @@
                 <div class="col-lx-6 col-lg-6 col-md-6 col-sm-12 col-12">
                     <br>
                     <label for="exampleInput3">Respiratory Rate</label>
-                    <input type="text" class="form-control " id="exampleInput3" placeholder="patient respiratory rate" name="RespiratoryRate" 
+                    <input type="text" class="form-control " id="exampleInput3" placeholder="patient respiratory rate" name="RespiratoryRate"
                      @foreach($formData as $item)
                                 @if($item->fieldName == 'RespiratoryRate')
                                     value="{{trim($item->fieldValue)}}"
@@ -133,7 +133,7 @@
                 <div class="col-lx-6 col-lg-6 col-md-6 col-sm-12 col-12">
                     <br>
                     <label for="exampleInput3">Temperature</label>
-                    <input type="text" class="form-control " id="exampleInput3" placeholder="patient temperature" name="Temperature" 
+                    <input type="text" class="form-control " id="exampleInput3" placeholder="patient temperature" name="Temperature"
                      @foreach($formData as $item)
                                 @if($item->fieldName == 'Temperature')
                                     value="{{trim($item->fieldValue)}}"
@@ -182,7 +182,7 @@
                 <div class="col-lx-4 col-lg-4 col-md-4 col-sm-12 col-12">
                     <br>
                     <label for="exampleInput4">Height</label>
-                    <input type="text" class="form-control " id="exampleInput4" placeholder="patient height" name="Height" 
+                    <input type="text" class="form-control " id="exampleInput4" placeholder="patient height" name="Height"
                      @foreach($formData as $item)
                                 @if($item->fieldName == 'Height')
                                     value="{{trim($item->fieldValue)}}"
@@ -194,7 +194,7 @@
                 <div class="col-lx-4 col-lg-4 col-md-4 col-sm-12 col-12">
                     <br>
                     <label for="exampleInput5">Weight</label>
-                    <input type="text" class="form-control " name="Weight" id="exampleInput5" placeholder="patient weight" 
+                    <input type="text" class="form-control " name="Weight" id="exampleInput5" placeholder="patient weight"
                      @foreach($formData as $item)
                                 @if($item->fieldName == 'Weight')
                                     {{trim($item->fieldValue)}}
@@ -206,7 +206,7 @@
                 <div class="col-lx-4 col-lg-4 col-md-4 col-sm-12 col-12">
                     <br>
                     <label for="exampleInput6">Body Mass Index (BMI)</label>
-                    <input name="BodyMassIndex" type="text" class="form-control " id="exampleInput6" placeholder="patient BMI" 
+                    <input name="BodyMassIndex" type="text" class="form-control " id="exampleInput6" placeholder="patient BMI"
                      @foreach($formData as $item)
                                 @if($item->fieldName == 'BodyMassIndex')
                                     {{trim($item->fieldValue)}}
@@ -218,7 +218,7 @@
                 <div class="col-lx-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <br>
                     <label for="exampleInput7">Laboratory Values</label>
-                    <input name="LaboratoryValues" type="text" class="form-control " id="exampleInput7" placeholder="patient laboratory values" 
+                    <input name="LaboratoryValues" type="text" class="form-control " id="exampleInput7" placeholder="patient laboratory values"
                      @foreach($formData as $item)
                                 @if($item->fieldName == 'LaboratoryValues')
                                     {{trim($item->fieldValue)}}
@@ -419,7 +419,7 @@
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
                     <div class="form-group">
                         <label for="datepicker">Date of Birth</label>
-                        <input name="DateofBirth" type="text" class="form-control" id="datepicker" 
+                        <input name="DateofBirth" type="text" class="form-control" id="datepicker"
                           @foreach($formData as $item)
                                 @if($item->fieldName == 'DateofBirth')
                                     {{trim($item->fieldValue)}}

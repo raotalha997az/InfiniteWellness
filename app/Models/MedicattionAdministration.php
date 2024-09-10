@@ -36,7 +36,7 @@ class MedicattionAdministration extends Model
 
     public function Medication(): HasMany
     {
-        return $this->hasMany(MedicationAdministrationDetails::class);
+        return $this->hasMany(MedicationAdministrationDetails::class , 'medication_administration_id', 'id');
     }
 
 }

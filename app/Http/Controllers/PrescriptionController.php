@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use Illuminate\Http\RedirectResponse;
 use App\Repositories\DoctorRepository;
@@ -64,6 +65,23 @@ class PrescriptionController extends AppBaseController
      * Show the form for creating a new Prescription.
      *
      */
+    public function getFormData($patient_id)
+    {
+        // Fetch rows where fieldName is either 'TestsandConsultations' or 'PatientEducation'
+        $data = DB::table('form_data')
+                  ->where('patientID', $patient_id)
+                  ->whereIn('fieldName', ['TestsandConsultations', 'PatientEducation'])
+                  ->select('fieldName', 'fieldValue')
+                  ->orderByDesc('id')->get();
+
+
+        return response()->json(['success' => true, 'data' => $data], 200);
+    }
+
+
+
+
+
     public function create()
     {
         $patients2 = $this->prescriptionRepository->getPatients();
@@ -95,9 +113,11 @@ class PrescriptionController extends AppBaseController
      */
     public function store(CreatePrescriptionRequest $request)
     {
-        // dd($request);
         $input = $request->all();
         $input['status'] = isset($input['status']) ? 1 : 0;
+        $input['TestsandConsultations'] = $request->input('TestsandConsultations');
+        $input['PatientEducation'] = $request->input('PatientEducation');
+
         $prescription = $this->prescriptionRepository->create($input);
         $this->prescriptionRepository->createPrescription($input, $prescription);
         $this->prescriptionRepository->createNotification($input);

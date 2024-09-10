@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use App;
 use Flash;
 use Exception;
@@ -13,6 +12,7 @@ use App\Models\Patient;
 use App\Models\BedAssign;
 use App\Models\Dietitian;
 use Illuminate\View\View;
+use App\Models\Medication;
 use App\Models\Appointment;
 use App\Models\BirthReport;
 use App\Models\DeathReport;
@@ -28,6 +28,7 @@ use App\Models\OperationReport;
 use App\Models\PatientAdmission;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\DB;
 use App\Models\InvestigationReport;
 use App\Models\IpdPatientDepartment;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +40,7 @@ use App\Http\Requests\DietitianRequest;
 use App\Repositories\PatientRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use App\Models\MedicattionAdministration;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\CreatePatientRequest;
 use App\Http\Requests\UpdatePatientRequest;
@@ -1051,6 +1053,7 @@ class PatientController extends AppBaseController
             ($ageDifference->m > 0) ? ($ageDifference->m . ' Months') : ($ageDifference->d . ' Days')
         );
         $nursingData = NursingForm::where('patient_mr_number', $patientID)->with(['patient.user', 'Allergies', 'Medication'])->first();
+        $medication = MedicattionAdministration::where('mr_number', $patientID)->with('Medication')->first();
 
         $form_patientId = DB::Table('form_patient')->where(['id' => $request->formPatientID])->first();
         $DietData = DB::Table('dietitianAssessment')->where(['patient_id' => $patient])->first();
@@ -1059,14 +1062,14 @@ class PatientController extends AppBaseController
             $fileName = $formFile->fileName;
             $formData = DB::Table('form_data')->where(['formID' => $request->formPatientID])->get();
 
-            return view('patients.' . $fileName, compact('formData', 'nursingData', 'patientData', 'DietData', 'age','doctors') ,['ignore_minify' => true],);
+            return view('patients.' . $fileName, compact('formData', 'nursingData', 'patientData', 'DietData', 'age','doctors','medication') ,['ignore_minify' => true],);
         }
         return "fdsfasdf";
     }
 
     public function submitForm(Request $request)
     {
-        // dd($request);
+        // dd($request->all());
         if ($request->BloodPressure != null) {
             Patient::where('id', $request->patient_id)->update([
                 'blood_pressure' => $request->BloodPressure,
@@ -1123,6 +1126,7 @@ class PatientController extends AppBaseController
                         'fieldValue' => '', // Update the fieldValue column with the new value
                     ]);
             }
+
         }
 
         // Handle updating the image data
@@ -1899,6 +1903,7 @@ class PatientController extends AppBaseController
             ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'FamilyMedicalHistory', 'fieldValue' => ''],
             ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'SocialHistory', 'fieldValue' => ''],
             ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'PhysicalExamination', 'fieldValue' => ''],
+            ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'editor', 'fieldValue' => ''],
             ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'soapFormAttachment', 'fieldValue' => ''],
         ];
 

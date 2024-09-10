@@ -348,14 +348,14 @@
 @endmodule
 @endrole
 @role('Admin|Receptionist')
-@module('Case Handlers',$modules)
+{{-- @module('Case Handlers',$modules)
 <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0  {{ (!Request::is('patients*','patient-cases*','case-handlers*','patient-admissions*')) ? 'd-none' : '' }}">
     <a class="nav-link p-0 {{ Request::is('case-handlers*') ? 'active' : '' }}"
        href="{{ route('case-handlers.index') }}">
         {{ __('messages.case_handlers') }}
     </a>
 </li>
-@endmodule
+@endmodule --}}
 @endrole
 @role('Admin|Receptionist|Doctor|Case Manager')
 @module('Patient Admissions',$modules)

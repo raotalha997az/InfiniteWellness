@@ -89,10 +89,10 @@
                 <a class="nav-link p-0" data-bs-toggle="tab"
                    href="#showPatientDocument">{{ __('messages.documents') }}</a>
             </li>
-            <li class="nav-item position-relative me-7 mb-3">
+            {{-- <li class="nav-item position-relative me-7 mb-3">
                 <a class="nav-link p-0" data-bs-toggle="tab"
                    href="#showPatientVaccinated">{{ __('messages.vaccinations') }}</a>
-            </li>
+            </li> --}}
             <li class="nav-item position-relative me-7 mb-3">
                 <a class="nav-link p-0" data-bs-toggle="tab"
                    href="#addonForms">Addon Forms</a>
@@ -122,10 +122,10 @@
                 <a class="nav-link p-0" data-bs-toggle="tab"
                    href="#showPatientDocument">{{ __('messages.documents') }}</a>
             </li>
-            <li class="nav-item position-relative me-7 mb-3">
+            {{-- <li class="nav-item position-relative me-7 mb-3">
                 <a class="nav-link p-0" data-bs-toggle="tab"
                    href="#showPatientVaccinated">{{ __('messages.vaccinations') }}</a>
-            </li>
+            </li> --}}
             <li class="nav-item position-relative me-7 mb-3">
                 <a class="nav-link p-0" data-bs-toggle="tab"
                    href="#addonForms">Addon Forms</a>
@@ -233,9 +233,9 @@
     <div class="tab-pane fade" id="showPatientDocument" role="tabpanel">
         <livewire:patient-document-table patient-id="{{ $data->id }}"/>
     </div>
-    <div class="tab-pane fade" id="showPatientVaccinated" role="tabpanel">
+    {{-- <div class="tab-pane fade" id="showPatientVaccinated" role="tabpanel">
         <livewire:patient-vaccination-detail-table patient-id="{{ $data->id }}"/>
-    </div>
+    </div> --}}
 
 
     <div class="tab-pane fade" id="addonForms" role="tabpanel">

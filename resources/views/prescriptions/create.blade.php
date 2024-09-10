@@ -28,7 +28,7 @@
             {{ Form::open(['route' => 'prescriptions.store', 'id' => 'createPrescription']) }}
             @csrf
             <div class="card">
-                <div class="card-body">
+                <div class="card-body padding-right-off">
                     @include('prescriptions.fields')
                 </div>
             </div>
