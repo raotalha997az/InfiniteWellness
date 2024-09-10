@@ -29,24 +29,35 @@
     }
 
     @media print {
-            /* Hide everything except the specific section */
-            body * {
-                visibility: hidden;
-            }
-            section.container, section.container * {
-                visibility: visible;
-            }
-            section.container {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-            }
+        /* Hide everything except the specific section */
+        body * {
+            visibility: hidden;
         }
+        section.container, section.container * {
+            visibility: visible;
+        }
+        section.container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        /* Hide the SAVE button inside the form when printing */
+        form .btn-primary {
+            display: none;
+        }
+    }
 </style>
+
+<script>
+       function printSection() {
+            window.print();
+        }
+</script>
 @section('content')
     <div class="container my-3">
-        <button class="btn btn-primary" onclick="window.print()">Print</button>
+        <button class="btn btn-primary" onclick="printSection()">Print</button>
         <section class="container p-5">
             <div class="d-flex flex-column gap-3 justify-content-center align-items-center">
                 <header>
@@ -119,7 +130,7 @@
                         </div>
                     </div>
                     @role('Admin|Doctor')
-                        <input class="btn btn-primary mt-5" type="submit" value="SAVE" />
+                    <input class="btn btn-primary mt-5" type="submit" value="SAVE">
                     @endrole
                 </form>
             </div>
@@ -189,5 +200,6 @@
         for (let index = 0; index < allInput2.length; index++) {
             allInput2[index].value = allInput2[index].value.trim();
         }
+
     </script>
 @endsection
