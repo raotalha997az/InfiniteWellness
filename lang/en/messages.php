@@ -1004,7 +1004,7 @@ return [
         'others' => 'Others',
         'medical_history' => 'Medical History',
         'current_medication' => 'Current Medication',
-        'female_pregnancy' => 'Female Pregnancy',
+        'female_pregnancy' => 'Pregnancy',
         'breast_feeding' => 'Breast Feeding',
         'health_insurance' => 'Health Insurance',
         'low_income' => 'Low Income',

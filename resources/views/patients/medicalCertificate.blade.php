@@ -29,13 +29,17 @@
     }
 
     @media print {
+
         /* Hide everything except the specific section */
         body * {
             visibility: hidden;
         }
-        section.container, section.container * {
+
+        section.container,
+        section.container * {
             visibility: visible;
         }
+
         section.container {
             position: absolute;
             top: 0;
@@ -51,9 +55,9 @@
 </style>
 
 <script>
-       function printSection() {
-            window.print();
-        }
+    function printSection() {
+        window.print();
+    }
 </script>
 @section('content')
     <div class="container my-3">
@@ -74,7 +78,12 @@
                     @csrf
                     <div class="d-flex gap-2 input_box">
                         <label for="dr">I, Dr.</label>
-                        <input type="text" id="dr" name="drName">
+                        <input type="text" id="dr" name="drName"
+                            @foreach ($formData as $item)
+                        @if ($item->fieldName == 'drName')
+                        value="{{ trim($item->fieldValue) ? trim($item->fieldValue) : '' }}"
+                        @break
+                    @endif @endforeach>
                     </div>
                     <h5>Certify That</h5>
                     <div class="d-flex gap-2 input_box col-7">
@@ -82,55 +91,93 @@
                         <input type="text" id="pn" name="patient_name"
                             @foreach ($formData as $item)
                     @if ($item->fieldName == 'patient_name')
-                        value="{{ trim($item->fieldValue) ? trim($item->fieldValue) : $patientData->user->first_name . ' ' .$patientData->user->last_name }}"
+                        value="{{ trim($item->fieldValue) ? trim($item->fieldValue) : $patientData->user->first_name . ' ' . $patientData->user->last_name }}"
                         @break
-                    @endif @endforeach readonly>
+                    @endif @endforeach
+                            readonly>
                     </div>
                     <div class="d-flex gap-2 input_box col-3">
                         <label for="age">Age</label>
                         <input type="text" min="1" id="age" name="age"
                             @foreach ($formData as $item)
                                 @if ($item->fieldName == 'age')
-                                    value="{{  trim($item->fieldValue) ? trim($item->fieldValue) : $age }}"
+                                    value="{{ trim($item->fieldValue) ? trim($item->fieldValue) : $age }}"
                                     @break
-                                @endif
-                            @endforeach readonly>
+                                @endif @endforeach
+                            readonly>
                     </div>
                     <div class="d-flex gap-2 input_box col-3">
                         <label for="gen">Gender</label>
                         <input type="text" id="gen" name="gender"
                             @foreach ($formData as $item)
                             @if ($item->fieldName == 'gender') value="{{ trim($item->fieldValue) ?: ($patientData->user->gender == 0 ? 'Male' : ($patientData->user->gender == 1 ? 'Female' : 'Other')) }}"
-                        @break @endif @endforeach readonly>
+                        @break @endif @endforeach
+                            readonly>
                     </div>
                     <div class="d-flex gap-2 input_box">
                         <label for="dis">Is suffering from</label>
-                        <textarea type="text" id="dis" rows="5" name="suffering_from"></textarea>
+                        <textarea type="text" id="dis" rows="5" name="suffering_from">
+@foreach ($formData as $item)
+@if ($item->fieldName == 'suffering_from')
+{{ trim($item->fieldValue) ? trim($item->fieldValue) : '' }}
+@break
+@endif
+@endforeach
+</textarea>
                     </div>
                     <div class="d-flex gap-2 input_box">
                         <label for="advise">He/She is advised to refrain from work starting</label>
-                        <input type="text" id="advise" name="advise">
+                        <input type="text" id="advise" name="advise"
+                        @foreach ($formData as $item)
+                        @if ($item->fieldName == 'advise')
+                        value="{{ trim($item->fieldValue) ? trim($item->fieldValue) : '' }}"
+                        @break
+                    @endif @endforeach>
                     </div>
                     <div class="d-flex gap-2 input_box col-3">
                         <label for="until">Until</label>
-                        <input type="text" id="until" name="until">
+                        <input type="text" id="until" name="until"
+                        @foreach ($formData as $item)
+                        @if ($item->fieldName == 'until')
+                        value="{{ trim($item->fieldValue) ? trim($item->fieldValue) : '' }}"
+                        @break
+                    @endif @endforeach
+                        >
                     </div>
                     <div class="d-flex gap-2 input_box">
                         <label for="rem">Remarks</label>
-                        <textarea type="text" id="rem" rows="3" name="remarks"></textarea>
+                        <textarea type="text" id="rem" rows="3" name="remarks">
+                            @foreach ($formData as $item)
+                            @if ($item->fieldName == 'remarks')
+                            {{ trim($item->fieldValue) ? trim($item->fieldValue) : '' }}
+                            @break
+                        @endif @endforeach
+                        </textarea>
                     </div>
                     <div class="d-flex justify-content-between align-items-end">
                         <div class="d-flex flex-column justify-content-center align-items-center gap-2 input_box">
-                            <input type="date" id="date" name="date">
+                            <input type="date" id="date" name="date"
+                            @foreach ($formData as $item)
+                            @if ($item->fieldName == 'date')
+                            value="{{ trim($item->fieldValue) ? trim($item->fieldValue) : '' }}"
+                            @break
+                        @endif @endforeach
+                            >
                             <label for="date">(Date)</label>
                         </div>
                         <div class="d-flex flex-column justify-content-center align-items-center gap-2 input_box">
-                            <input type="text" id="sig" name="signature">
+                            <input type="text" id="sig" name="signature"
+                            @foreach ($formData as $item)
+                            @if ($item->fieldName == 'signature')
+                            value="{{ trim($item->fieldValue) ? trim($item->fieldValue) : '' }}"
+                            @break
+                        @endif @endforeach
+                            >
                             <label for="sig">(Signature)</label>
                         </div>
                     </div>
                     @role('Admin|Doctor')
-                    <input class="btn btn-primary mt-5" type="submit" value="SAVE">
+                        <input class="btn btn-primary mt-5" type="submit" value="SAVE">
                     @endrole
                 </form>
             </div>
@@ -200,6 +247,5 @@
         for (let index = 0; index < allInput2.length; index++) {
             allInput2[index].value = allInput2[index].value.trim();
         }
-
     </script>
 @endsection
