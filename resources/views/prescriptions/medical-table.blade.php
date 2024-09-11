@@ -140,6 +140,9 @@
                             <td>
                                 {{ Form::textarea('comment[]', $prescription->comment, ['class' => 'form-control', 'rows'=>1]) }}
                             </td>
+                            <td>
+                                {{ Form::text('route[]', null, ['class' => 'form-control']) }}
+                            </td>
                             <td class="text-center">
                                 <a href="javascript:void(0)" title="{{__('messages.common.delete')}}"
                                    class="delete-prescription-medicine-item btn px-1 text-danger fs-3 pe-0">
@@ -175,6 +178,9 @@
                     </td>
                     <td>
                         {{ Form::textarea('comment[]', null, ['class' => 'form-control', 'rows'=>1]) }}
+                    </td>
+                    <td>
+                        {{ Form::text('route[]', null, ['class' => 'form-control']) }}
                     </td>
                     <td class="text-center">
                         <a href="javascript:void(0)" title=" {{__('messages.common.delete')}}"

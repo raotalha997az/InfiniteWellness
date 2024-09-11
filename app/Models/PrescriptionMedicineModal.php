@@ -32,6 +32,7 @@ class PrescriptionMedicineModal extends Model
         'day',
         'time',
         'comment',
+        'route',
     ];
 
     /**

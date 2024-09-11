@@ -300,6 +300,7 @@
                         <th scope="col">{{ __('messages.prescription.medicine_name') }}</th>
                         <th scope="col">{{ __('messages.ipd_patient_prescription.dosage') }}</th>
                         <th scope="col">{{ __('messages.prescription.duration') }}</th>
+                        <th scope="col">Route</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -316,6 +317,7 @@
                                 @endif
                             </td>
                             <td class="py-4 border-bottom-0">{{ $medicine->day }} Day</td>
+                            <td class="py-4 border-bottom-0">{{ $medicine->route ? $medicine->route  : ''}} Route</td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -130,7 +130,7 @@ class PrescriptionRepository extends BaseRepository
                     'day' => $input['day'][$key],
                     'time' => $input['time'][$key],
                     'comment' => $input['comment'][$key],
-                    
+                    'route' => $input['route'][$key],
                 ];
                 PrescriptionMedicineModal::create($PrescriptionItem);
             }

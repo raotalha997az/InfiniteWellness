@@ -113,11 +113,12 @@ class PrescriptionController extends AppBaseController
      */
     public function store(CreatePrescriptionRequest $request)
     {
+        // dd($request->all());
         $input = $request->all();
         $input['status'] = isset($input['status']) ? 1 : 0;
         $input['TestsandConsultations'] = $request->input('TestsandConsultations');
         $input['PatientEducation'] = $request->input('PatientEducation');
-        $input['route'] = $request->input('route');
+        
 
         $prescription = $this->prescriptionRepository->create($input);
         $this->prescriptionRepository->createPrescription($input, $prescription);

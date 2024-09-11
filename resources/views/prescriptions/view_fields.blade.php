@@ -303,6 +303,7 @@
                         <th scope="col">{{ __('messages.prescription.medicine_name') }}</th>
                         <th scope="col">{{ __('messages.ipd_patient_prescription.dosage') }}</th>
                         <th scope="col">{{ __('messages.prescription.duration') }}</th>
+                        <th scope="col">Route</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -313,7 +314,6 @@
                             </td>
                         </tr>
                     @else
-                        {{-- {{dd($prescription) }} --}}
                         @foreach ($prescription->getMedicine as $medicine)
                             <tr>
                                 <td class="py-4 border-bottom-0">
@@ -329,6 +329,8 @@
                                 </td>
                                 <td class="py-4 border-bottom-0">
                                     {{ $medicine->day === null ? 'Not Available' : $medicine->day }} Day</td>
+                                    <td class="py-4 border-bottom-0">
+                                        {{ $medicine->route === null ? 'Not Available' : $medicine->route }} Route</td>
                             </tr>
                         @endforeach
                     @endif
