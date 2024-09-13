@@ -4,8 +4,6 @@
 @endsection
 
 @section('content')
-
-    {{--  {{dd($patientData) }}  --}}
     <div class="container my-3">
         <form action="{{ request()->url() }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -81,7 +79,7 @@
                         <label for="textAreaExample20">Family Medical History</label>
                         <small>(if relevant)</small>
                         <!-- <input type="email" class="form-control " id="textAreaExample18" aria-describedby="emailHelp"
-                                                    placeholder=""> -->
+                                                                        placeholder=""> -->
                         <textarea class="form-control" id="textAreaExample20" rows="4" placeholder="Family medical history "
                             name="FamilyMedicalHistory">
                          @foreach ($formData as $item)
@@ -96,7 +94,7 @@
                         <label for="textAreaExample21">Social History</label>
                         <small>(e.g., smoking, alcohol consumption)</small>
                         <!-- <input type="email" class="form-control " id="textAreaExample18" aria-describedby="emailHelp"
-                                                    placeholder=""> -->
+                                                                        placeholder=""> -->
                         <textarea class="form-control" id="textAreaExample21" rows="4" placeholder="(e.g., smoking, alcohol consumption) "
                             name="SocialHistory">
                         @foreach ($formData as $item)
@@ -389,18 +387,50 @@
                     </li>  --}}
                     <br>
                     <li>
-                        <label for="textAreaExample12">Medications</label>
-                        <table class="table bordered">
-                            <thead>
-                                <tr>
-                                    <td>Medication</td>
-                                    <td>Dosage</td>
-                                    <td>Frequency</td>
-                                    <td>Route</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if ($nursingData)
+                        <div class="table-responsive">
+                            <label for="textAreaExample12">Medications</label>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <td>Medication</td>
+                                        <td>Dosage</td>
+                                        <td>Frequency</td>
+                                        <td>Route</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        // Initialize default values for the form fields
+                                        $medication = '';
+                                        $dosage = '';
+                                        $frequency = '';
+                                        $route = '';
+
+                                        // Loop through formData to find values for the fields
+                                        foreach ($formData as $item) {
+                                            if ($item->fieldName == 'medication') {
+                                                $medication = trim($item->fieldValue);
+                                            }
+                                            if ($item->fieldName == 'dosage') {
+                                                $dosage = trim($item->fieldValue);
+                                            }
+                                            if ($item->fieldName == 'frequency') {
+                                                $frequency = trim($item->fieldValue);
+                                            }
+                                            if ($item->fieldName == 'route') {
+                                                $route = trim($item->fieldValue);
+                                            }
+                                        }
+                                    @endphp
+
+                                    <tr>
+                                        <td><input type="text" value="{{ $medication }}" name="medication"></td>
+                                        <td><input type="text" value="{{ $dosage }}" name="dosage"></td>
+                                        <td><input type="text" value="{{ $frequency }}" name="frequency"></td>
+                                        <td><input type="text" value="{{ $route }}" name="route"></td>
+                                    </tr>
+
+                                    {{-- @if ($nursingData)
                                     @foreach ($nursingData->Medication as $medication)
                                         <tr>
                                             <td>{{ $medication->medication_name == null ? '-' : $medication->medication_name }}
@@ -409,8 +439,9 @@
                                             <td>{{ $medication->frequency == null ? '-' : $medication->frequency }}</td>
                                         </tr>
                                     @endforeach
-                                @endif
-                                {{-- @if ($medication)
+                                @endif --}}
+                                    {{-- {{ dd($medication) }}
+                                @if ($medication)
                                     @foreach ($medication->Medication as $medication)
                                         <tr>
                                         <td></td>
@@ -420,8 +451,9 @@
                                     </tr>
                                     @endforeach
                                 @endif --}}
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                 </div>
                 </li>
 
@@ -482,14 +514,13 @@
                     <br>
                     <li>
                         <label for="editor">Others</label>
-                        <textarea class="form-control" id="editor" rows="4"
-                            placeholder="" name="editor">
+                        <textarea class="form-control" id="editor" rows="4" placeholder="" name="editor">
                                 @foreach ($formData as $item)
-                                @if ($item->fieldName == 'editor')
-                                {{ trim($item->fieldValue) }}
-                                @break
-                                @endif
-                                @endforeach
+@if ($item->fieldName == 'editor')
+{{ trim($item->fieldValue) }}
+@break
+@endif
+@endforeach
                         </textarea>
                     </li>
                 </div>
@@ -611,7 +642,6 @@
         }
     });
     });
-    });
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
@@ -619,11 +649,10 @@
     $(document).ready(function() {
         ClassicEditor
             .create(document.querySelector('#editor'))
-            .then(editor => {
-            })
+            .then(editor => {})
             .catch(error => {
                 console.error('CKEditor error:', error);
             });
     });
-    </Script>
+</Script>
 @endsection

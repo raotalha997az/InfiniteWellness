@@ -68,6 +68,10 @@
                     <div class="form-logo d-flex justify-content-center align-items-center">
                         <img src="http://infinitewellnesspk.com/wp-content/uploads/2024/02/infinite-.svg" alt="Image Here">
                     </div>
+                    <p class="text-center mt-3">Plot No.35/135. CP & Berar Cooperative Housing Society, PECHS, Block 7/8,
+                        Karachi East.</p>
+                    <p class="text-center">0348-1349769</p>
+                    <p class="text-center">0325-8331133</p>
                     <div class="text-center py-5">
                         <h1>MEDICAL CERTIFICATE</h1>
                         <h5>To whom it may concern</h5>
@@ -128,7 +132,7 @@
                     <div class="d-flex gap-2 input_box">
                         <label for="advise">He/She is advised to refrain from work starting</label>
                         <input type="text" id="advise" name="advise"
-                        @foreach ($formData as $item)
+                            @foreach ($formData as $item)
                         @if ($item->fieldName == 'advise')
                         value="{{ trim($item->fieldValue) ? trim($item->fieldValue) : '' }}"
                         @break
@@ -137,42 +141,40 @@
                     <div class="d-flex gap-2 input_box col-3">
                         <label for="until">Until</label>
                         <input type="text" id="until" name="until"
-                        @foreach ($formData as $item)
+                            @foreach ($formData as $item)
                         @if ($item->fieldName == 'until')
                         value="{{ trim($item->fieldValue) ? trim($item->fieldValue) : '' }}"
                         @break
-                    @endif @endforeach
-                        >
+                    @endif @endforeach>
                     </div>
                     <div class="d-flex gap-2 input_box">
                         <label for="rem">Remarks</label>
                         <textarea type="text" id="rem" rows="3" name="remarks">
                             @foreach ($formData as $item)
-                            @if ($item->fieldName == 'remarks')
-                            {{ trim($item->fieldValue) ? trim($item->fieldValue) : '' }}
-                            @break
-                        @endif @endforeach
+@if ($item->fieldName == 'remarks')
+{{ trim($item->fieldValue) ? trim($item->fieldValue) : '' }}
+@break
+@endif
+@endforeach
                         </textarea>
                     </div>
                     <div class="d-flex justify-content-between align-items-end">
                         <div class="d-flex flex-column justify-content-center align-items-center gap-2 input_box">
                             <input type="date" id="date" name="date"
-                            @foreach ($formData as $item)
+                                @foreach ($formData as $item)
                             @if ($item->fieldName == 'date')
                             value="{{ trim($item->fieldValue) ? trim($item->fieldValue) : '' }}"
                             @break
-                        @endif @endforeach
-                            >
+                        @endif @endforeach>
                             <label for="date">(Date)</label>
                         </div>
                         <div class="d-flex flex-column justify-content-center align-items-center gap-2 input_box">
                             <input type="text" id="sig" name="signature"
-                            @foreach ($formData as $item)
+                                @foreach ($formData as $item)
                             @if ($item->fieldName == 'signature')
                             value="{{ trim($item->fieldValue) ? trim($item->fieldValue) : '' }}"
                             @break
-                        @endif @endforeach
-                            >
+                        @endif @endforeach>
                             <label for="sig">(Signature)</label>
                         </div>
                     </div>

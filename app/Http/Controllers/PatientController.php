@@ -1922,6 +1922,10 @@ class PatientController extends AppBaseController
             ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'PhysicalExamination', 'fieldValue' => ''],
             ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'editor', 'fieldValue' => ''],
             ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'soapFormAttachment', 'fieldValue' => ''],
+            ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'medication', 'fieldValue' => ''],
+            ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'dosage', 'fieldValue' => ''],
+            ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'frequency', 'fieldValue' => ''],
+            ['formID' => $formID, 'patientID' => $patientID, 'fieldName' => 'route', 'fieldValue' => ''],
         ];
 
         DB::table('form_data')->insert($data);

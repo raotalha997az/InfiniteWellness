@@ -2,15 +2,29 @@
 @section('title')
     {{ __('messages.patients') }}
 @endsection
+<style>
+    .form-logo img {
+        height: 5rem;
+    }
 
+    .forem {
+        width: 100%;
+    }
+</style>
 @section('content')
     <div class="container my-3">
         <form action="{{ request()->url() }}" method="POST" enctype="multipart/form-data">
             @csrf
-
+            <div class="form-logo d-flex justify-content-center align-items-center">
+                <img src="http://infinitewellnesspk.com/wp-content/uploads/2024/02/infinite-.svg" alt="Image Here">
+            </div>
+            <p class="text-center mt-3">Plot No.35/135. CP & Berar Cooperative Housing Society, PECHS, Block 7/8, Karachi
+                East.</p>
+            <p class="text-center">0348-1349769</p>
+            <p class="text-center">0325-8331133</p> 
             <div class="row">
                 <div class="col-12">
-                    <h2 class="text-center">Referral Form</h2>
+                    <h2 class="text-center mt-5">Referral Form</h2>
                 </div>
                 <br><br>
                 <div class="col-12">
@@ -279,7 +293,7 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                     <label for="textAreaExample23">Describe The Reason For Referral / Any Specific Concerns </small>
                         <!-- <input type="email" class="form-control " id="textAreaExample18" aria-describedby="emailHelp"
-                                placeholder=""> -->
+                                    placeholder=""> -->
                         <textarea class="form-control" id="textAreaExample23" rows="4" cols="80"
                             placeholder="Briefly describe the reason for referral and any specific concerns. " name="ReasonForReferral">
                               @foreach ($formData as $item)
@@ -299,43 +313,42 @@
                             @if ($item->fieldName == 'drSignature')
                                value="{{ trim($item->fieldValue) }}"
                             @break
-                        @endif
-                    @endforeach>
-            </div>
+                        @endif @endforeach>
+                </div>
 
-            <div class="col-lx-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                <br>
-                <label for="exampleInput8">Attach File</label>
-                <input name="referralFormAttachment" type="file" class="form-control " id="exampleInput8"
-                    @foreach ($formData as $item)
+                <div class="col-lx-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                    <br>
+                    <label for="exampleInput8">Attach File</label>
+                    <input name="referralFormAttachment" type="file" class="form-control " id="exampleInput8"
+                        @foreach ($formData as $item)
                                 @if ($item->fieldName == 'referralFormAttachment')
                                     value="{{ trim($item->fieldValue) }}"
                                     @break
                                 @endif @endforeach>
-                <input type="hidden" name="oldreferralFormAttachment"
-                    @foreach ($formData as $item)
+                    <input type="hidden" name="oldreferralFormAttachment"
+                        @foreach ($formData as $item)
                                 @if ($item->fieldName == 'referralFormAttachment')
                                     value="{{ trim($item->fieldValue) }}"
                                     @break
                                 @endif @endforeach>
-            </div>
+                </div>
 
-            <div class="col-lx-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                <br>
-                <label for="exampleInput8">Attach File</label>
-                <br>
-                @foreach ($formData as $item)
-                    @if ($item->fieldName == 'referralFormAttachment')
-                        <a href="/storage/Attachments/{{ trim($item->fieldValue) }}
+                <div class="col-lx-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                    <br>
+                    <label for="exampleInput8">Attach File</label>
+                    <br>
+                    @foreach ($formData as $item)
+                        @if ($item->fieldName == 'referralFormAttachment')
+                            <a href="/storage/Attachments/{{ trim($item->fieldValue) }}
                             "
-                            target="_blank">Show Attachment</a>
-                    @break
-                @endif
-            @endforeach
-        </div>
+                                target="_blank">Show Attachment</a>
+                        @break
+                    @endif
+                @endforeach
+            </div>
 
 
-        {{-- <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            {{-- <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <label for="signature"> Signature</small>
                         <!-- <input type="email" class="form-control " id="textAreaExample18" aria-describedby="emailHelp"
                             placeholder=""> -->
@@ -351,16 +364,16 @@
                 </div> --}}
 
 
-        <hr>
+            <hr>
 
 
 
 
-        @role('Admin|Doctor')
-            <input class="btn btn-primary" type="submit" value="SAVE" />
-        @endrole
+            @role('Admin|Doctor')
+                <input class="btn btn-primary" type="submit" value="SAVE" />
+            @endrole
 
-</form>
+    </form>
 
 </div>
 
