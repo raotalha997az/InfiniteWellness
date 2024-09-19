@@ -9,6 +9,7 @@ use App\Models\Bill;
 use App\Models\Doctor;
 use App\Models\Invoice;
 use App\Models\Patient;
+use App\Models\Medicine;
 use App\Models\BedAssign;
 use App\Models\Dietitian;
 use Illuminate\View\View;
@@ -40,6 +41,7 @@ use App\Http\Requests\DietitianRequest;
 use App\Repositories\PatientRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use App\Repositories\MedicineRepository;
 use App\Models\MedicattionAdministration;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\CreatePatientRequest;
@@ -57,6 +59,7 @@ class PatientController extends AppBaseController
     {
         $this->patientRepository = $patientRepo;
     }
+
 
     /**
      * Display a listing of the Patient.
@@ -1047,6 +1050,7 @@ class PatientController extends AppBaseController
     {
         $patientID =  Patient::where('id', $patient)->pluck('MR')->first();
         $patientData =  Patient::where('id', $patient)->with('user')->first();
+        $medicines = Medicine::with('category')->get();
         $doctors = Doctor::with('user')->get();
         $ageDifference = Carbon::parse($patientData->user->dob)->diff(Carbon::now());
         $age = ($ageDifference->y > 0) ? ($ageDifference->y . ' Years') : (
@@ -1062,7 +1066,7 @@ class PatientController extends AppBaseController
             $fileName = $formFile->fileName;
             $formData = DB::Table('form_data')->where(['formID' => $request->formPatientID])->get();
 
-            return view('patients.' . $fileName, compact('formData', 'nursingData', 'patientData', 'DietData', 'age','doctors','medication'),['ignore_minify' => true],);
+            return view('patients.' . $fileName, compact('formData', 'nursingData', 'patientData', 'DietData', 'age','doctors','medication','medicines'),['ignore_minify' => true],);
         }
         return "fdsfasdf";
     }
@@ -1111,6 +1115,30 @@ class PatientController extends AppBaseController
         }
 
         $reqArray = $request->all();
+        $patientID =  $request->patient_id;
+        $prescriptionId = Prescription::where('patient_id', $patientID)->pluck('id')->first();
+        if ($prescriptionId) {
+            // Iterate over each medication in the request
+            foreach ($request->medication_id as $key => $medicineID) {
+                // Get the category ID for the medicine
+                $medicine = Medicine::find($medicineID);
+
+                // Create a new entry in the prescription_medicines table
+                DB::table('prescriptions_medicines')->insert([
+                    'prescription_id' => $prescriptionId,
+                    'category_id' => $medicine->category_id,   // Get category ID from Medicine table
+                    'medicine_id' => $medicineID,              // Medicine ID from request
+                    'dosage' => $request->dosage[$key] ?? null, // Dosage from request
+                    'day' => null,                             // Assuming 'day' is not provided in request, set to null
+                    'time' => null,                            // Assuming 'time' is not provided in request, set to null
+                    'comment' => null,                         // Assuming 'comment' is not provided in request, set to null
+                    'route' => $request->route[$key] ?? null,  // Route from request
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
+
         foreach ($reqArray as $fieldName => $fieldValue) {
             if ($fieldValue != null) {
                 DB::table('form_data')

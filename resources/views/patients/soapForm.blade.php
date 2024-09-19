@@ -71,15 +71,16 @@
 @break
 @endif
 @endforeach
-</textarea>
+                            </textarea>
                     </li>
                 </div>
+
                 <div class="row  mt-5 mb-5">
                     <div class="col-md-6">
                         <label for="textAreaExample20">Family Medical History</label>
                         <small>(if relevant)</small>
                         <!-- <input type="email" class="form-control " id="textAreaExample18" aria-describedby="emailHelp"
-                                                                        placeholder=""> -->
+                                                                                                            placeholder=""> -->
                         <textarea class="form-control" id="textAreaExample20" rows="4" placeholder="Family medical history "
                             name="FamilyMedicalHistory">
                          @foreach ($formData as $item)
@@ -94,7 +95,7 @@
                         <label for="textAreaExample21">Social History</label>
                         <small>(e.g., smoking, alcohol consumption)</small>
                         <!-- <input type="email" class="form-control " id="textAreaExample18" aria-describedby="emailHelp"
-                                                                        placeholder=""> -->
+                                                                                                            placeholder=""> -->
                         <textarea class="form-control" id="textAreaExample21" rows="4" placeholder="(e.g., smoking, alcohol consumption) "
                             name="SocialHistory">
                         @foreach ($formData as $item)
@@ -389,6 +390,9 @@
                     <li>
                         <div class="table-responsive">
                             <label for="textAreaExample12">Medications</label>
+                            <div>
+                                <button type="button" class="btn btn-primary" onclick="addMedication()">Add</button>
+                            </div>
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -400,59 +404,48 @@
                                 </thead>
                                 <tbody>
                                     @php
-                                        // Initialize default values for the form fields
-                                        $medication = '';
-                                        $dosage = '';
-                                        $frequency = '';
-                                        $route = '';
+                                        // Initialize arrays for each field with default empty arrays
+                                        $medicationArray = [];
+                                        $dosageArray = [];
+                                        $frequencyArray = [];
+                                        $routeArray = [];
 
-                                        // Loop through formData to find values for the fields
+                                        // Accumulate values for each field
                                         foreach ($formData as $item) {
                                             if ($item->fieldName == 'medication') {
-                                                $medication = trim($item->fieldValue);
-                                            }
-                                            if ($item->fieldName == 'dosage') {
-                                                $dosage = trim($item->fieldValue);
-                                            }
-                                            if ($item->fieldName == 'frequency') {
-                                                $frequency = trim($item->fieldValue);
-                                            }
-                                            if ($item->fieldName == 'route') {
-                                                $route = trim($item->fieldValue);
+                                                $medicationArray = json_decode($item->fieldValue, true) ?? [];
+                                            } elseif ($item->fieldName == 'dosage') {
+                                                $dosageArray = json_decode($item->fieldValue, true) ?? [];
+                                            } elseif ($item->fieldName == 'frequency') {
+                                                $frequencyArray = json_decode($item->fieldValue, true) ?? [];
+                                            } elseif ($item->fieldName == 'route') {
+                                                $routeArray = json_decode($item->fieldValue, true) ?? [];
                                             }
                                         }
+
+                                        // Get the maximum length of any array to handle rows with uneven lengths
+                                        $maxLength = max(
+                                            count($medicationArray),
+                                            count($dosageArray),
+                                            count($frequencyArray),
+                                            count($routeArray),
+                                        );
                                     @endphp
 
-                                    <tr>
-                                        <td><input type="text" value="{{ $medication }}" name="medication"></td>
-                                        <td><input type="text" value="{{ $dosage }}" name="dosage"></td>
-                                        <td><input type="text" value="{{ $frequency }}" name="frequency"></td>
-                                        <td><input type="text" value="{{ $route }}" name="route"></td>
-                                    </tr>
-
-                                    {{-- @if ($nursingData)
-                                    @foreach ($nursingData->Medication as $medication)
+                                    @for ($i = 0; $i < $maxLength; $i++)
                                         <tr>
-                                            <td>{{ $medication->medication_name == null ? '-' : $medication->medication_name }}
+                                            <td>{{ $medicationArray[$i] ?? '' }}
+                                                <input type="hidden" name="medication[]" value="{{ $medicationArray[$i] ?? '' }}">
                                             </td>
-                                            <td>{{ $medication->dosage == null ? '-' : $medication->dosage }}</td>
-                                            <td>{{ $medication->frequency == null ? '-' : $medication->frequency }}</td>
+                                            <td>{{ $dosageArray[$i] ?? '' }}</td>
+                                            <td>{{ $frequencyArray[$i] ?? '' }}</td>
+                                            <td>{{ $routeArray[$i] ?? '' }}</td>
                                         </tr>
-                                    @endforeach
-                                @endif --}}
-                                    {{-- {{ dd($medication) }}
-                                @if ($medication)
-                                    @foreach ($medication->Medication as $medication)
-                                        <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{ $medication->route == null ? '-' : $medication->route }}</td>
-                                    </tr>
-                                    @endforeach
-                                @endif --}}
+                                    @endfor
                                 </tbody>
+
                             </table>
+
                         </div>
                 </div>
                 </li>
@@ -574,14 +567,9 @@
 
         </div>
         <hr>
-
-
-
-
         @role('Admin|Doctor')
             <input class="btn btn-primary" type="submit" value="SAVE" />
         @endrole
-
     </form>
 
 </div>
@@ -627,21 +615,62 @@
     $(document).ready(function() {
 
 
-    {{--  var apiUrl = "/patients/{{$data->id}}";  --}}
+        {{--  var apiUrl = "/patients/{{$data->id}}";  --}}
 
-    $.ajax({
-        type: "POST",
-        url: apiUrl,
-        success: function(response) {
+        $.ajax({
+            type: "POST",
+            url: apiUrl,
+            success: function(response) {
 
-            console.log("dataaaa:", response);
-        },
-        error: function(error) {
+                console.log("dataaaa:", response);
+            },
+            error: function(error) {
 
-            console.error("Error dataaaaa:", error);
-        }
+                console.error("Error dataaaaa:", error);
+            }
+        });
     });
-    });
+
+    function addMedication() {
+        // Get the table body
+        var tbody = document.querySelector("table tbody");
+
+        // Create a new table row
+        var newRow = document.createElement("tr");
+
+        // Create and append new td elements with inputs for each column
+        newRow.innerHTML = `
+        <td>
+            <select name="medication[]" onchange="setMedicationId(this)">
+                <option value="" disabled selected>Select Medication</option>
+                @foreach ($medicines as $medicine)
+                    <option value="{{ $medicine->name }}" data-id="{{ $medicine->id }}">
+                        {{ $medicine->name }}
+                    </option>
+                @endforeach
+            </select>
+            <input type="hidden" name="medication_id[]" class="medication-id" value=""/>
+        </td>
+        <td><input type="text" name="dosage[]"></td>
+        <td><input type="text" name="frequency[]"></td>
+        <td><input type="text" name="route[]"></td>
+    `;
+
+        // Append the new row to the table body
+        tbody.appendChild(newRow);
+    }
+
+    // Function to set the hidden medication_id field
+    function setMedicationId(selectElement) {
+        // Get the selected option
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+        // Get the hidden input field that is a sibling of the select
+        var hiddenInput = selectElement.nextElementSibling;
+
+        // Set the value of the hidden input to the data-id attribute of the selected option
+        hiddenInput.value = selectedOption.getAttribute('data-id');
+    }
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
