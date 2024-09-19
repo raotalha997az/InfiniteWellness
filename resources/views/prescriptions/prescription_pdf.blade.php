@@ -1,6 +1,56 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "//www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
-
+    <style>
+        .form-logo img {
+            height: 5rem;
+        }
+    
+        .forem {
+            width: 100%;
+        }
+    
+        .input_box label {
+            text-wrap: nowrap;
+        }
+    
+        .input_box {
+            padding: 1rem 0;
+        }
+    
+        .input_box input,
+        .input_box textarea {
+            border: 0;
+            outline: 0;
+            width: 100%;
+            padding: 0rem 1rem;
+            border-bottom: 1px #000 solid;
+        }
+    
+        @media print {
+    
+            /* Hide everything except the specific section */
+            body * {
+                visibility: hidden;
+            }
+    
+            section.container,
+            section.container * {
+                visibility: visible;
+            }
+    
+            section.container {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+            }
+    
+            /* Hide the SAVE button inside the form when printing */
+            form .btn-primary {
+                display: none;
+            }
+        }
+    </style>
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <link rel="icon" href="{{ asset('web/img/hms-saas-favicon.ico') }}" type="image/png">
@@ -19,8 +69,17 @@
     {{-- {{dd($prescription) }} --}}
     <div class="row">
         <center>
-            <img src="{{ asset('images/8.png') }}" width="150px" alt="">
-           <p>{{ $address }}</p>
+            <div class="form-logo d-flex justify-content-center align-items-center">
+                <img src="http://infinitewellnesspk.com/wp-content/uploads/2024/02/infinite-.svg" alt="Image Here">
+            </div>
+            <p class="text-center mt-3">Plot No.35/135. CP & Berar Cooperative Housing Society, PECHS, Block 7/8,
+                Karachi East.</p>
+            <p class="text-center">0348-1349769</p>
+            <p class="text-center">0325-8331133</p>
+            <div class="text-center py-5">
+                <h1>MEDICAL CERTIFICATE</h1>
+                <h5>To whom it may concern</h5>
+            </div>
         </center>
         <div class="col-md-4 col-sm-6 co-12">
             <div class="image mb-7">

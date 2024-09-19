@@ -116,8 +116,8 @@ class PrescriptionController extends AppBaseController
         // dd($request->all());
         $input = $request->all();
         $input['status'] = isset($input['status']) ? 1 : 0;
-        $input['TestsandConsultations'] = $request->input('TestsandConsultations');
-        $input['PatientEducation'] = $request->input('PatientEducation');
+        $input['TestsandConsultations'] = $request->input('TestsandConsultations') ?? '';
+        $input['PatientEducation'] = $request->input('PatientEducation') ?? '';
 
 
         $prescription = $this->prescriptionRepository->create($input);
