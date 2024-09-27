@@ -80,7 +80,7 @@
                         <label for="textAreaExample20">Family Medical History</label>
                         <small>(if relevant)</small>
                         <!-- <input type="email" class="form-control " id="textAreaExample18" aria-describedby="emailHelp"
-                                                                                                            placeholder=""> -->
+                                                                                                                placeholder=""> -->
                         <textarea class="form-control" id="textAreaExample20" rows="4" placeholder="Family medical history "
                             name="FamilyMedicalHistory">
                          @foreach ($formData as $item)
@@ -95,7 +95,7 @@
                         <label for="textAreaExample21">Social History</label>
                         <small>(e.g., smoking, alcohol consumption)</small>
                         <!-- <input type="email" class="form-control " id="textAreaExample18" aria-describedby="emailHelp"
-                                                                                                            placeholder=""> -->
+                                                                                                                placeholder=""> -->
                         <textarea class="form-control" id="textAreaExample21" rows="4" placeholder="(e.g., smoking, alcohol consumption) "
                             name="SocialHistory">
                         @foreach ($formData as $item)
@@ -392,6 +392,7 @@
                             <label for="textAreaExample12">Medications</label>
                             <div>
                                 <button type="button" class="btn btn-primary" onclick="addMedication()">Add</button>
+                                <button type="button" class="fa fa-plus btn btn-primary" onclick="addMedicationManualy()"></button>
                             </div>
                             <table class="table table-bordered">
                                 <thead>
@@ -403,6 +404,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {{-- {{ dd($formData) }} --}}
                                     @php
                                         // Initialize arrays for each field with default empty arrays
                                         $medicationArray = [];
@@ -435,7 +437,8 @@
                                     @for ($i = 0; $i < $maxLength; $i++)
                                         <tr>
                                             <td>{{ $medicationArray[$i] ?? '' }}
-                                                <input type="hidden" name="medication[]" value="{{ $medicationArray[$i] ?? '' }}">
+                                                <input type="hidden" name="medication"
+                                                    value="{{ $medicationArray[$i] ?? '' }}">
                                             </td>
                                             <td>{{ $dosageArray[$i] ?? '' }}</td>
                                             <td>{{ $frequencyArray[$i] ?? '' }}</td>
@@ -654,11 +657,39 @@
         <td><input type="text" name="dosage[]"></td>
         <td><input type="text" name="frequency[]"></td>
         <td><input type="text" name="route[]"></td>
+        <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button></td>
     `;
 
         // Append the new row to the table body
         tbody.appendChild(newRow);
     }
+
+    function addMedicationManualy() {
+    // Get the table body
+    var tbody = document.querySelector("table tbody");
+
+    // Create a new table row
+    var newRow = document.createElement("tr");
+
+    // Create and append new td elements with inputs for each column and a delete button
+    newRow.innerHTML = `
+        <td><input type="text" name="medication[]" ></td>
+        <td><input type="text" name="dosage[]"></td>
+        <td><input type="text" name="frequency[]"></td>
+        <td><input type="text" name="route[]"></td>
+        <td><button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button></td>
+    `;
+
+    // Append the new row to the table body
+    tbody.appendChild(newRow);
+}
+
+// Function to remove the row
+function removeRow(button) {
+    // Find the parent row (tr) and remove it
+    var row = button.closest("tr");
+    row.remove();
+}
 
     // Function to set the hidden medication_id field
     function setMedicationId(selectElement) {

@@ -1118,6 +1118,7 @@ class PatientController extends AppBaseController
         $patientID =  $request->patient_id;
         $prescriptionId = Prescription::where('patient_id', $patientID)->pluck('id')->first();
         if ($prescriptionId) {
+            if($request->medication_id != null){
             // Iterate over each medication in the request
             foreach ($request->medication_id as $key => $medicineID) {
                 // Get the category ID for the medicine
@@ -1137,6 +1138,8 @@ class PatientController extends AppBaseController
                     'updated_at' => now(),
                 ]);
             }
+            }
+
         }
 
         foreach ($reqArray as $fieldName => $fieldValue) {
