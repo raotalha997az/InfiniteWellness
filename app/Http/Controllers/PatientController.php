@@ -326,7 +326,33 @@ class PatientController extends AppBaseController
                    'date42' => $request->date42 ?? 0,
                    'time42' => $request->time42 ?? 0,
                    'week42' => $request->week42 ?? 0,
+                   'Fever' => $request->Fever ?? 0,
+                   'Fatigue' => $request->Fatigue ?? 0,
+                   'WeightLoss' => $request->WeightLoss ?? 0,
+                   'ShortnessofBreath' => $request->ShortnessofBreath ?? 0,
+                   'Cough' => $request->Cough ?? 0,
+                   'Edema' => $request->Edema ?? 0,
+                   'NauseaVomiting' => $request->NauseaVomiting ?? 0,
+                   'Diarrhea' => $request->Diarrhea ?? 0,
+                   'Abdominalpain' => $request->Abdominalpain ?? 0,
+                   'MuscleStiffness' => $request->MuscleStiffness ?? 0,
+                   'LesionsWounds' => $request->LesionsWounds ?? 0,
+                   'ExcessiveThirst' => $request->ExcessiveThirst ?? 0,
+                   'FrequentUrination' => $request->FrequentUrination ?? 0,
+                   'BleedingGums' => $request->BleedingGums ?? 0,
+                   'FoodCravings' => $request->FoodCravings ?? 0,
+                   'Irritability' => $request->Irritability ?? 0,
+                   'Confusion' => $request->Confusion ?? 0,
+                   'DrySkin' => $request->DrySkin ?? 0,
+                   'HungerPangs' => $request->HungerPangs ?? 0,
+                   'Constipation' => $request->Constipation ?? 0,
+                   'MuscleCramps' => $request->MuscleCramps ?? 0,
+                   'Bloating' => $request->Bloating ?? 0,
+                   'Paleness' => $request->Paleness ?? 0,
+                   'HairLoss' => $request->HairLoss ?? 0,
+                   'Tingling' => $request->Tingling ?? 0,
                ]);
+
            } else {
                $insertedId = DB::table('dietitianAssessment')->insertGetId([
                    'patient_id' => $request->patient_id,
@@ -413,9 +439,35 @@ class PatientController extends AppBaseController
                    'date42' => $request->date42,
                    'time42' => $request->time42,
                    'week42' => $request->week42,
+                   'Fever' => $request->Fever ?? 0,
+                   'Fatigue' => $request->Fatigue ?? 0,
+                   'WeightLoss' => $request->WeightLoss ?? 0,
+                   'ShortnessofBreath' => $request->ShortnessofBreath ?? 0,
+                   'Cough' => $request->Cough ?? 0,
+                   'Edema' => $request->Edema ?? 0,
+                   'NauseaVomiting' => $request->NauseaVomiting ?? 0,
+                   'Diarrhea' => $request->Diarrhea ?? 0,
+                   'Abdominalpain' => $request->Abdominalpain ?? 0,
+                   'MuscleStiffness' => $request->MuscleStiffness ?? 0,
+                   'LesionsWounds' => $request->LesionsWounds ?? 0,
+                   'ExcessiveThirst' => $request->ExcessiveThirst ?? 0,
+                   'FrequentUrination' => $request->FrequentUrination ?? 0,
+                   'BleedingGums' => $request->BleedingGums ?? 0,
+                   'FoodCravings' => $request->FoodCravings ?? 0,
+                   'Irritability' => $request->Irritability ?? 0,
+                   'Confusion' => $request->Confusion ?? 0,
+                   'DrySkin' => $request->DrySkin ?? 0,
+                   'HungerPangs' => $request->HungerPangs ?? 0,
+                   'Constipation' => $request->Constipation ?? 0,
+                   'MuscleCramps' => $request->MuscleCramps ?? 0,
+                   'Bloating' => $request->Bloating ?? 0,
+                   'Paleness' => $request->Paleness ?? 0,
+                   'HairLoss' => $request->HairLoss ?? 0,
+                   'Tingling' => $request->Tingling ?? 0,
                ]);
 
                return response()->json(['message' => 'Success'], 200);
+
            }
         } else{
             $patientIds = DB::table('dietitianAssessment')->pluck('patient_id')->toArray();
@@ -507,6 +559,31 @@ class PatientController extends AppBaseController
                    'date42' => $request->date42 ?? 0,
                    'time42' => $request->time42 ?? 0,
                    'week42' => $request->week42 ?? 0,
+                   'Fever' => $request->Fever ?? 0,
+                   'Fatigue' => $request->Fatigue ?? 0,
+                   'WeightLoss' => $request->WeightLoss ?? 0,
+                   'ShortnessofBreath' => $request->ShortnessofBreath ?? 0,
+                   'Cough' => $request->Cough ?? 0,
+                   'Edema' => $request->Edema ?? 0,
+                   'NauseaVomiting' => $request->NauseaVomiting ?? 0,
+                   'Diarrhea' => $request->Diarrhea ?? 0,
+                   'Abdominalpain' => $request->Abdominalpain ?? 0,
+                   'MuscleStiffness' => $request->MuscleStiffness ?? 0,
+                   'LesionsWounds' => $request->LesionsWounds ?? 0,
+                   'ExcessiveThirst' => $request->ExcessiveThirst ?? 0,
+                   'FrequentUrination' => $request->FrequentUrination ?? 0,
+                   'BleedingGums' => $request->BleedingGums ?? 0,
+                   'FoodCravings' => $request->FoodCravings ?? 0,
+                   'Irritability' => $request->Irritability ?? 0,
+                   'Confusion' => $request->Confusion ?? 0,
+                   'DrySkin' => $request->DrySkin ?? 0,
+                   'HungerPangs' => $request->HungerPangs ?? 0,
+                   'Constipation' => $request->Constipation ?? 0,
+                   'MuscleCramps' => $request->MuscleCramps ?? 0,
+                   'Bloating' => $request->Bloating ?? 0,
+                   'Paleness' => $request->Paleness ?? 0,
+                   'HairLoss' => $request->HairLoss ?? 0,
+                   'Tingling' => $request->Tingling ?? 0,
 
                ]);
            } else {
@@ -594,7 +671,33 @@ class PatientController extends AppBaseController
                    'date42' => $request->date42,
                    'time42' => $request->time42,
                    'week42' => $request->week42,
+                   'Fever' => $request->Fever ?? 0,
+                   'Fatigue' => $request->Fatigue ?? 0,
+                   'WeightLoss' => $request->WeightLoss ?? 0,
+                   'ShortnessofBreath' => $request->ShortnessofBreath ?? 0,
+                   'Cough' => $request->Cough ?? 0,
+                   'Edema' => $request->Edema ?? 0,
+                   'NauseaVomiting' => $request->NauseaVomiting ?? 0,
+                   'Diarrhea' => $request->Diarrhea ?? 0,
+                   'Abdominalpain' => $request->Abdominalpain ?? 0,
+                   'MuscleStiffness' => $request->MuscleStiffness ?? 0,
+                   'LesionsWounds' => $request->LesionsWounds ?? 0,
+                   'ExcessiveThirst' => $request->ExcessiveThirst ?? 0,
+                   'FrequentUrination' => $request->FrequentUrination ?? 0,
+                   'BleedingGums' => $request->BleedingGums ?? 0,
+                   'FoodCravings' => $request->FoodCravings ?? 0,
+                   'Irritability' => $request->Irritability ?? 0,
+                   'Confusion' => $request->Confusion ?? 0,
+                   'DrySkin' => $request->DrySkin ?? 0,
+                   'HungerPangs' => $request->HungerPangs ?? 0,
+                   'Constipation' => $request->Constipation ?? 0,
+                   'MuscleCramps' => $request->MuscleCramps ?? 0,
+                   'Bloating' => $request->Bloating ?? 0,
+                   'Paleness' => $request->Paleness ?? 0,
+                   'HairLoss' => $request->HairLoss ?? 0,
+                   'Tingling' => $request->Tingling ?? 0,
                ]);
+
                return response()->json(['message' => 'Success'], 200);
            }
         }
@@ -606,6 +709,7 @@ class PatientController extends AppBaseController
            $file->move(public_path('storage/Attachments'), $fileName);
            $path2 =  $fileName;
            $patientIds = DB::table('dietitianAssessment')->pluck('patient_id')->toArray();
+
            if (in_array($request->patient_id, $patientIds)) {
                // Patient ID already exists, so return a response indicating that it's a duplicate.
                // return response()->json(['message' => 'Patient ID already exists'], 400); // You can use a 400 status code for a bad request or choose an appropriate status code.
@@ -695,8 +799,34 @@ class PatientController extends AppBaseController
                    'time42' => $request->time42 ?? 0,
                    'week42' => $request->week42 ?? 0,
                    'patientFollowUpFile' => $path2 ?? 0,
+                   'Fever' => $request->Fever ?? 0,
+                   'Fatigue' => $request->Fatigue ?? 0,
+                   'WeightLoss' => $request->WeightLoss ?? 0,
+                   'ShortnessofBreath' => $request->ShortnessofBreath ?? 0,
+                   'Cough' => $request->Cough ?? 0,
+                   'Edema' => $request->Edema ?? 0,
+                   'NauseaVomiting' => $request->NauseaVomiting ?? 0,
+                   'Diarrhea' => $request->Diarrhea ?? 0,
+                   'Abdominalpain' => $request->Abdominalpain ?? 0,
+                   'MuscleStiffness' => $request->MuscleStiffness ?? 0,
+                   'LesionsWounds' => $request->LesionsWounds ?? 0,
+                   'ExcessiveThirst' => $request->ExcessiveThirst ?? 0,
+                   'FrequentUrination' => $request->FrequentUrination ?? 0,
+                   'BleedingGums' => $request->BleedingGums ?? 0,
+                   'FoodCravings' => $request->FoodCravings ?? 0,
+                   'Irritability' => $request->Irritability ?? 0,
+                   'Confusion' => $request->Confusion ?? 0,
+                   'DrySkin' => $request->DrySkin ?? 0,
+                   'HungerPangs' => $request->HungerPangs ?? 0,
+                   'Constipation' => $request->Constipation ?? 0,
+                   'MuscleCramps' => $request->MuscleCramps ?? 0,
+                   'Bloating' => $request->Bloating ?? 0,
+                   'Paleness' => $request->Paleness ?? 0,
+                   'HairLoss' => $request->HairLoss ?? 0,
+                   'Tingling' => $request->Tingling ?? 0,
 
                ]);
+
            } else {
                $insertedId = DB::table('dietitianAssessment')->insertGetId([
                    'patient_id' => $request->patient_id,
@@ -783,9 +913,35 @@ class PatientController extends AppBaseController
                    'time42' => $request->time42,
                    'week42' => $request->week42,
                    'patientFollowUpFile' => $path2,
+                   'Fever' => $request->Fever ?? 0,
+                   'Fatigue' => $request->Fatigue ?? 0,
+                   'WeightLoss' => $request->WeightLoss ?? 0,
+                   'ShortnessofBreath' => $request->ShortnessofBreath ?? 0,
+                   'Cough' => $request->Cough ?? 0,
+                   'Edema' => $request->Edema ?? 0,
+                   'NauseaVomiting' => $request->NauseaVomiting ?? 0,
+                   'Diarrhea' => $request->Diarrhea ?? 0,
+                   'Abdominalpain' => $request->Abdominalpain ?? 0,
+                   'MuscleStiffness' => $request->MuscleStiffness ?? 0,
+                   'LesionsWounds' => $request->LesionsWounds ?? 0,
+                   'ExcessiveThirst' => $request->ExcessiveThirst ?? 0,
+                   'FrequentUrination' => $request->FrequentUrination ?? 0,
+                   'BleedingGums' => $request->BleedingGums ?? 0,
+                   'FoodCravings' => $request->FoodCravings ?? 0,
+                   'Irritability' => $request->Irritability ?? 0,
+                   'Confusion' => $request->Confusion ?? 0,
+                   'DrySkin' => $request->DrySkin ?? 0,
+                   'HungerPangs' => $request->HungerPangs ?? 0,
+                   'Constipation' => $request->Constipation ?? 0,
+                   'MuscleCramps' => $request->MuscleCramps ?? 0,
+                   'Bloating' => $request->Bloating ?? 0,
+                   'Paleness' => $request->Paleness ?? 0,
+                   'HairLoss' => $request->HairLoss ?? 0,
+                   'Tingling' => $request->Tingling ?? 0,
                ]);
                return response()->json(['message' => 'Success'], 200);
            }
+
         }else{
             $patientIds = DB::table('dietitianAssessment')->pluck('patient_id')->toArray();
            if (in_array($request->patient_id, $patientIds)) {
@@ -876,8 +1032,34 @@ class PatientController extends AppBaseController
                    'date42' => $request->date42 ?? 0,
                    'time42' => $request->time42 ?? 0,
                    'week42' => $request->week42 ?? 0,
+                   'Fever' => $request->Fever ?? 0,
+                   'Fatigue' => $request->Fatigue ?? 0,
+                   'WeightLoss' => $request->WeightLoss ?? 0,
+                   'ShortnessofBreath' => $request->ShortnessofBreath ?? 0,
+                   'Cough' => $request->Cough ?? 0,
+                   'Edema' => $request->Edema ?? 0,
+                   'NauseaVomiting' => $request->NauseaVomiting ?? 0,
+                   'Diarrhea' => $request->Diarrhea ?? 0,
+                   'Abdominalpain' => $request->Abdominalpain ?? 0,
+                   'MuscleStiffness' => $request->MuscleStiffness ?? 0,
+                   'LesionsWounds' => $request->LesionsWounds ?? 0,
+                   'ExcessiveThirst' => $request->ExcessiveThirst ?? 0,
+                   'FrequentUrination' => $request->FrequentUrination ?? 0,
+                   'BleedingGums' => $request->BleedingGums ?? 0,
+                   'FoodCravings' => $request->FoodCravings ?? 0,
+                   'Irritability' => $request->Irritability ?? 0,
+                   'Confusion' => $request->Confusion ?? 0,
+                   'DrySkin' => $request->DrySkin ?? 0,
+                   'HungerPangs' => $request->HungerPangs ?? 0,
+                   'Constipation' => $request->Constipation ?? 0,
+                   'MuscleCramps' => $request->MuscleCramps ?? 0,
+                   'Bloating' => $request->Bloating ?? 0,
+                   'Paleness' => $request->Paleness ?? 0,
+                   'HairLoss' => $request->HairLoss ?? 0,
+                   'Tingling' => $request->Tingling ?? 0,
 
                ]);
+
            } else {
                $insertedId = DB::table('dietitianAssessment')->insertGetId([
                    'patient_id' => $request->patient_id,
@@ -963,7 +1145,33 @@ class PatientController extends AppBaseController
                    'date42' => $request->date42,
                    'time42' => $request->time42,
                    'week42' => $request->week42,
+                   'Fever' => $request->Fever ?? 0,
+                   'Fatigue' => $request->Fatigue ?? 0,
+                   'WeightLoss' => $request->WeightLoss ?? 0,
+                   'ShortnessofBreath' => $request->ShortnessofBreath ?? 0,
+                   'Cough' => $request->Cough ?? 0,
+                   'Edema' => $request->Edema ?? 0,
+                   'NauseaVomiting' => $request->NauseaVomiting ?? 0,
+                   'Diarrhea' => $request->Diarrhea ?? 0,
+                   'Abdominalpain' => $request->Abdominalpain ?? 0,
+                   'MuscleStiffness' => $request->MuscleStiffness ?? 0,
+                   'LesionsWounds' => $request->LesionsWounds ?? 0,
+                   'ExcessiveThirst' => $request->ExcessiveThirst ?? 0,
+                   'FrequentUrination' => $request->FrequentUrination ?? 0,
+                   'BleedingGums' => $request->BleedingGums ?? 0,
+                   'FoodCravings' => $request->FoodCravings ?? 0,
+                   'Irritability' => $request->Irritability ?? 0,
+                   'Confusion' => $request->Confusion ?? 0,
+                   'DrySkin' => $request->DrySkin ?? 0,
+                   'HungerPangs' => $request->HungerPangs ?? 0,
+                   'Constipation' => $request->Constipation ?? 0,
+                   'MuscleCramps' => $request->MuscleCramps ?? 0,
+                   'Bloating' => $request->Bloating ?? 0,
+                   'Paleness' => $request->Paleness ?? 0,
+                   'HairLoss' => $request->HairLoss ?? 0,
+                   'Tingling' => $request->Tingling ?? 0,
                ]);
+
                return response()->json(['message' => 'Success'], 200);
            }
         }
