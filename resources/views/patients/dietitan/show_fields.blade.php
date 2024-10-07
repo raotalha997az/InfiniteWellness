@@ -347,7 +347,7 @@
                         </li>
                         <li class="nav-item" role="presentation">
                             <a class="nav-link" id="ex2-tab-3" data-mdb-toggle="tab" href="#ex2-tabs-3" role="tab"
-                                aria-controls="ex2-tabs-3" aria-selected="false">History</a>
+                                aria-controls="ex2-tabs-3" aria-selected="false">Previous Dietary History</a>
                         </li>
                         <li class="nav-item" role="presentation">
                             <a class="nav-link" id="ex2-tab-4" data-mdb-toggle="tab" href="#ex2-tabs-4" role="tab"
@@ -750,7 +750,7 @@
                                             <h2
                                                 style="    justify-content: center;
                                         display: flex;">
-                                                History</h2>
+                                                Previous Dietary History</h2>
                                         </div>
 
 
@@ -791,23 +791,23 @@
                                                 value="{{ $dietdata === null ? '' : ($dietdata->Dinner != null ? $dietdata->Dinner : '') }}"
                                                 id="Dinner" name="Dinner">
                                         </div>
-
+                                        <div class="col-md-6">
+                                            <label for="bed_time" class="form-label"> Bed Time:
+                                            </label>
+                                            <input type="text" class="form-control"
+                                                value="{{ $dietdata === null ? '' : ($dietdata->bed_time != null ? $dietdata->bed_time : '') }}"
+                                                id="bed_time" name="bed_time">
+                                        </div>
                                         <div class="col-md-12">
                                             <h3> Exercise Regimen Followed in the Past
                                             </h3>
                                         </div>
-                                        <div class="col-md-6">
-                                            <label for="Regimen" class="form-label"> Exercise Regimen Followed in the
-                                                Past
-                                            </label>
-                                            <input type="text" class="form-control"
-                                                value="{{ $dietdata === null ? '' : ($dietdata->Regimen != null ? $dietdata->Regimen : '') }}"
-                                                id="Regimen" name="Regimen">
+                                        <div class="col-md-12">
+                                            <label for="history_description" class="form-label">Write points:</label>
+                                            <textarea class="form-control" id="history_description" name="history_description">
+                                                {{ $dietdata === null ? '' : ($dietdata->history_description != null ? $dietdata->history_description : '') }}
+                                            </textarea>
                                         </div>
-
-
-
-
                                     </form>
                                 </div>
                             </div>
@@ -1184,7 +1184,6 @@
                                                     <h3>Second Month</h3>
                                                 </td>
                                                 <td colspan="3">
-
                                                 </td>
                                             </tr>
 
@@ -1441,7 +1440,7 @@
                                             </div>
 
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="Diarrhea" 
+                                                <input class="form-check-input" type="checkbox" name="Diarrhea"
                                                 {{ $dietdata === null ? '' : ($dietdata->Diarrhea == 1 ? 'checked value=1' : 'value=0') }}  id="Diarrhea">
                                                 <label class="form-check-label" for="Diarrhea">
                                                     Diarrhea
@@ -1638,7 +1637,6 @@
             });
         });
     </script>
-
 
     {{-- <script>
         // Add event listeners to the height and weight input fields
