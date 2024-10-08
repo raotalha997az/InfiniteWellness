@@ -277,6 +277,117 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="row">
+                        <h3 class="pt-5">Avoid Harmful Habits </h3>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-md-12 mt-5">
+                            <label for="alcohol" class="form-label">Alcohol</label>
+                            <textarea name="alcohol" id="alcohol" class="form-control"></textarea>
+                            @error('alcohol')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-md-12 mt-5">
+                            <label for="smoking" class="form-label">Smoking</label>
+                            <textarea name="smoking" id="smoking" class="form-control"></textarea>
+                            @error('smoking')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-md-12 mt-5">
+                            <label for="abuse" class="form-label">Substance Abuse</label>
+                            <textarea name="abuse" id="abuse" class="form-control"></textarea>
+                            @error('abuse')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h3 class="pt-5">Healthy Environment </h3>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-md-12 mt-5">
+                            <label for="clean" class="form-label">Clean And Organize Living Space</label>
+                            <textarea name="clean" id="clean" class="form-control"></textarea>
+                            @error('clean')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-md-12 mt-5">
+                            <label for="safety" class="form-label">Safety Practices</label>
+                            <textarea name="safety" id="safety" class="form-control"></textarea>
+                            @error('safety')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h3 class="pt-5">Work And Personal life Balance </h3>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-md-12 mt-5">
+                            <label for="leisure_activities" class="form-label">Leisure Activities</label>
+                            <textarea name="leisure_activities" id="leisure_activities" class="form-control"></textarea>
+                            @error('leisure_activities')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-md-12 mt-5">
+                            <label for="family" class="form-label">Family Activities</label>
+                            <textarea name="family" id="family" class="form-control"></textarea>
+                            @error('family')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-md-12 mt-5">
+                            <label for="social_time" class="form-label">Social Time</label>
+                            <textarea name="social_time" id="social_time" class="form-control"></textarea>
+                            @error('social_time')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-md-12 mt-5">
+                            <label for="time_management" class="form-label">Time Management</label>
+                            <textarea name="time_management" id="time_management" class="form-control"></textarea>
+                            @error('time_management')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h3 class="pt-5">Macro And Micro Nutrients</h3>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-md-12 mt-5">
+                            <label for="intermittent" class="form-label">Intermittent Fasting</label>
+                            <textarea name="intermittent" id="intermittent" class="form-control"></textarea>
+                            @error('intermittent')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <div class="col-md-12 mt-5">
+                            <label for="essential_herbs" class="form-label">Essential Herbs</label>
+                            <textarea name="essential_herbs" id="essential_herbs" class="form-control"></textarea>
+                            @error('essential_herbs')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
                     <div class="card-footer">
                         <button type="submit" id="submit" disabled class="btn btn-primary">Save</button>
                     </div>

@@ -52,6 +52,17 @@ class FunctionalMedicineController extends Controller
             "stress" => "nullable|string",
             "social_connection" => "nullable|string",
             "seeking_help" => "nullable|string",
+            "alcohol" => "nullable|string",
+            "smoking" => "nullable|string",
+            "abuse" => "nullable|string",
+            "clean" => "nullable|string",
+            "safety" => "nullable|string",
+            "leisure_activities" => "nullable|string",
+            "family" => "nullable|string",
+            "social_time" => "nullable|string",
+            "time_management" => "nullable|string",
+            "intermittent" => "nullable|string",
+            "essential_herbs" => "nullable|string",
         ]);
 
         // If validation fails, redirect back with errors
@@ -99,7 +110,6 @@ class FunctionalMedicineController extends Controller
         "examination" => "nullable|string",
         "investigation" => "nullable|string",
         "details" => "required|string",
-        // New fields
         "nutrition" => "nullable|string",
         "aerobics" => "nullable|string",
         "balance" => "nullable|string",
@@ -111,6 +121,17 @@ class FunctionalMedicineController extends Controller
         "stress" => "nullable|string",
         "social_connection" => "nullable|string",
         "seeking_help" => "nullable|string",
+        "alcohol" => "nullable|string",
+        "smoking" => "nullable|string",
+        "abuse" => "nullable|string",
+        "clean" => "nullable|string",
+        "safety" => "nullable|string",
+        "leisure_activities" => "nullable|string",
+        "family" => "nullable|string",
+        "social_time" => "nullable|string",
+        "time_management" => "nullable|string",
+        "intermittent" => "nullable|string",
+        "essential_herbs" => "nullable|string",
     ]);
 
     // If validation fails, redirect back with errors

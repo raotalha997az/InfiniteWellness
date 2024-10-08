@@ -17,7 +17,7 @@
 .card-body .two-text-align .details p {
     margin: 0 !important;!i;!;
 }
-</style>    
+</style>
 @section('content')
     <div class="container-fluid">
         <div class="card">
@@ -107,6 +107,38 @@
                 <p><strong>Seeking Help:</strong></p>
                 <div> {{ $functionalMedicine->seeking_help ?? '' }}</div>
 
+                <p><strong>Alcohol:</strong></p>
+                <div> {{ $functionalMedicine->alcohol ?? '' }}</div>
+
+                <p><strong>Smoking:</strong></p>
+                <div> {{ $functionalMedicine->smoking ?? '' }}</div>
+
+                <p><strong>Substance Abuse:</strong></p>
+                <div> {{ $functionalMedicine->abuse ?? '' }}</div>
+
+                <p><strong>Clean And Organize Living Space:</strong></p>
+                <div> {{ $functionalMedicine->clean ?? '' }}</div>
+
+                <p><strong>Safety Practices:</strong></p>
+                <div> {{ $functionalMedicine->safety ?? '' }}</div>
+
+                <p><strong>Leisure Activities:</strong></p>
+                <div> {{ $functionalMedicine->leisure_activities ?? '' }}</div>
+
+                <p><strong>Family Activities:</strong></p>
+                <div> {{ $functionalMedicine->family ?? '' }}</div>
+
+                <p><strong>Social Time:</strong></p>
+                <div> {{ $functionalMedicine->social_time ?? '' }}</div>
+
+                <p><strong>Time Management:</strong></p>
+                <div> {{ $functionalMedicine->time_management ?? '' }}</div>
+
+                <p><strong>Intermittent Fasting:</strong></p>
+                <div> {{ $functionalMedicine->intermittent ?? '' }}</div>
+
+                <p><strong>Essential Herbs:</strong></p>
+                <div> {{ $functionalMedicine->essential_herbs ?? '' }}</div>
             </div>
             <div class="card-footer">
                 <a href="{{ route('functional-medicine.index') }}" class="btn btn-secondary">Back</a>
