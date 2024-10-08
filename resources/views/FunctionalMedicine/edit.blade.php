@@ -170,7 +170,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <h3>Priniciples of Repair in Functional Medicine</h3>
+                        <h3 class="pt-5">Priniciples of Repair in Functional Medicine</h3>
                     </div>
                     <div class="mb-3 row">
                         <div class="col-md-12 mt-5">
@@ -182,7 +182,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <h3>Ragular physical activity</h3>
+                        <h3 class="pt-5">Ragular physical activity</h3>
                     </div>
                     <div class="mb-3 row">
                         <div class="col-md-12 mt-5">
@@ -212,7 +212,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <h3>Adequate sleep</h3>
+                        <h3 class="pt-5">Adequate sleep</h3>
                     </div>
                     <div class="mb-3 row">
                         <div class="col-md-12 mt-5">
@@ -242,7 +242,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <h3>Mental And Emotional Well Being </h3>
+                        <h3 class="pt-5">Mental And Emotional Well Being </h3>
                     </div>
                     <div class="mb-3 row">
                         <div class="col-md-12 mt-5">
