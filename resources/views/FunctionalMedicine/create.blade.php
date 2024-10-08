@@ -31,10 +31,11 @@
                     </div>
                     <div class="mb-3 row">
                         <div class="col-md-12 mt-5">
-                            <label for="life_line" class="form-label">Life Line</label>
+
+                            <h3>Life Line</h3>
                             <p>Tell me about your life since birth, any problem/concern you have faced and how did you
                                 address it?</p>
-                            <h4>Environmental</h4>
+                            <label for="life_line" class="form-label">Environmental</label>
                             <textarea name="life_line" id="life_line" class="form-control" rows="1" cols="5"></textarea>
                             @error('life_line')
                                 <p class="text-danger">{{ $message }}</p>
