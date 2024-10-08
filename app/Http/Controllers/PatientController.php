@@ -196,6 +196,9 @@ class PatientController extends AppBaseController
 
     public function dietitanShow($patientId)
     {
+        $nutrition = DB::table('form_type')->where('fileName', '=', 'Nutritional Assessment Form
+        ')->get();
+        $forNutritions = DB::table('form_patient')->where('formName','Nutritional Assessment Form')->where('patientID' , $patientId)->orderBy('id', 'desc')->first();
         $data = $this->patientRepository->getPatientAssociatedData($patientId);
         if (!$data) {
             return view('errors.404');
@@ -223,7 +226,7 @@ class PatientController extends AppBaseController
             $patientMR = Patient::where('id', $patientId)->pluck('MR')->first();
             $nursingData = NursingForm::where('patient_mr_number', $patientMR)->with(['patient.user', 'Allergies', 'Medication'])->first();
 
-            return view('patients.dietitan.show', compact('data','patientMR', 'patients', 'vaccinations', 'vaccinationPatients', 'forms', 'currentForm', 'dietdata', 'nursingData'));
+            return view('patients.dietitan.show', compact('data','patientMR', 'patients', 'vaccinations', 'vaccinationPatients', 'forms', 'currentForm', 'dietdata', 'nursingData','forNutritions'));
         }
     }
 

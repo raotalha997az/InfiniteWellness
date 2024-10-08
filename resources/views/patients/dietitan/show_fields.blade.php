@@ -103,10 +103,14 @@
         </div>
         <div class="overflow-hidden mt-7">
             <ul class="pb-1 mb-5 overflow-auto nav nav-tabs flex-nowrap text-nowrap">
-                @role('Admin')
+                @role('Admin|Doctor')
                     <li class="mb-3 nav-item position-relative me-7">
                         <a class="p-0 nav-link active" data-bs-toggle="tab"
                             href="#PatientOverview">{{ __('messages.overview') }}</a>
+                    </li>
+                    <li class="mb-3 nav-item position-relative me-7">
+                        <a class="p-0 nav-link"
+                            href="/patients/{{$forNutritions->patientID}}/{{$forNutritions->id}}">Nutritional Assessment Form</a>
                     </li>
                     {{-- <li class="mb-3 nav-item position-relative me-7">
                     <a class="p-0 nav-link" data-bs-toggle="tab"
