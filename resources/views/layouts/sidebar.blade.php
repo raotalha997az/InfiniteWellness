@@ -5,7 +5,7 @@
 <div class="aside-menu-container" id="sidebar">
     <!--begin::Brand-->
     <div class="aside-menu-container__aside-logo flex-column-auto mt-3">
-        <a data-turbo="false" href="https://app.infinitewellnesspk.com/" data-toggle="tooltip" data-placement="right"
+        <a data-turbo="false" href="https://webapp.infinitewellnesspk.com/" data-toggle="tooltip" data-placement="right"
            class="text-decoration-none sidebar-logo"
            title="{{ getAppName() }}">
             <img src="{{ asset('logo.png') }}"
@@ -37,6 +37,6 @@
             @endif
         </ul>
     </div>
-    
+
 </div>
 <div class="bg-overlay" id="sidebar-overly"></div>
