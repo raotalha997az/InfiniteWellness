@@ -14,30 +14,29 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class DoctorRepository extends BaseRepository
 {
-    
+
     protected $fieldSearchable = [
         'doctor_user_id',
         'specialist',
     ];
 
-   
+
     public function getFieldsSearchable()
     {
         return $this->fieldSearchable;
     }
 
-    
+
     public function model()
     {
         return Doctor::class;
     }
 
-    
+
     public function store($input, $mail = false)
     {
         try {
             $input['phone'] = preparePhoneNumber($input, 'phone');
-            $input['department_id'] = Department::whereName('Doctor')->first()->id;
             $input['password'] = Hash::make($input['password']);
             $input['dob'] = (! empty($input['dob'])) ? $input['dob'] : null;
             $user = User::create(Arr::except($input, ['specialist']));
@@ -71,7 +70,7 @@ class DoctorRepository extends BaseRepository
         return true;
     }
 
-    
+
     public function update($doctor, $input)
     {
         try {
@@ -85,7 +84,7 @@ class DoctorRepository extends BaseRepository
                 $mediaId = updateProfileImage($user, $input['image']);
             }
 
-            
+
             $input['phone'] = preparePhoneNumber($input, 'phone');
             $input['dob'] = (! empty($input['dob'])) ? $input['dob'] : null;
             $doctor->doctorUser->update($input);
@@ -110,17 +109,17 @@ class DoctorRepository extends BaseRepository
         }
     }
 
-    
+
     public function getDoctors()
     {
-        
+
         $doctors = Doctor::with('doctorUser')->get()->where('doctorUser.status', '=', 1)->pluck('doctorUser.full_name',
             'id')->sort();
 
         return $doctors;
     }
 
-    
+
     public function getDoctorAssociatedData($doctorId)
     {
         $data['doctorData'] = Doctor::with([

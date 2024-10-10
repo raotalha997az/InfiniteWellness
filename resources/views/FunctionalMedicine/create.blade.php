@@ -32,7 +32,7 @@
                     <div class="mb-3 row">
                         <div class="col-md-12 mt-5">
 
-                            <h3>Life Line</h3>
+                            <h3 >Life Line</h3>
                             <p>Tell me about your life since birth, any problem/concern you have faced and how did you
                                 address it?</p>
                             <label for="life_line" class="form-label">Environmental</label>
