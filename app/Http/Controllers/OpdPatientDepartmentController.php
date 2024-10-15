@@ -666,8 +666,8 @@ class OpdPatientDepartmentController extends AppBaseController
                 'appointment_date' => $input['appointment_date'],
                 'is_old_patient' => 1,
                 'standard_charge' => 0,
-                'followup_charge' => $input['followup_charge'],
-                'advance_amount' => $input['advance_amount'],
+                'followup_charge' => $input['followup_charge'] ?? 1,
+                'advance_amount' => $input['advance_amount'] ?? 1,
                 'payment_mode' => $input['payment_mode'],
                 'currency_symbol' => 'PKR',
             ]);
