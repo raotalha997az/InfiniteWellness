@@ -2,13 +2,14 @@
 
 namespace App\Repositories;
 
+use Arr;
+use Hash;
+use Exception;
+use App\Models\User;
+use App\Models\Doctor;
 use App\Models\Address;
 use App\Models\Department;
-use App\Models\Doctor;
-use App\Models\User;
-use Arr;
-use Exception;
-use Hash;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 
@@ -33,36 +34,90 @@ class DoctorRepository extends BaseRepository
     }
 
 
+    // public function store($input, $mail = false)
+    // {
+    //     try {
+    //         $input['phone'] = preparePhoneNumber($input, 'phone');
+    //         $input['password'] = Hash::make($input['password']);
+    //         $input['dob'] = (! empty($input['dob'])) ? $input['dob'] : null;
+    //         $user = User::create(Arr::except($input, ['specialist']));
+    //         if ($mail) {
+    //             $user->sendEmailVerificationNotification();
+    //         }
+
+    //         if (isset($input['image']) && ! empty($input['image'])) {
+    //             $mediaId = storeProfileImage($user, $input['image']);
+    //         }
+
+    //         $doctor = Doctor::create([
+    //             'doctor_user_id' => $user->id,
+    //             'department_id' => $input['department_id'],
+
+    //             'specialist' => $input['specialist'],
+    //         ]);
+    //         $ownerId = $doctor->id;
+    //         $ownerType = Doctor::class;
+
+    //         if (! empty($address = Address::prepareAddressArray($input))) {
+    //             Address::create(array_merge($address, ['owner_id' => $ownerId, 'owner_type' => $ownerType]));
+    //         }
+
+    //         $user->update(['owner_id' => $ownerId, 'owner_type' => $ownerType]);
+    //         $user->assignRole($input['department_id']);
+    //     } catch (Exception $e) {
+    //         throw new UnprocessableEntityHttpException($e->getMessage());
+    //     }
+
+    //     return true;
+    // }
+
+
     public function store($input, $mail = false)
     {
         try {
+            // Validate and prepare phone number
             $input['phone'] = preparePhoneNumber($input, 'phone');
+            // Hash password
             $input['password'] = Hash::make($input['password']);
-            $input['dob'] = (! empty($input['dob'])) ? $input['dob'] : null;
+            // Handle date of birth
+            $input['dob'] = !empty($input['dob']) ? $input['dob'] : null;
+
+            // Create user without 'specialist' and 'department_id'
+
             $user = User::create(Arr::except($input, ['specialist']));
+            // Send email verification if needed
             if ($mail) {
                 $user->sendEmailVerificationNotification();
             }
 
-            if (isset($input['image']) && ! empty($input['image'])) {
-                $mediaId = storeProfileImage($user, $input['image']);
+            // Handle image upload if provided
+            if (!empty($input['image'])) {
+                storeProfileImage($user, $input['image']);
             }
 
+            // Create doctor and associate with user
             $doctor = Doctor::create([
                 'doctor_user_id' => $user->id,
                 'department_id' => $input['department_id'],
-
                 'specialist' => $input['specialist'],
             ]);
-            $ownerId = $doctor->id;
-            $ownerType = Doctor::class;
 
-            if (! empty($address = Address::prepareAddressArray($input))) {
-                Address::create(array_merge($address, ['owner_id' => $ownerId, 'owner_type' => $ownerType]));
+            // Save address if available
+            if (!empty($address = Address::prepareAddressArray($input))) {
+                Address::create(array_merge($address, [
+                    'owner_id' => $doctor->id,
+                    'owner_type' => Doctor::class,
+                ]));
             }
 
-            $user->update(['owner_id' => $ownerId, 'owner_type' => $ownerType]);
-            $user->assignRole($input['department_id']);
+            // Update user owner ID and type
+            $user->update([
+                'owner_id' => $doctor->id,
+                'owner_type' => Doctor::class,
+            ]);
+
+            // Assign role to user (based on your actual role logic)
+            $user->assignRole('Doctor');
         } catch (Exception $e) {
             throw new UnprocessableEntityHttpException($e->getMessage());
         }
@@ -70,12 +125,10 @@ class DoctorRepository extends BaseRepository
         return true;
     }
 
-
     public function update($doctor, $input)
     {
         try {
             unset($input['password']);
-
             $user = User::find($doctor->doctorUser->id);
             if ($input['avatar_remove'] == 1 && isset($input['avatar_remove']) && ! empty($input['avatar_remove'])) {
                 removeFile($user, User::COLLECTION_PROFILE_PICTURES);
@@ -102,7 +155,6 @@ class DoctorRepository extends BaseRepository
                     Address::create(array_merge($address, ['owner_id' => $ownerId, 'owner_type' => $ownerType]));
                 }
             }
-
             return true;
         } catch (Exception $e) {
             throw new UnprocessableEntityHttpException($e->getMessage());
