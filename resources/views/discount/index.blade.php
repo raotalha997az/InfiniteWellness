@@ -95,7 +95,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Update Discount</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close2">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close3">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -141,7 +141,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">Save changes</button>
-                                <button type="button" class="btn btn-secondary" id="close" data-dismiss="modal"
+                                <button type="button" class="btn btn-secondary" id="close4" data-dismiss="modal"
                                     aria-label="Close">Close</button>
                             </div>
                         </form>
@@ -214,6 +214,12 @@
             $('#amountUpdate').val(amount);
             $('#activeUpdate').val(status).trigger('change');
             $('#idUpdate').val(id);
-        })
+        });
+        $('#close3').click(function() {
+            $('#updateDiscountModal').modal('hide');
+        });
+        $('#close4').click(function() {
+            $('#updateDiscountModal').modal('hide');
+        });
     });
 </script>
