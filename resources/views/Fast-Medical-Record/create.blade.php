@@ -15,27 +15,32 @@
                     <div class="row mb-5 mt-5">
                         <div class="col-md-4">
                             <label for="patient_name" class="form-label">MR #<sup class="text-danger">*</sup></label>
-                            <select class="form-select" name="patient_name" id="patient_name">
+                            <select class="form-select" name="patient_name" id="patient_name"> <!-- Change name to patient_id -->
                                 <option selected disabled>select mr number</option>
                                 @foreach ($patients as $patient)
-                                    <option value="{{ $patient->user->full_name }}"
-                                        {{ old('patient_name') == $patient->user->full_name ? 'selected' : '' }}
+                                    <option value="{{ $patient->patientUser->first_name . ' ' . $patient->patientUser->last_name }}"
+                                        {{ old('patient_name') == $patient->patientUser->first_name . ' ' . $patient->patientUser->last_name ? 'selected' : '' }}
                                         data-blood_pressure="{{ $patient->blood_pressure }}"
-                                        data-patient_id="{{ $patient->id }}" data-heart_rate="{{ $patient->heart_rate }}"
+                                        data-patient_id="{{ $patient->id }}"
+                                        data-heart_rate="{{ $patient->heart_rate }}"
                                         data-respiratory_rate="{{ $patient->respiratory_rate }}"
-                                        data-temperature="{{ $patient->temperature }}" data-height="{{ $patient->height }}"
-                                        data-weight="{{ $patient->weight }}" data-bmi="{{ $patient->bmi }}"
-                                        data-dob="{{ $patient->user->dob }}" data-contact_no="{{ $patient->user->phone }}"
+                                        data-temperature="{{ $patient->temperature }}"
+                                        data-height="{{ $patient->height }}"
+                                        data-weight="{{ $patient->weight }}"
+                                        data-bmi="{{ $patient->bmi }}"
+                                        data-dob="{{ $patient->user->dob }}"
+                                        data-contact_no="{{ $patient->user->phone }}"
                                         data-first_name="{{ $patient->user->first_name }}"
                                         data-last_name="{{ $patient->user->last_name }}">
-                                        {{ $patient->MR }}
-                                        ~ {{ $patient->user->full_name }}</option>
+                                        {{ $patient->MR }} ~ {{ $patient->user->full_name }}
+                                    </option>
                                 @endforeach
                             </select>
                             @error('patient_name')
                                 <p class="text-danger">{{ $message }}</p>
                             @enderror
                         </div>
+
 
                         <div class="col-md-4">
                             <div class="mb-2">

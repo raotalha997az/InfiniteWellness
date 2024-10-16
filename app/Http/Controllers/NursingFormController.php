@@ -199,11 +199,12 @@ class NursingFormController extends Controller
     public function fastMedicalRecordcreate()
     {
         return view('Fast-Medical-Record.create', [
-            'patients' => Patient::with('user')->get(),
+            'patients' => Patient::getActivePatientNames(),
         ]);
     }
     public function fastMedicalRecordstore(Request $request)
     {
+
         FastMedicalRecord::create($request->all());
         return redirect()->route('fast-medical-record.index')->with('success', 'Fast Medical Record created!');
     }
@@ -268,7 +269,6 @@ class NursingFormController extends Controller
     {
         $fastrecord = FastMedicalRecord::findOrFail($id);
         $fastrecord->update($request->all());
-
         return redirect()->route('fast-medical-record.index')->with('success', 'Record updated successfully');
     }
 
