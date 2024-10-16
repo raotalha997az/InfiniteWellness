@@ -267,10 +267,21 @@ class NursingFormController extends Controller
     // update
     public function fastMedicalupdate(Request $request, $id)
     {
+        // Create the validator instance
+        $validator = Validator::make($request->all(), [
+            'contact' => 'required|string|max:15',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+        $validatedData = $validator->validated();
         $fastrecord = FastMedicalRecord::findOrFail($id);
-        $fastrecord->update($request->all());
+        $fastrecord->update($validatedData);
         return redirect()->route('fast-medical-record.index')->with('success', 'Record updated successfully');
     }
+
+
 
     // print
     public function fastMedicalprint($id)

@@ -18,7 +18,7 @@
                         <div class="col-md-4">
                             <label for="patient_name" class="form-label">MR #<sup class="text-danger">*</sup></label>
                             <input type="text" name="contact" value="{{ old('patient_name', $fastrecord->patient_name) }}" id="contact"
-                            class="form-control" readonly>                       
+                            class="form-control" readonly>
                             </select>
                             @error('patient_name')
                                 <p class="text-danger">{{ $message }}</p>
