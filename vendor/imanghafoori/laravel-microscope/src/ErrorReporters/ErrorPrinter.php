@@ -2,72 +2,93 @@
 
 namespace Imanghafoori\LaravelMicroscope\ErrorReporters;
 
+use Exception;
 use Imanghafoori\LaravelMicroscope\FileReaders\FilePath;
-use Imanghafoori\LaravelMicroscope\LaravelPaths\LaravelPaths;
 use Symfony\Component\Console\Terminal;
 
 class ErrorPrinter
 {
-    public $errorsList = [
-        'total' => 0,
+    public static $ignored;
+
+    /**
+     * @var array
+     */
+    public $errorsList = [];
+
+    /**
+     * @var array
+     */
+    public $errorsCounts = [
+        'extraWrongImport' => 0,
+        'wrongClassRef' => 0,
+        'extraCorrectImport' => 0,
     ];
 
+    /**
+     * @var int
+     */
+    public $total = 0;
+
+    /**
+     * The output interface implementation.
+     *
+     * @var \Illuminate\Console\OutputStyle
+     */
     public $printer;
 
+    /**
+     * @var bool
+     */
     public $logErrors = true;
 
+    /**
+     * @var string[]
+     */
     public $pended = [];
 
+    /**
+     * @var int
+     */
     public $count = 0;
 
-    public function view($absPath, $message, $lineNumber, $fileName)
+    /**
+     * @var self
+     */
+    public static $instance;
+
+    /**
+     * @var string
+     */
+    public static $basePath;
+
+    /**
+     * @return self
+     */
+    public static function singleton($output = null)
     {
-        $this->simplePendError($fileName.'.blade.php', $absPath, $lineNumber, 'view', \trim($message), ' does not exist');
+        if (! self::$instance) {
+            self::$instance = new self;
+        }
+        $output && (self::$instance->printer = $output);
+
+        return self::$instance;
     }
 
-    public function printFixation($absPath, $wrongClass, $lineNumber, $correct)
+    public function flushErrors()
     {
-        $header = $wrongClass.'  <=== Did not exist';
-        $msg = 'Fixed to:   '.substr($correct[0], 0, 55);
-
-        $this->simplePendError($msg, $absPath, $lineNumber, 'ns_replacement', $header);
-    }
-
-    public function route($path, $errorIt, $errorTxt, $absPath = null, $lineNumber = 0)
-    {
-        $this->simplePendError($path, $absPath, $lineNumber, 'route', $errorIt, $errorTxt);
-    }
-
-    public function authConf()
-    {
-        $this->print('The model in the "config/auth.php" is not a valid class');
-    }
-
-    public function badRelation($absPath, $lineNumber, $relatedModel)
-    {
-        $header = 'Wrong model is passed in relation:';
-
-        $this->doesNotExist($relatedModel, $absPath, $lineNumber, 'badRelation', $header);
-    }
-
-    public function doesNotExist($yellowText, $absPath, $lineNumber, $key, $header)
-    {
-        $this->simplePendError($yellowText, $absPath, $lineNumber, $key, $header);
-    }
-
-    public function routelessAction($absPath, $lineNumber, $msg)
-    {
-        $this->simplePendError($msg, $absPath, $lineNumber, 'routelessCtrl', 'No route is defined for controller action:');
-    }
-
-    public function wrongImport($absPath, $class, $lineNumber)
-    {
-        $this->doesNotExist("use $class;", $absPath, $lineNumber, 'wrongImport', 'Wrong import:');
+        if ($this->hasErrors()) {
+            $this->logErrors();
+            foreach (['extraWrongImport', 'wrongClassRef', 'extraCorrectImport'] as $item) {
+                $this->errorsCounts[$item] += count($this->errorsList[$item] ?? []);
+            }
+            $this->errorsList = [];
+            $this->count = 0;
+        }
     }
 
     public function addPendingError($path, $lineNumber, $key, $header, $errorData)
     {
-        if (LaravelPaths::isIgnored($path)) {
+        if (self::isIgnored($path)) {
             return;
         }
         $this->count++;
@@ -84,77 +105,9 @@ class ErrorPrinter
         $this->addPendingError($absPath, $lineNumber, $key, $header, $errorData);
     }
 
-    public function compactError($path, $lineNumber, $absent, $key, $header)
+    public function color($msg, $color = 'blue')
     {
-        $errorData = $this->color(\implode(', ', array_keys($absent))).' does not exist';
-
-        $this->addPendingError($path, $lineNumber, $key, $header, $errorData);
-    }
-
-    public function queryInBlade($absPath, $class, $lineNumber)
-    {
-        $key = 'queryInBlade';
-        $errorData = $this->color($class).'  <=== DB query in blade file';
-        $header = 'Query in blade file: ';
-
-        $this->addPendingError($absPath, $lineNumber, $key, $header, $errorData);
-    }
-
-    public function routeDefinitionConflict($route1, $route2, $info)
-    {
-        if (LaravelPaths::isIgnored($info[0]['file'] ?? 'unknown')) {
-            return;
-        }
-
-        $key = 'routeDefinitionConflict';
-        $routeName = $route1->getName();
-        if ($routeName) {
-            $routeName = $this->color($routeName);
-            $msg = 'Route name: '.$routeName;
-        } else {
-            $routeUri = $route1->uri();
-            $routeUri = $this->color($routeUri);
-            $msg = 'Route uri: '.$routeUri;
-        }
-
-        $msg .= "\n".' at '.($info[0]['file'] ?? 'unknown').':'.($info[0]['line'] ?? 2);
-        $msg .= "\n".' is overridden by ';
-
-        $routeName = $route2->getName();
-        if ($routeName) {
-            $routeName = $this->color($routeName);
-            $msg .= 'route name: '.$routeName;
-        } else {
-            $msg .= 'an other route with same uri.';
-        }
-
-        $msg .= "\n".' at '.($info[1]['file'] ?? ' ').':'.$info[1]['line']."\n";
-
-        $methods = \implode(',', $route1->methods());
-
-        $this->errorsList[$key][$methods] = (new PendingError($key))
-            ->header('Route with uri: '.$this->color($methods.': /'.$route1->uri()).' is overridden.')
-            ->errorData($msg);
-    }
-
-    public function wrongUsedClassError($absPath, $class, $lineNumber)
-    {
-        $this->doesNotExist($class, $absPath, $lineNumber, 'wrongUsedClassError', 'Class does not exist:');
-    }
-
-    public function extraImport($absPath, $class, $lineNumber)
-    {
-        $this->doesNotExist($class, $absPath, $lineNumber, 'extraImport', 'Import is not used:');
-    }
-
-    public function wrongMethodError($absPath, $class, $lineNumber)
-    {
-        $this->doesNotExist($class, $absPath, $lineNumber, 'wrongMethodError', 'Method does not exist:');
-    }
-
-    public function color($msg)
-    {
-        return "<fg=blue>$msg</>";
+        return "<fg=$color>$msg</>";
     }
 
     public function print($msg, $path = '   ')
@@ -164,16 +117,16 @@ class ErrorPrinter
 
     public function printHeader($msg)
     {
-        $number = ++$this->errorsList['total'];
+        $number = ++$this->total;
         ($number < 10) && $number = " $number";
 
-        $number = '<fg=cyan>'.$number.' </>';
-        $path = "  $number";
+        $number = $this->color($number, 'cyan');
+        $path = "  $number ";
 
         $width = (new Terminal)->getWidth() - 6;
         PendingError::$maxLength = max(PendingError::$maxLength, strlen($msg), $width);
         PendingError::$maxLength = min(PendingError::$maxLength, $width);
-        $this->print('<fg=red>'.$msg.'</>', $path);
+        $this->print($this->color($msg, 'red'), $path);
     }
 
     public function end()
@@ -183,7 +136,7 @@ class ErrorPrinter
         };
         try {
             $line('gray');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $line('blue'); // for older versions of laravel
         }
     }
@@ -205,46 +158,31 @@ class ErrorPrinter
     /**
      * Checks for errors for the run command.
      *
-     * @return int
+     * @return bool
      */
     public function hasErrors()
     {
-        $errorsCollection = collect($this->errorsList);
-
-        return $errorsCollection->flatten()->filter(function ($action) {
-            return $action instanceof PendingError;
-        })->count();
+        return $this->count > 0;
     }
 
     public function logErrors()
     {
-        collect($this->errorsList)->except('total')->flatten()->each(function ($error) {
-            if ($error instanceof PendingError) {
+        foreach ($this->errorsList as $list) {
+            foreach ($list as $error) {
                 $this->printHeader($error->getHeader());
                 $this->print($error->getErrorData());
-                $this->printLink($error->getLinkPath(), $error->getLinkLineNumber());
+                $this->printLink(
+                    $error->getLinkPath(),
+                    $error->getLinkLineNumber()
+                );
                 $this->end();
             }
-        });
+        }
 
         foreach ($this->pended as $pend) {
             $this->print($pend);
             $this->end();
         }
-    }
-
-    private static function possibleFixMsg($pieces)
-    {
-        $fixes = \implode("\n - ", $pieces);
-        $fixes && $fixes = "\n Possible fixes:\n - ".$fixes;
-
-        return $fixes;
-    }
-
-    public function wrongImportPossibleFixes($absPath, $class, $line, $fixes)
-    {
-        $fixes = self::possibleFixMsg($fixes);
-        $this->wrongUsedClassError($absPath, $class.' '.$fixes, $line);
     }
 
     public function getCount($key)
@@ -254,18 +192,68 @@ class ErrorPrinter
 
     public function printTime()
     {
-        $this->logErrors && $this->printer->writeln('time: '.round(microtime(true) - microscope_start, 3).' (sec)', 2);
+        $this->logErrors && $this->printer->writeln($this->getTimeMessage(), 2);
     }
 
-    public static function thanks($command)
+    /**
+     * Check given path should be ignored.
+     *
+     * @param  string  $path
+     * @return bool
+     */
+    public static function isIgnored($path)
     {
-        $command->line(PHP_EOL.'<fg=blue>|-------------------------------------------------|</>');
-        $command->line('<fg=blue>|-----------     Star Me On Github     -----------|</>');
-        $command->line('<fg=blue>|-------------------------------------------------|</>');
-        $command->line('<fg=blue>|  Hey man, if you have found microscope useful   |</>');
-        $command->line('<fg=blue>|  Please consider giving it an star on github.   |</>');
-        $command->line('<fg=blue>|  \(^_^)/    Regards, Iman Ghafoori    \(^_^)/   |</>');
-        $command->line('<fg=blue>|-------------------------------------------------|</>');
-        $command->line('https://github.com/imanghafoori1/microscope');
+        $ignorePatterns = self::$ignored;
+
+        if (! $ignorePatterns || ! is_array($ignorePatterns)) {
+            return false;
+        }
+
+        foreach ($ignorePatterns as $ignorePattern) {
+            if (self::is(base_path($ignorePattern), $path)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static function is($pattern, $value)
+    {
+        if (! is_iterable($pattern)) {
+            $pattern = [$pattern];
+        }
+
+        foreach ($pattern as $pattern) {
+            if ($pattern === $value) {
+                return true;
+            }
+
+            $pattern = preg_quote($pattern, '#');
+
+            // Asterisks are translated into zero-or-more regular expression wildcards
+            // to make it convenient to check if the strings starts with the given
+            // pattern such as "library/*", making any string check convenient.
+            $pattern = str_replace('\*', '.*', $pattern);
+
+            if (preg_match('#^'.$pattern.'\z#u', $value) === 1) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function getTimeMessage()
+    {
+        $duration = microtime(true) - microscope_start;
+        $duration = round($duration, 3);
+
+        return "time: {$duration} (sec)";
+    }
+
+    public static function lineSeparator(): string
+    {
+        return ' <fg='.config('microscope.colors.line_separator').'>'.str_repeat('_', (new Terminal)->getWidth() - 3).'</>';
     }
 }

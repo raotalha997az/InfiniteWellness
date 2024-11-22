@@ -1,6 +1,6 @@
 {
     "name": "imanghafoori/php-token-analyzer",
-    "description": "Token analyzer utility for php",
+    "description": "Token analyzer utility for PHP",
     "keywords": [
         "php-token-analyzer"
     ],
@@ -16,11 +16,11 @@
     ],
     "require": {
         "phpdocumentor/reflection-docblock": "4.*|5.*",
-        "php" : "^7.0|8.0.*|8.1.*|8.2.*"
+        "php": "^7.2|8.0.*|8.1.*|8.2.*|8.3.*"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.0|^7.0|^8.0|^9.0",
-        "symfony/var-dumper" : "3.*|4.*|5.*"
+        "phpunit/phpunit": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0",
+        "symfony/var-dumper": "3.*|4.*|5.*"
     },
     "autoload": {
         "psr-4": {
@@ -35,9 +35,9 @@
     "scripts": {
         "test": "vendor/bin/phpunit",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-
     },
     "config": {
         "sort-packages": true
-    }
+    },
+    "minimum-stability": "stable"
 }

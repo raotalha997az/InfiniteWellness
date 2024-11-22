@@ -6,7 +6,7 @@ class ParseUseStatement
 {
     public static function getExpandedRef($tokens, $className)
     {
-        $refs = ParseUseStatement::parseUseStatements($tokens, $className);
+        $refs = self::parseUseStatements($tokens, $className);
 
         $namespace = '';
         foreach($refs[0] as $classPath => $y) {
@@ -25,7 +25,9 @@ class ParseUseStatement
             $rest && $rest = '\\'.$rest;
         }
 
-        return ($refs[1][$className][0] ?? ($namespace.'\\'.$className)).$rest;
+        $namespace && ($namespace = $namespace.'\\');
+
+        return ($refs[1][$className][0] ?? ($namespace.$className)).$rest;
     }
 
     public static function getUseStatementsByPath($namespacedClassName, $absPath)
@@ -37,7 +39,7 @@ class ParseUseStatement
     {
         $imports = self::parseUseStatements($tokens);
         $imports = $imports[0] ?: [$imports[1]];
-        [$classes, $namespace] = ClassReferenceFinder::process($tokens);
+        [$classes, $namespace, $attributeRefs] = ClassReferenceFinder::process($tokens);
 
         return ClassRefExpander::expendReferences($classes, $imports, $namespace);
     }
@@ -54,8 +56,10 @@ class ParseUseStatement
     {
         ! defined('T_NAME_QUALIFIED') && define('T_NAME_QUALIFIED', -352);
         ! defined('T_NAME_FULLY_QUALIFIED') && define('T_NAME_FULLY_QUALIFIED', -373);
+        ! defined('T_ENUM') && define('T_ENUM', -144);
 
-        $namespace = $class = $classLevel = $level = null;
+        $namespace = $class = $classLevel = null;
+        $level = 0;
         $output = $uses = [];
         while ($token = \current($tokens)) {
             \next($tokens);
@@ -66,6 +70,7 @@ class ParseUseStatement
                     break;
 
                 case T_CLASS:
+                case T_ENUM:
                 case T_INTERFACE:
                 case T_TRAIT:
                     if ($name = self::fetch($tokens, T_STRING)) {

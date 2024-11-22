@@ -12,7 +12,7 @@ class NamespaceCalculator
 
         $classPath = \implode('\\', $classPath);
 
-        // Ensure back slashes in All Operating Systems.
+        // Ensure backslashes in All Operating Systems.
         $composerPath = \str_replace('/', '\\', $composerPath);
 
         // replace composer base_path with composer namespace
@@ -92,7 +92,7 @@ class NamespaceCalculator
         $relativePath = str_replace(['\\', '.php'], ['/', ''], $relativePath);
         foreach ($psr4Mapping as $namespacePrefix => $paths) {
             foreach ((array) $paths as $path) {
-                if (0 === strpos($relativePath, $path)) {
+                if (strpos($relativePath, $path) === 0) {
                     $correctNamespace = substr_replace($relativePath, $namespacePrefix, 0, strlen($path));
                     $correctNamespace = str_replace('/', '\\', $correctNamespace);
                     $correctNamespaces[] = self::getNamespaceFromFullClass($correctNamespace);
@@ -116,5 +116,14 @@ class NamespaceCalculator
         }
 
         return $subject;
+    }
+
+    public static function getNamespaceFromPath($absFilePath, $basePath, $psr4Path, $psr4Namespace): string
+    {
+        $className = basename(str_replace(['.php', '\\'], ['', '/'], $absFilePath));
+        $relativePath = str_replace($basePath, '', $absFilePath);
+        $namespace = self::calculateCorrectNamespace($relativePath, $psr4Path, $psr4Namespace);
+
+        return $namespace ? ($namespace.'\\'.$className) : $className;
     }
 }

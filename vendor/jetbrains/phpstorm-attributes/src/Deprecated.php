@@ -4,10 +4,9 @@ namespace JetBrains\PhpStorm;
 
 use Attribute;
 
-
 #[Attribute(Attribute::TARGET_FUNCTION | Attribute::TARGET_METHOD | Attribute::TARGET_CLASS | Attribute::TARGET_CLASS_CONSTANT | Attribute::TARGET_PROPERTY | Attribute::TARGET_PARAMETER)]
 class Deprecated {
-    const PHP_VERSIONS = [
+    public const PHP_VERSIONS = [
         "5.3",
         "5.4",
         "5.5",
@@ -18,6 +17,10 @@ class Deprecated {
         "7.3",
         "7.4",
         "8.0",
+        "8.1",
+        "8.2",
+        "8.3",
+        "8.4",
     ];
 
     /**
@@ -33,7 +36,7 @@ class Deprecated {
      * <li>%class%: If the attribute is provided for method "m", then for "$this->f()->m()", %class% will be "$this->f()"</li>
      * </ul>
      * The following example shows how to wrap a function call in another call and swap arguments:<br />
-     * "#[Deprecated(replaceWith: "wrappedCall(%name%(%parameter1%, %parameter0%))")] f($a, $b){}<br />
+     * "#[Deprecated(replacement: "wrappedCall(%name%(%parameter1%, %parameter0%))")] f($a, $b){}<br />
      * f(1,2) will be replaced with wrappedCall(f(2,1))
      * @param string $since Element is deprecated starting with the provided PHP language level, applicable only for PhpStorm stubs entries
      */

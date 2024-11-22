@@ -5,17 +5,21 @@
 <div class="aside-menu-container" id="sidebar">
     <!--begin::Brand-->
     <div class="aside-menu-container__aside-logo flex-column-auto mt-3">
+
+        <button type="button" class="btn px-0 aside-menu-container__aside-menubar d-lg-block d-none sidebar-btn">
+            <i class="fa-solid fa-bars fs-1"></i>
+        </button>
+
+
         <a data-turbo="false" href="https://webapp.infinitewellnesspk.com/" data-toggle="tooltip" data-placement="right"
            class="text-decoration-none sidebar-logo"
            title="{{ getAppName() }}">
             <img src="{{ asset('logo.png') }}"
                  alt="Logo" width="50px" height="50px" class="image"/>
-            <span class="navbar-brand-name text-dark text-decoration-none logo ps-2">{{ getAppName() }}</span>
+            <span class="navbar-brand-name text-dark text-decoration-none logo ps-2" style="font-size: 13px">{{ getAppName() }}</span>
         </a>
 
-        <button type="button" class="btn px-0 aside-menu-container__aside-menubar d-lg-block d-none sidebar-btn">
-            <i class="fa-solid fa-bars fs-1"></i>
-        </button>
+
 
     </div>
     <!--end::Brand-->

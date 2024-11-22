@@ -2,17 +2,25 @@
 
 namespace Imanghafoori\LaravelMicroscope\LaravelPaths;
 
-use Illuminate\Database\Eloquent\Factory;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Imanghafoori\LaravelMicroscope\FileReaders\FilePath;
 use Imanghafoori\LaravelMicroscope\FileReaders\Paths;
-use Imanghafoori\LaravelMicroscope\SpyClasses\RoutePaths;
-use Symfony\Component\Finder\Finder;
+use Imanghafoori\LaravelMicroscope\Iterators\BladeFiles;
 use Throwable;
 
 class LaravelPaths
 {
+    /**
+     * @return \Generator
+     */
+    public static function configDirs()
+    {
+        yield from array_merge([config_path()], config('microscope.additional_config_paths', []));
+    }
+
+    /**
+     * @return string|null
+     */
     public static function seedersDir()
     {
         $dir = app()->databasePath('seeds');
@@ -26,102 +34,51 @@ class LaravelPaths
     public static function factoryDirs()
     {
         try {
-            return app()->make(Factory::class)->loadedPaths;
+            return app()->make('Illuminate\Database\Eloquent\Factory')->loadedPaths;
         } catch (Throwable $e) {
             return [];
         }
     }
 
+    /**
+     * @return \Generator
+     */
     public static function migrationDirs()
     {
         // normalize the migration paths
-        $migrationDirs = [];
-
         foreach (app('migrator')->paths() as $path) {
+            if (! is_dir($path)) {
+                continue;
+            }
             // Excludes the migrations within "vendor" folder:
             if (! Str::startsWith($path, [base_path('vendor')])) {
-                $migrationDirs[] = FilePath::normalize($path);
+                yield FilePath::normalize($path);
             }
         }
 
-        $migrationDirs[] = app()->databasePath('migrations');
+        yield app()->databasePath('migrations');
+    }
 
-        return $migrationDirs;
+    public static function getMigrationsFiles($fileName, $folder)
+    {
+        return Paths::getAbsFilePaths(self::migrationDirs(), $fileName, $folder);
     }
 
     /**
-     * Check given path should be ignored.
-     *
-     * @param  string  $path
-     * @return bool
+     * @return \Generator
      */
-    public static function isIgnored($path)
+    public static function allBladeFiles()
     {
-        $ignorePatterns = config('microscope.ignore');
-
-        if (! $ignorePatterns || ! is_array($ignorePatterns)) {
-            return false;
-        }
-
-        foreach ($ignorePatterns as $ignorePattern) {
-            if (Str::is(base_path($ignorePattern), $path)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public static function bladeFilePaths()
-    {
-        $bladeFiles = [];
-        $hints = self::getNamespacedPaths();
-        $hints['1'] = View::getFinder()->getPaths();
-
-        foreach ($hints as $paths) {
+        foreach (BladeFiles::getViews() as $paths) {
             foreach ($paths as $path) {
-                $files = is_dir($path) ? Finder::create()->name('*.blade.php')->files()->in($path) : [];
+                $files = is_dir($path) ? BladeFiles\CheckBladePaths::findFiles($path) : [];
                 foreach ($files as $blade) {
                     /**
                      * @var \Symfony\Component\Finder\SplFileInfo $blade
                      */
-                    $bladeFiles[] = $blade->getRealPath();
+                    yield $blade->getRealPath();
                 }
             }
         }
-
-        return $bladeFiles;
-    }
-
-    private static function getNamespacedPaths()
-    {
-        $hints = View::getFinder()->getHints();
-        unset($hints['notifications'], $hints['pagination']);
-
-        return $hints;
-    }
-
-    public static function collectFilesInNonPsr4Paths()
-    {
-        $paths = [
-            RoutePaths::get(),
-            Paths::getAbsFilePaths(LaravelPaths::migrationDirs()),
-            Paths::getAbsFilePaths(config_path()),
-            Paths::getAbsFilePaths(LaravelPaths::factoryDirs()),
-            Paths::getAbsFilePaths(LaravelPaths::seedersDir()),
-            LaravelPaths::bladeFilePaths(),
-        ];
-
-        return self::mergePaths($paths);
-    }
-
-    private static function mergePaths($paths)
-    {
-        $all = [];
-        foreach ($paths as $p) {
-            $all = array_merge($all, $p);
-        }
-
-        return $all;
     }
 }

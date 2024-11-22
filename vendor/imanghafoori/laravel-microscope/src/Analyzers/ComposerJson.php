@@ -2,36 +2,61 @@
 
 namespace Imanghafoori\LaravelMicroscope\Analyzers;
 
+use Composer\ClassMapGenerator\ClassMapGenerator;
 use ImanGhafoori\ComposerJson\ComposerJson as Composer;
+use Imanghafoori\LaravelMicroscope\FileReaders\FilePath;
 
 class ComposerJson
 {
+    public static $composer;
+
     public static function make(): Composer
     {
-        return resolve(Composer::class);
+        return (self::$composer)();
     }
 
-    public static function readAutoload($purgeAutoload = false)
+    public static function readPsr4($purgeAutoload = false)
     {
         return self::make()->readAutoload($purgeAutoload);
     }
 
-    public static function readAutoloadFiles()
+    public static function autoloadedFilesList($basePath)
     {
-        $basePath = base_path();
-        $psr4Autoloads = self::make()->readAutoloadFiles();
+        return self::make()->autoloadedFilesList($basePath);
+    }
 
-        $allFiles = [];
-        foreach ($psr4Autoloads as $path => $files) {
-            $p = $basePath.'/'.trim($path, '/');
-            foreach ($files['autoload'] as $f) {
-                $allFiles[] = $p.'/'.$f;
-            }
-            foreach ($files['autoload-dev'] as $f) {
-                $allFiles[] = $p.'/'.$f;
+    public static function getClassMaps($basePath, $fileName = '', $folder = '')
+    {
+        foreach (self::make()->readAutoloadClassMap() as $composerPath => $classMapPaths) {
+            yield $composerPath => self::getFilteredClasses($composerPath, $classMapPaths, $basePath, $fileName, $folder);
+        }
+    }
+
+    private static function getFilteredClasses($composerPath, $classMapPaths, $basePath, $fileName, $folder)
+    {
+        foreach ($classMapPaths as $classmapPath) {
+            $classes = self::getClasses($composerPath, $basePath, $classmapPath);
+            yield $classmapPath => self::filterClasses($classes, $basePath, $fileName, $folder);
+        }
+    }
+
+    private static function getClasses($compPath, $basePath, $classmapPath)
+    {
+        $compPath1 = trim($compPath, '/');
+        $compPath1 = $compPath1 ? $compPath1.DIRECTORY_SEPARATOR : '';
+        $classmapFullPath = $basePath.DIRECTORY_SEPARATOR.$compPath1.$classmapPath;
+
+        return array_values(ClassMapGenerator::createMap($classmapFullPath));
+    }
+
+    private static function filterClasses(array $classes, $basePath, $fileName, $folder)
+    {
+        foreach ($classes as $i => $class) {
+            if (! FilePath::contains(str_replace($basePath, '', $class), $folder, $fileName)) {
+                unset($classes[$i]);
             }
         }
 
-        return $allFiles;
+        return $classes;
     }
 }

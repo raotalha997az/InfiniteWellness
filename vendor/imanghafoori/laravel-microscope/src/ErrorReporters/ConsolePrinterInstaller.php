@@ -4,20 +4,14 @@ namespace Imanghafoori\LaravelMicroscope\ErrorReporters;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
-use Imanghafoori\LaravelMicroscope\ErrorTypes\BladeFile;
-use Imanghafoori\LaravelMicroscope\ErrorTypes\CompactCall;
-use Imanghafoori\LaravelMicroscope\ErrorTypes\ddFound;
-use Imanghafoori\LaravelMicroscope\ErrorTypes\EnvFound;
-use Imanghafoori\LaravelMicroscope\ErrorTypes\RouteDefinitionConflict;
+use Imanghafoori\LaravelMicroscope\Features\CheckEnvCalls\EnvFound;
+use Imanghafoori\LaravelMicroscope\Features\RouteOverride\Installer as RouteOverrideInstaller;
 
 class ConsolePrinterInstaller
 {
     protected static function finishCommand($command)
     {
-        /**
-         * @var $errorPrinter ErrorPrinter
-         */
-        $errorPrinter = app(ErrorPrinter::class);
+        $errorPrinter = ErrorPrinter::singleton();
         $errorPrinter->printer = $command->getOutput();
 
         $commandName = class_basename($command);
@@ -52,66 +46,12 @@ class ConsolePrinterInstaller
 
     public static function boot()
     {
-        Event::listen(BladeFile::class, function (BladeFile $event) {
-            $data = $event->data;
-            $msg = 'The blade file is missing:';
+        RouteOverrideInstaller::install();
 
-            app(ErrorPrinter::class)->view(
-                $data['absPath'],
-                $msg,
-                $data['lineNumber'],
-                $data['name']
-            );
-        });
-
-        Event::listen(ddFound::class, function (ddFound $event) {
-            $data = $event->data;
-            app(ErrorPrinter::class)->simplePendError(
-                $data['name'],
-                $data['absPath'],
-                $data['lineNumber'],
-                'ddFound',
-                'Debug function found: '
-            );
-        });
-
-        self::compactCall();
-
-        Event::listen(RouteDefinitionConflict::class, function ($e) {
-            app(ErrorPrinter::class)->routeDefinitionConflict(
-                $e->data['poorRoute'],
-                $e->data['bullyRoute'],
-                $e->data['info']
-            );
-        });
-
-        Event::listen(EnvFound::class, function (EnvFound $event) {
-            $data = $event->data;
-            app(ErrorPrinter::class)->simplePendError(
-                $data['name'],
-                $data['absPath'],
-                $data['lineNumber'],
-                'envFound',
-                'env() function found: '
-            );
-        });
+        EnvFound::listen();
 
         Event::listen('microscope.finished.checks', function ($command) {
             self::finishCommand($command);
-        });
-    }
-
-    private static function compactCall()
-    {
-        Event::listen(CompactCall::class, function ($event) {
-            $data = $event->data;
-
-            app(ErrorPrinter::class)->compactError(
-                $data['absPath'],
-                $data['lineNumber'],
-                $data['name'],
-                'CompactCall',
-                'compact() function call has problems man ! ');
         });
     }
 

@@ -40,8 +40,8 @@ class DentalOpdPatientTable extends LivewireTableComponent
         $this->setThAttributes(function (Column $column) {
             if ($column->isField('standard_charge')) {
                 return [
-                    'class' => 'd-flex justify-content-end',
-                    'style' => 'padding-right: 3rem !important',
+                    // 'class' => 'd-flex justify-content-end',
+                    // 'style' => 'padding-right: 3rem !important',
                 ];
             }
 

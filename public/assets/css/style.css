@@ -232,12 +232,12 @@ sup {
 }
 
 a {
-    color: #6571ff;
-    text-decoration: underline
+    color: #05073A;
+    text-decoration: underline;
 }
 
 a:hover {
-    color: #515acc
+    color: #00001C
 }
 
 a:not([href]):not([class]),
@@ -2888,7 +2888,7 @@ progress {
 .table {
     --bs-table-bg: transparent;
     --bs-table-accent-bg: transparent;
-    --bs-table-striped-color: #6c757d;
+    --bs-table-striped-color: #777777;
     --bs-table-striped-bg: #fff;
     --bs-table-active-color: #6c757d;
     --bs-table-active-bg: rgba(6, 9, 23, .1);
@@ -10572,24 +10572,35 @@ fieldset:disabled .btn {
 
 .rounded-bottom,
 .rounded-start {
-    border-bottom-left-radius: .313rem !important
+    border-bottom-left-radius: .313rem !important;
 }
 
 .rounded-start {
-    border-top-left-radius: .313rem !important
+    border-top-left-radius: .313rem !important;
 }
 
 .visible {
-    visibility: visible !important
+    visibility: visible !important;
 }
 
 .invisible {
-    visibility: hidden !important
+    visibility: hidden !important;
 }
+
+
+.bg-red-300{
+    background-color: #383B49 !important;
+}
+
+.bg-red-300{
+    background-color: #383B49 !important;
+}
+
+
 
 @media (min-width:576px) {
     .float-sm-start {
-        float: left !important
+        float: left !important;
     }
 
     .float-sm-end {
@@ -19555,7 +19566,7 @@ html ::-webkit-scrollbar-resizer:vertical {
 
 .table.table-striped>thead>tr>th {
     border-bottom-color: #e9ecef;
-    padding: .75rem .25rem .75rem 1.875rem !important
+    padding: .75rem 0 .75rem 10px !important;
 }
 
 .table.table-striped>thead>tr>th:first-child {
@@ -19569,7 +19580,7 @@ html ::-webkit-scrollbar-resizer:vertical {
 }
 
 .table.table-striped>:not(caption)>*>* {
-    padding: .625rem .25rem .625rem 1.875rem !important;
+    padding: 0.625rem 0 .625rem 10px !important;
     vertical-align: middle
 }
 

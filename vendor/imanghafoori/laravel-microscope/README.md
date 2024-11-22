@@ -4,7 +4,7 @@
 
 
 <p align="center">
-    <img width="300px" src="https://user-images.githubusercontent.com/6961695/78522127-920e9e80-77e1-11ea-869a-05a29466e6b0.png" alt="widgetize_header"></img>
+    <img width="300px" src="https://user-images.githubusercontent.com/6961695/78522127-920e9e80-77e1-11ea-869a-05a29466e6b0.png" alt="microscope_header"></img>
 </p>
 
 <h4 align="center">
@@ -28,6 +28,9 @@ Give your eyes a rest, we will detect and fix them for you.
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 [![Today Downloads][ico-today-downloads]][link-downloads]
+[![tests](https://github.com/imanghafoori1/laravel-microscope/actions/workflows/run-tests.yml/badge.svg?branch=master)](https://github.com/imanghafoori1/laravel-microscope/actions/workflows/run-tests.yml)
+[![Imports](https://github.com/imanghafoori1/laravel-microscope/actions/workflows/imports.yml/badge.svg?branch=master)](https://github.com/imanghafoori1/laravel-microscope/actions/workflows/imports.yml)
+
 <!--
 <p align="center">
 <a href="https://packagist.org/packages/imanghafoori/laravel-microscope" rel="nofollow"><img src="https://camo.githubusercontent.com/8d75e05f4b67de65b51e10772b054f506aa8cfab/68747470733a2f2f696d672e736869656c64732e696f2f7061636b61676973742f762f696d616e676861666f6f72692f6c61726176656c2d6d6963726f73636f70652e7376673f7374796c653d666c61742d737175617265" alt="Latest Version on Packagist" data-canonical-src="https://img.shields.io/packagist/v/imanghafoori/laravel-microscope.svg?style=round-square" style="max-width:100%;"></a>
@@ -77,6 +80,8 @@ Give your eyes a rest, we will detect and fix them for you.
         1. [`php artisan check:aliases`](#aliases)
         1. [`php artisan check:dead_controllers`](#dead_controllers)
         1. [`php artisan check:generic_docblocks`](#generic_docblocks)
+        1. [`php artisan check:migrations`](#migrations)
+        1. [`php artisan check:empty_comment`](#empty_comment)
         1. [`php artisan enforce:helper_functions`](#helper_functions)
         1. [`php artisan list:models`](#models)
     
@@ -108,7 +113,7 @@ Give your eyes a rest, we will detect and fix them for you.
 <a name="installation"></a>
 ## <g-emoji class="g-emoji" alias="arrow_down" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2b07.png">⬇️</g-emoji> Installation
 
-You can **install** the package via composer:
+You can **install** the package via Composer:
 
 ```bash
 composer require imanghafoori/laravel-microscope --dev
@@ -135,14 +140,14 @@ php artisan vendor:publish --provider="Imanghafoori\LaravelMicroscope\LaravelMic
 
 
 <a name="less-use-commands"></a>
-### Less Use Commands
+### Less Used Commands:
 
 |#|Artisan Command|
 |---|---|
 |1|`php artisan check:views`|
 |2|`php artisan check:routes`|
 |3|`php artisan check:psr4 {-s\|--nofix} `|
-|4|`php artisan check:imports {-s\|--nofix}`|
+|4|`php artisan check:imports {-s\|--nofix} {--wrong} {--extra}`|
 |5|`php artisan check:stringy_classes`|
 |6|`php artisan check:dd`|
 |7|`php artisan check:bad_practices`|
@@ -163,7 +168,7 @@ php artisan vendor:publish --provider="Imanghafoori\LaravelMicroscope\LaravelMic
 |22|`php artisan list:models`|
 
 <a name="global-helper-functions"></a>
-## Global Helper Functions
+## Global Helper Functions:
 >Also, You will have access to some global helper functions
 
 ```php 
@@ -233,7 +238,7 @@ Here is a comprehensive list of placeholders you can use:
 |8|`<statement>`|to capture a whole php statement.|
 |9|`<name:nam1,nam2>` or `<name>`|for method or function names. `->where` or `::where`|
 |10|`<white_space>`|for whitespace blocks|
-|11|`<bool>` or `<boolean>`|for true or false (acts case-insensetive)|
+|11|`<bool>` or `<boolean>`|for true or false (acts case-insensitive)|
 |12|`<number>`|for numeric values|
 |13|`<cast>`|for type-casts like: `(array) $a;`|
 |14|`<int>` or `"<integer>"`|for integer values|
@@ -245,12 +250,12 @@ Here is a comprehensive list of placeholders you can use:
 
 >You can also define your own keywords if needed!
 >
->You just define a class for your new keyword and append the class path to the end of the `Finder::$keywords[] = MyKeyword::class` property.
+>You just define a class for your new keyword and append the classpath to the end of the `Finder::$keywords[] = MyKeyword::class` property.
 Just like the default keywords.
 
 **Example:**
 
-:one:  Let's say you want to find only the "comments" which contain the word "todo:" in them.
+:one:  Let's say you want to find only the "comments" that contain the word "todo:" in them.
 ```php
  'todo_comments' => [
         'search' => '<comment>',
@@ -311,12 +316,12 @@ You can also mention a static method instead of a function, like this: `[MyClass
     ]
 ```
 In this case, our pattern is not very accurate and in some cases, it may result in syntax errors.
-Because of  that, we turn on php syntax validator to check the result, but that costs us a performance penalty!!!
-To exclude the usage of php, to validate the results we have mentioned the `avoid_result_in` so that if they happen in the result it skips.
+Because of  that, we turn on the php syntax validator to check the result, but that costs us a performance penalty!!!
+To exclude the usage of PHP, to validate the results we have mentioned the `avoid_result_in` so that if they happen in the result it skips.
 
 - **Note**: The `?` in the "<white_space>?" notes this is an `optional` placeholder.
 
-If you are curious to see a better pattern which does not need any syntax checking, try this:
+If you are curious to see a better pattern that does not need any syntax checking, try this:
 
 ```
 'enforce_optional_comma' => [
@@ -339,9 +344,9 @@ If you are curious to see a better pattern which does not need any syntax checki
 ```
 This is more complex but works much faster. (since it does not need the php syntax validator)
 
-- Here `'post_replace'` is a pattern which is applied only and only on the resulting code to refine it, and NOT on the entire file.
+- Here `'post_replace'` is a pattern that is applied only and only on the resulting code to refine it, and NOT on the entire file.
 
-- You can optionally comment your placeholders (as above `<1:any>`) with numbers, so that you know which one corresponds to which when replaced.
+- You can optionally comment your placeholders (as above `<1:any>`) with numbers so that you know which one corresponds to which when replaced.
 
 <a name="filters" ></a>
 :four: **Filters:**
@@ -379,32 +384,27 @@ User::query()->where(...)->get();
 \App\Models\User::query()->find(...);
 ```
 
-- The filters here ensure that the captured class reference is a laravel Model and the method name is one of the names mentioned in the list.
+- The filters here ensure that the captured class reference is a Laravel Model and the method name is one of the names mentioned in the list.
 
 So it does not tamper with something like this:
 ```php
-User::all();            // The `all` method can not be preceded with `query`
+User::all();            // The `all` method can not be preceded by `query`
 
 UserRepo::where(...);   /// UserRepo is not a model
 ```
 
-- This is something which you can never do by regex.
+- This is something that you can never do by regex.
 
 <a name="capturing-php-statements" ></a>
 :five: **Capturing php "statements":**
 
-Let's say we want to opt into php 7.4 arrow functions:
+Let's say we want to opt into PHP v7.4 arrow functions:
 
 ```php
 'fn' => [
-    'search' => 'function (<in_between>)<until>{ <statement> }',
+    'search' => 'function (<in_between>)<until>{ return <statement>; }',
     'replace' => 'fn (<1>) => <3>',
     'tags' => 'php74,refactor',
-    'mutator' => function ($matches) {
-      $matches[2][1] = str_replace(['return ', ';'], '', $matches[2][1]);
-
-      return $matches;
-    }
 ]
 
 ```
@@ -431,7 +431,7 @@ $closure = function ($a) {
 
 :six: **Difference between `<statement>` and `<until>;`**
 
-They seem to be very similar but there is an important case which you can not use `<until>;` in order to cover it properly!
+They seem to be very similar but there is an important case in which you can not use `<until>;` to cover it properly!
 
 ```php
 $first = $a + $b;
@@ -447,14 +447,14 @@ If we define our pattern like this:
 
 ```php
 return [
-    'staty' => [
+    'pattern_name' => [
         'search' => '<var> = <until>;',   
     ]
 ];
 ```
 For `$c = $a + $b;` they act the same way, but for the second one `"<until>";` will not capture the whole closure and will stop as soon as it reaches `$a++;` and that is a problem.
 
-But if you define your pattern as: `'<var> = <statement>'` it would be smart enough to capture the correct semicolon at the end of closure definition and whole close would be captured.
+But if you define your pattern as: `'<var> = <statement>'` it would be smart enough to capture the correct semicolon at the end of the closure definition and the whole close would be captured.
 
 <a name="capturing-global" ></a>
 :seven: **Capturing global function calls:**
@@ -480,7 +480,7 @@ new      dd('I am a class');  // here "dd" is the name of a class.
 But will detect and remove real global `dd()` calls with whatever parameters they have received.
 
 ```
-dd(                // <=== will be detected, even the pattern above is written all in one line.
+dd(                // <=== will be detected, even if the pattern above is written all in one line.
    auth('admin')
         ->user()->id   
 );
@@ -603,7 +603,7 @@ if ($cond1) {
     }
 }
 
-// merge into:
+// we get merged into:
 
 if ($cond1 && $cond2) { 
     ...  
@@ -690,7 +690,7 @@ If you create an empty `.php` file which ends with `ServiceProvider.php` after r
 ### `php artisan check:blade_queries`
 
 - Blade files should not contain DB queries. We should move them back into controllers and pass variables.
-This command searches all the blade files for `Eloquent models` and `DB` query builder and shows them if any.
+This command searches all the blade files for the `Eloquent models` and `DB` query builder and shows them if any.
 
 <a name="extract_blades"></a>
 ### `php artisan check:extract_blades`
@@ -729,7 +729,7 @@ Also, it will create:
 
 And put the corresponding content in them.
 
-- It is also compatible with namespaced views in modular laravel applications.
+- It is also compatible with namespaced views in modular Laravel applications.
 So this syntax will work: `'MyMod::myPartials.body'`
 
 <a name="action_comments"></a>
@@ -882,7 +882,7 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 <a name="contributing"></a>
 
 ### :raising_hand: Contributing
-If you find an issue or have a better way to do something, feel free to open an issue, or a pull request.
+If you find an issue or have a better way to do something, feel free to open an issue or a pull request.
 If you use laravel-microscope in your open source project, create a pull request to provide its URL as a sample application in the README.md file.
 
 <a name="security"></a>
@@ -894,7 +894,7 @@ If you discover any security-related issues, please email `imanghafoori1@gmail.c
 
 ### Laravel HeyMan
 
-:gem: It allows us to write expressive code to authorize, validate and authenticate.
+:gem: It allows us to write expressive code to authorize, validate, and authenticate.
 
 - https://github.com/imanghafoori1/laravel-heyman
 
@@ -904,7 +904,7 @@ If you discover any security-related issues, please email `imanghafoori1@gmail.c
 ### Laravel Terminator
 
 
- :gem: A minimal yet powerful package to allow you to refactor your controllers.
+ :gem: A minimal yet powerful package which allows you to refactor your controllers.
 
 - https://github.com/imanghafoori1/laravel-terminator
 
@@ -924,7 +924,7 @@ A man will never fail unless he stops trying.
 Albert Einstein
 ```
 
-[ico-laravel]: https://img.shields.io/badge/Laravel-%E2%89%A5%205.4-ff2d20?style=flat-square&logo=laravel
+[ico-laravel]: https://img.shields.io/badge/Laravel-%E2%89%A5%205.6-ff2d20?style=flat-square&logo=laravel
 [ico-php]: https://img.shields.io/packagist/php-v/imanghafoori/laravel-microscope?color=%238892BF&style=flat-square&logo=php
 [ico-version]: https://img.shields.io/packagist/v/imanghafoori/laravel-microscope.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
@@ -949,6 +949,6 @@ Albert Einstein
 This project exists thanks to all the people who contribute. [[Contributors](https://github.com/imanghafoori1/laravel-microscope/graphs/contributors)].
 <a href="https://github.com/imanghafoori1/laravel-microscope/graphs/contributors"><img src="https://opencollective.com/laravel-microscope/contributors.svg?width=890&button=false" /></a>
 
-## Star History
+## ⭐ Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=imanghafoori1/laravel-microscope&type=Date)](https://star-history.com/#imanghafoori1/laravel-microscope&Date)

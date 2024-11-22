@@ -2,13 +2,10 @@
 
 namespace Imanghafoori\LaravelMicroscope\FileReaders;
 
-use Exception;
-use Symfony\Component\Finder\Finder;
+use JetBrains\PhpStorm\Pure;
 
 class FilePath
 {
-    public static $basePath = '';
-
     /**
      * Normalize file path to standard formal
      * For a path like: "/usr/laravel/app\Http\..\..\database" returns "/usr/laravel/database".
@@ -16,22 +13,23 @@ class FilePath
      * @param  string  $path  directory path
      * @return string
      */
+    #[Pure]
     public static function normalize($path)
     {
-        $dir = \str_replace(['\\', '/', '//', '\\\\'], DIRECTORY_SEPARATOR, $path);
+        $dir = str_replace(['\\', '/', '//', '\\\\'], DIRECTORY_SEPARATOR, $path);
 
-        $sections = \explode(DIRECTORY_SEPARATOR, $dir);
+        $sections = explode(DIRECTORY_SEPARATOR, $dir);
 
         $result = [];
         foreach ($sections as $section) {
             if ($section == '..') {
-                \array_pop($result);
+                array_pop($result);
             } else {
                 $result[] = $section;
             }
         }
 
-        return \implode(DIRECTORY_SEPARATOR, $result);
+        return implode(DIRECTORY_SEPARATOR, $result);
     }
 
     /**
@@ -40,70 +38,73 @@ class FilePath
      * @param  string  $absFilePath  Absolute directory path
      * @return string
      */
+    #[Pure]
     public static function getRelativePath($absFilePath)
     {
-        return \trim(str_replace(self::$basePath, '', $absFilePath), '/\\');
+        return trim(str_replace(PhpFinder::$basePath, '', $absFilePath), '/\\');
     }
 
     /**
-     * get all ".php" files in directory by giving a path.
+     * Get all ".php" files in directory by giving a path.
      *
      * @param  string  $path  Directory path
      * @return \Symfony\Component\Finder\Finder
      */
+    #[Pure]
     public static function getAllPhpFiles($path, $basePath = '')
     {
-        if ($basePath === '') {
-            $basePath = self::$basePath;
-        }
-
-        $basePath = rtrim($basePath, '/\\');
-        $path = ltrim($path, '/\\');
-        $path = $basePath.DIRECTORY_SEPARATOR.$path;
-
-        try {
-            return Finder::create()->files()->name('*.php')->in($path);
-        } catch (Exception $e) {
-            return [];
-        }
+        return PhpFinder::getAllPhpFiles($path, $basePath);
     }
 
+    #[Pure]
     public static function getFolderFile($absFilePath): array
     {
-        $segments = explode('/', str_replace('\\', '/', FilePath::getRelativePath($absFilePath)));
+        $segments = explode('/', str_replace('\\', '/', self::getRelativePath($absFilePath)));
         $fileName = array_pop($segments);
 
         return [$fileName, implode('/', $segments)];
     }
 
-    public static function contains($absFilePath, $excludeFile, $excludeFolder)
+    #[Pure]
+    public static function contains($filePath, $folder, $file)
     {
-        if (! $excludeFile && ! $excludeFolder) {
+        if (! $file && ! $folder) {
             return true;
         }
 
-        [$fileName, $folderPath] = FilePath::getFolderFile($absFilePath);
+        [$fileName, $folderPath] = self::getFolderFile($filePath);
 
-        if ($excludeFile && mb_strpos($fileName, $excludeFile) !== false) {
-            return true;
+        if ($file) {
+            foreach (explode(',', $file) as $_file) {
+                if (mb_strpos($fileName, $_file) !== false) {
+                    return true;
+                }
+            }
         }
 
-        if ($excludeFolder && mb_strpos($folderPath, $excludeFolder) !== false) {
-            return true;
+        if ($folder) {
+            foreach (explode(',', $folder) as $_folder) {
+                if (mb_strpos($folderPath, $_folder) !== false) {
+                    return true;
+                }
+            }
         }
 
         return false;
     }
 
-    public static function removeExtraPaths($paths, $includeFile, $includeFolder)
+    /**
+     * @param  $paths
+     * @param  $file
+     * @param  $folder
+     * @return \Generator
+     */
+    public static function removeExtraPaths($paths, $folder, $file)
     {
-        $results = [];
         foreach ($paths as $absFilePath) {
-            if (self::contains($absFilePath, $includeFile, $includeFolder)) {
-                $results[] = $absFilePath;
+            if (self::contains($absFilePath, $folder, $file)) {
+                yield $absFilePath;
             }
         }
-
-        return $results;
     }
 }

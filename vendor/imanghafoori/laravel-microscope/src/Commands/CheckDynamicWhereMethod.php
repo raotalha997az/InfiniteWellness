@@ -4,30 +4,32 @@ namespace Imanghafoori\LaravelMicroscope\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Concerns\QueriesRelationships;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Str;
 use Imanghafoori\LaravelMicroscope\ErrorReporters\ErrorPrinter;
-use Imanghafoori\LaravelMicroscope\ForPsr4LoadedClasses;
 use Imanghafoori\LaravelMicroscope\SearchReplace\IsSubClassOf;
-use Imanghafoori\LaravelMicroscope\SearchReplace\PatternRefactorings;
 use Imanghafoori\LaravelMicroscope\Traits\LogsErrors;
 use Imanghafoori\SearchReplace\Filters;
-use Imanghafoori\SearchReplace\PatternParser;
 
 class CheckDynamicWhereMethod extends Command
 {
     use LogsErrors;
+    use PatternApply;
 
-    protected $signature = 'check:dynamic_wheres {--f|file=} {--d|folder=} {--detailed : Show files being checked} {--s|nofix : avoids the automatic fixes}';
+    protected $signature = 'check:dynamic_wheres {--f|file=} {--d|folder=}';
 
     protected $description = 'Enforces the non-dynamic where clauses.';
 
+    protected $customMsg = 'No dynamic where clause was found!   \(^_^)/';
+
     protected $excludeMethods = [
+        'whereKey',
         'whereHas',
-        'whereDoesntHave',
         'whereHasMorph',
-        'whereDoesntHaveMorph',
         'whereRelation',
+        'whereDoesntHave',
+        'whereDoesntHaveMorph',
         'whereMorphRelation',
         'whereMorphedTo',
         'whereBelongsTo',
@@ -37,17 +39,17 @@ class CheckDynamicWhereMethod extends Command
         'whereNotIn',
         'whereIntegerInRaw',
         'whereIntegerNotInRaw',
-        'whereNull',
-        'whereNotNull',
-        'whereBetween',
+        'whereNotBetweenColumns',
         'whereBetweenColumns',
         'whereNotBetween',
-        'whereNotBetweenColumns',
+        'whereNotNull',
+        'whereBetween',
+        'whereNull',
         'whereDate',
         'whereTime',
         'whereDay',
-        'whereMonth',
         'whereYear',
+        'whereMonth',
         'whereNested',
         'whereExists',
         'whereNotExists',
@@ -57,9 +59,10 @@ class CheckDynamicWhereMethod extends Command
         'whereJsonLength',
         'whereFullText',
         'whereNot',
-        'whereInstanceOf',
+        'whereAny',
         'whereStrict',
         'whereInStrict',
+        'whereInstanceOf',
         'whereNotInStrict',
     ];
 
@@ -68,33 +71,9 @@ class CheckDynamicWhereMethod extends Command
         event('microscope.start.command');
         $this->info('Soaring like an eagle...');
 
-        $this->option('nofix') && config(['microscope.no_fix' => true]);
+        Filters::$filters['is_subclass_of'] = IsSubClassOf::class;
 
-        $errorPrinter->printer = $this->output;
-
-        $fileName = ltrim($this->option('file'), '=');
-        $folder = ltrim($this->option('folder'), '=');
-        Filters::$filters['is_sub_class_of'] = IsSubClassOf::class;
-
-        app()->singleton('current.command', function () {
-            return $this;
-        });
-
-        $errorPrinter->printer = $this->output;
-
-        $patterns = $this->getPatterns();
-        $parsedPatterns = PatternParser::parsePatterns($patterns);
-
-        ForPsr4LoadedClasses::check([PatternRefactorings::class], [$parsedPatterns, $patterns], $fileName, $folder);
-
-        // Checks the blade files for class references.
-        // BladeFiles::check([PatternRefactorings::class], $fileName, $folder);
-
-        $this->finishCommand($errorPrinter);
-
-        $errorPrinter->printTime();
-
-        return $errorPrinter->hasErrors() ? 1 : 0;
+        return $this->patternCommand($errorPrinter);
     }
 
     private function getPatterns(): array
@@ -115,16 +94,19 @@ class CheckDynamicWhereMethod extends Command
 
         return [
             'pattern_name_1' => [
-                'search' => '::<name>(',
-                'replace' => '::query()->where(<1>, ',
+                'search' => '<class_ref>::<name>(',
+                'replace' => '<1>::query()->where(<2>, ',
                 'filters' => [
                     1 => [
+                        'is_subclass_of' => Model::class,
+                    ],
+                    2 => [
                         [$dynamicWhere, null],
                     ],
                 ],
                 'mutator' => $mutator,
             ],
-            'pattern_name_3' => [
+            'pattern_name_2' => [
                 'search' => ')-><name>(<in_between>)',
                 'replace' => ')->where(<1>, <2>)',
                 'filters' => [

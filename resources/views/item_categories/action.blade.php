@@ -1,5 +1,5 @@
 @role('Admin|PharmacistAdmin')
-<div class="d-flex align-items-center">
+<div class="d-flex align-items-center" style="padding-right: 15px !important;">
     <a href="javascript:void(0)" title="{{__('messages.common.edit') }}" data-id="{{ $row->id }}"
        class="editItemCategoryBtn btn px-1 text-primary fs-3 ps-0">
         <i class="fa-solid fa-pen-to-square"></i>

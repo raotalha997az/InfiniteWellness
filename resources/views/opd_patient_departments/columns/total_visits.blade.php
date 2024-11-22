@@ -1,5 +1,5 @@
-<div class="d-flex align-items-center mt-2">
-    <span class="badge bg-light-info">{{getLoggedinPatient()  ?  $row->visits  : count($row->patient->opd)}}</span>    
+<div class="d-flex align-items-center justify-content-center">
+    <span style="color: #05073A;">{{getLoggedinPatient()  ?  $row->visits  : count($row->patient->opd)}}</span>
 </div>
 
 

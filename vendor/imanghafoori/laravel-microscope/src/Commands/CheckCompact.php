@@ -6,12 +6,12 @@ use Exception;
 use Illuminate\Console\Command;
 use Imanghafoori\LaravelMicroscope\Analyzers\ComposerJson;
 use Imanghafoori\LaravelMicroscope\ErrorReporters\ErrorPrinter;
-use Imanghafoori\LaravelMicroscope\ErrorTypes\CompactCall;
-use Imanghafoori\LaravelMicroscope\FileReaders\FilePath;
+use Imanghafoori\LaravelMicroscope\FileReaders\PhpFinder;
 use Imanghafoori\LaravelMicroscope\SpyClasses\RoutePaths;
 use Imanghafoori\TokenAnalyzer\FunctionCall;
 use Imanghafoori\TokenAnalyzer\Ifs;
 use Imanghafoori\TokenAnalyzer\TokenManager;
+use JetBrains\PhpStorm\ExpectedValues;
 
 class CheckCompact extends Command
 {
@@ -19,6 +19,7 @@ class CheckCompact extends Command
 
     protected $description = 'Checks that compact() function calls are correct';
 
+    #[ExpectedValues(values: [0, 1])]
     public function handle()
     {
         event('microscope.start.command');
@@ -61,10 +62,12 @@ class CheckCompact extends Command
 
     private function checkPsr4Classes()
     {
-        foreach (ComposerJson::readAutoload() as $psr4) {
-            foreach ($psr4 as $_namespace => $dirPath) {
-                foreach (FilePath::getAllPhpFiles($dirPath) as $filePath) {
-                    $this->checkPathForCompact($filePath->getRealPath());
+        foreach (ComposerJson::readPsr4() as $psr4) {
+            foreach ($psr4 as $_namespace => $dirPaths) {
+                foreach ((array) $dirPaths as $dirPath) {
+                    foreach (PhpFinder::getAllPhpFiles($dirPath) as $filePath) {
+                        $this->checkPathForCompact($filePath->getRealPath());
+                    }
                 }
             }
         }
@@ -88,8 +91,22 @@ class CheckCompact extends Command
 
             unset($vars['$this']);
             $missingVars = array_diff_key($compactVars, $vars);
-            $missingVars && CompactCall::warn($absPath, $methodBody[$pp][2], $missingVars);
+
+            self::compactError(
+                $absPath,
+                $methodBody[$pp][2],
+                $missingVars,
+                'CompactCall',
+                'compact() function call has problems man!');
         }
+    }
+
+    private static function compactError($path, $lineNumber, $absent, $key, $header)
+    {
+        $p = ErrorPrinter::singleton();
+        $errorData = $p->color(\implode(', ', array_keys($absent))).' does not exist';
+
+        $p->addPendingError($path, $lineNumber, $key, $header, $errorData);
     }
 
     private function collectSignatureVars($tokens, $i)

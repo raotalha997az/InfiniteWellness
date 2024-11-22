@@ -5,19 +5,21 @@ namespace Imanghafoori\LaravelMicroscope\SpyClasses;
 use Illuminate\Support\Str;
 use Imanghafoori\LaravelMicroscope\Analyzers\ComposerJson;
 use Imanghafoori\LaravelMicroscope\FileReaders\FilePath;
+use Imanghafoori\LaravelMicroscope\Foundations\PhpFileDescriptor;
 use Imanghafoori\TokenAnalyzer\FunctionCall;
 use Throwable;
 
 class RoutePaths
 {
+    /**
+     * @return \Generator
+     */
     public static function get()
     {
-        $routePaths = [];
-
         foreach (app('router')->routePaths as $path) {
-            $routePaths[] = FilePath::normalize($path);
+            yield FilePath::normalize($path);
         }
-        $autoloads = ComposerJson::readAutoload();
+        $autoloads = ComposerJson::readPsr4();
         foreach (config('app.providers') as $providerClass) {
             // we exclude the core or package service providers here.
             foreach ($autoloads as $autoload) {
@@ -37,15 +39,17 @@ class RoutePaths
 
             foreach ($methodCalls as $calls) {
                 $routeFilePath = self::fullPath($calls, $providerClass, $path);
-                is_file($routeFilePath) && $routePaths[] = $routeFilePath;
+                if (is_file($routeFilePath)) {
+                    yield $routeFilePath;
+                }
             }
         }
 
         foreach (config('microscope.additional_route_files', []) as $routeFilePath) {
-            is_file($routeFilePath) && $routePaths[] = $routeFilePath;
+            if (is_file($routeFilePath)) {
+                yield $routeFilePath;
+            }
         }
-
-        return $routePaths;
     }
 
     private static function fullPath($calls, $providerClass, $path)
@@ -69,15 +73,12 @@ class RoutePaths
 
     private static function readLoadedRouteFiles($path)
     {
-        $tokens = token_get_all(file_get_contents(base_path($path).'.php'));
+        $tokens = PhpFileDescriptor::make(base_path($path).'.php')->getTokens();
 
-        $methodCalls = [];
         foreach ($tokens as $i => $routeFileToken) {
             if (FunctionCall::isMethodCallOnThis('loadRoutesFrom', $tokens, $i)) {
-                $methodCalls[] = FunctionCall::readParameters($tokens, $i);
+                yield FunctionCall::readParameters($tokens, $i);
             }
         }
-
-        return $methodCalls;
     }
 }

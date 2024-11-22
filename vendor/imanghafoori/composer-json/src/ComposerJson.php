@@ -101,6 +101,19 @@ class ComposerJson
         return $result;
     }
 
+    public function autoloadedFilesList($basePath)
+    {
+        $absoluteFilePaths = [];
+        foreach ($this->readAutoloadFiles() as $path => $files) {
+            $p = rtrim($basePath.'/'.$path, '/\\');
+            foreach (array_merge($files['autoload'], $files['autoload-dev']) as $filePath) {
+                $absoluteFilePaths[] = str_replace('/', DIRECTORY_SEPARATOR, $p.'/'.trim($filePath, '\\/'));
+            }
+        }
+
+        return $absoluteFilePaths;
+    }
+
     public function collectLocalRepos()
     {
         $composers = [];
@@ -160,8 +173,12 @@ class ComposerJson
         $classLists = [];
 
         foreach ($this->readAutoload(true) as $composerFilePath => $autoload) {
-            foreach ($autoload as $namespace => $psr4Path) {
-                $classLists[$composerFilePath][$namespace] = $this->getClassesWithin($psr4Path, $filter, $pathFilter);
+            foreach ($autoload as $namespace => $psr4Paths) {
+                $result = [];
+                foreach ((array) $psr4Paths as $psr4Path) {
+                    $result = array_merge($result, $this->getClassesWithin($psr4Path, $filter, $pathFilter));
+                }
+                $classLists[$composerFilePath][$namespace] = $result;
             }
         }
 
@@ -218,10 +235,14 @@ class ComposerJson
     public static function purgeAutoloadShortcuts($autoloads)
     {
         foreach ($autoloads as $composerPath => $psr4Mappings) {
-            foreach ($psr4Mappings as $namespace1 => $psr4Path1) {
-                foreach ($psr4Mappings as $psr4Path2) {
-                    if (strlen($psr4Path1) > strlen($psr4Path2) && self::startsWith($psr4Path1, $psr4Path2)) {
-                        unset($autoloads[$composerPath][$namespace1]);
+            foreach ($psr4Mappings as $namespace1 => $psr4Paths1) {
+                foreach ((array) $psr4Paths1 as $psr4Path1) {
+                    foreach ($psr4Mappings as $psr4Paths2) {
+                        foreach ((array) $psr4Paths2 as $psr4Path2) {
+                            if (strlen($psr4Path1) > strlen($psr4Path2) && self::startsWith($psr4Path1, $psr4Path2)) {
+                                unset($autoloads[$composerPath][$namespace1]);
+                            }
+                        }
                     }
                 }
             }
@@ -248,7 +269,7 @@ class ComposerJson
         [$namespaces, $paths] = self::flatten($paths, $namespaces);
         $path = '';
         foreach ($namespaces as $i => $ns) {
-            if (0 === strpos($namespace, $ns)) {
+            if (strpos($namespace, $ns) === 0) {
                 $path = \substr_replace($namespace, $paths[$i], 0, strlen($ns));
 
                 break;
@@ -266,7 +287,7 @@ class ComposerJson
         $className = str_replace('.php', '', basename($absPath));
 
         foreach ($psr4Mappings as $composerPath => $psr4Mapping) {
-            if (0 === strpos($relativePath, $composerPath)) {
+            if (strpos($relativePath, $composerPath) === 0) {
                 $correctNamespaces = NamespaceCalculator::getCorrectNamespaces($psr4Mapping, $relativePath);
 
                 return NamespaceCalculator::findShortest($correctNamespaces).'\\'.$className;

@@ -37,6 +37,7 @@ class DocumentController extends AppBaseController
      */
     public function index()
     {
+      
         $data = $this->documentRepository->getSyncList();
 
         return view('documents.index')->with($data);

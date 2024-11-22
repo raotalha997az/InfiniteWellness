@@ -108,27 +108,29 @@ class StartSession
      * @return mixed
      */
     protected function handleStatefulRequest(Request $request, $session, Closure $next)
-{
-    $request->setLaravelSession(
-        $this->startSession($request, $session)
-    );
+    {
+        // If a session driver has been configured, we will need to start the session here
+        // so that the data is ready for an application. Note that the Laravel sessions
+        // do not make use of PHP "native" sessions in any way since they are crappy.
+        $request->setLaravelSession(
+            $this->startSession($request, $session)
+        );
 
-    $this->collectGarbage($session);
+        $this->collectGarbage($session);
 
-    $response = $next($request);
+        $response = $next($request);
 
-    if (is_null($response)) {
-        return redirect($request->headers->get('referer', '/'));
+        $this->storeCurrentUrl($request, $session);
+
+        $this->addCookieToResponse($response, $session);
+
+        // Again, if the session has been configured we will need to close out the session
+        // so that the attributes may be persisted to some storage medium. We will also
+        // add the session identifier cookie to the application response headers now.
+        $this->saveSession($request);
+
+        return $response;
     }
-    $this->storeCurrentUrl($request, $session);
-
-    $this->addCookieToResponse($response, $session);
-
-    $this->saveSession($request);
-
-    return $response;
-}
-
 
     /**
      * Start the session for the given request.

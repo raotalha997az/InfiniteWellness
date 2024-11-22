@@ -2,76 +2,39 @@
 
 namespace Imanghafoori\LaravelMicroscope\Commands;
 
-use Exception;
 use Illuminate\Console\Command;
-use Imanghafoori\LaravelMicroscope\Analyzers\ComposerJson;
+use Imanghafoori\LaravelMicroscope\Checks\CheckRubySyntax;
 use Imanghafoori\LaravelMicroscope\ErrorReporters\ErrorPrinter;
-use Imanghafoori\LaravelMicroscope\FileReaders\FilePath;
-use Imanghafoori\TokenAnalyzer\Refactor;
-use Imanghafoori\TokenAnalyzer\SyntaxNormalizer;
+use Imanghafoori\LaravelMicroscope\Features\CheckImports\Reporters\Psr4Report;
+use Imanghafoori\LaravelMicroscope\ForPsr4LoadedClasses;
+use Imanghafoori\LaravelMicroscope\Iterators\ClassMapIterator;
+use JetBrains\PhpStorm\ExpectedValues;
 
 class CheckEndIf extends Command
 {
-    protected $signature = 'check:endif {--t|test : backup the changed files}';
+    protected $signature = 'check:endif {--f|file=} {--d|folder=} {--t|test : backup the changed files}';
 
-    protected $description = 'replaces endif with curly brackets.';
+    protected $description = 'replaces ruby like syntax of php (endif) with curly brackets.';
 
-    public function handle()
+    #[ExpectedValues(values: [0, 1])]
+    public function handle(ErrorPrinter $errorPrinter)
     {
         if (! $this->startWarning()) {
             return null;
         }
 
-        $fixedFilesCount = 0;
-        foreach (ComposerJson::readAutoload() as $psr4) {
-            foreach ($psr4 as $psr4Path) {
-                $files = FilePath::getAllPhpFiles($psr4Path);
-                foreach ($files as $file) {
-                    $path = $file->getRealPath();
-                    $tokens = token_get_all(file_get_contents($path));
-                    if (empty($tokens) || $tokens[0][0] !== T_OPEN_TAG) {
-                        continue;
-                    }
+        $fileName = ltrim($this->option('file'), '=');
+        $folder = ltrim($this->option('folder'), '=');
 
-                    try {
-                        $tokens = SyntaxNormalizer::normalizeSyntax($tokens, true);
-                    } catch (Exception $e) {
-                        self::requestIssue($path);
-                        continue;
-                    }
+        $errorPrinter->printer = $this->output;
 
-                    if (! SyntaxNormalizer::$hasChange || ! $this->getConfirm($path)) {
-                        continue;
-                    }
+        [$psr4Stats, $classMapStats] = self::applyRubySyntaxCheck($fileName, $folder);
 
-                    Refactor::saveTokens($path, $tokens, $this->option('test'));
+        $this->getOutput()->writeln(implode(PHP_EOL, [
+            Psr4Report::printAutoload($psr4Stats, $classMapStats),
+        ]));
 
-                    $fixedFilesCount++;
-                }
-            }
-        }
-
-        $this->printFinalMsg($fixedFilesCount);
-
-        return app(ErrorPrinter::class)->hasErrors() ? 1 : 0;
-    }
-
-    private function printFinalMsg($fixed)
-    {
-        if ($fixed > 0) {
-            $msg = 'Hooray!, '.$fixed.' files were transformed by the microscope.';
-        } else {
-            $msg = 'Congratulations, your code base does not seem to need any fix.';
-        }
-        $this->info(PHP_EOL.$msg);
-        $this->info('     \(^_^)/    You Rock    \(^_^)/    ');
-    }
-
-    private function getConfirm($filePath)
-    {
-        $filePath = FilePath::getRelativePath($filePath);
-
-        return $this->output->confirm('Replacing endif in: '.$filePath, true);
+        return ErrorPrinter::singleton()->hasErrors() ? 1 : 0;
     }
 
     private function startWarning()
@@ -79,13 +42,15 @@ class CheckEndIf extends Command
         $this->info('Checking for endif\'s...');
         $this->warn('This command is going to make changes to your files!');
 
-        return $this->output->confirm('Do you have committed everything in git?', true);
+        return $this->output->confirm('Do you have committed everything in git?');
     }
 
-    private static function requestIssue(string $path)
+    public static function applyRubySyntaxCheck(string $fileName, string $folder)
     {
-        dump('(O_o)   Well, It seems we had some problem parsing the contents of:   (o_O)');
-        dump('Submit an issue on github: https://github.com/imanghafoori1/microscope');
-        dump('Send us the contents of: '.$path);
+        $check = [CheckRubySyntax::class];
+        $psr4stats = ForPsr4LoadedClasses::check($check, [], $fileName, $folder);
+        $classMapStats = ClassMapIterator::iterate(base_path(), $check, [], $fileName, $folder);
+
+        return [$psr4stats, $classMapStats];
     }
 }

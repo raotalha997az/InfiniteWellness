@@ -13,17 +13,13 @@ class CheckRefactorsCommand extends Command
 {
     protected $signature = 'search_replace {--N|name=} {--t|tag=} {--f|file=} {--d|folder=} {--s|nofix}';
 
-    protected $description = 'Does refactoring.';
+    protected $description = 'Searches for the code patterns and replaces them accordingly.';
 
     public function handle(ErrorPrinter $errorPrinter)
     {
         $this->info('Checking for refactors...');
 
         Filters::$filters['is_sub_class_of'] = IsSubClassOf::class;
-
-        app()->singleton('current.command', function () {
-            return $this;
-        });
 
         $errorPrinter->printer = $this->output;
 
@@ -57,7 +53,8 @@ class CheckRefactorsCommand extends Command
         $file = ltrim($this->option('file'), '=');
         $folder = ltrim($this->option('folder'), '=');
 
-        ForPsr4LoadedClasses::check([PatternRefactorings::class], [$parsedPatterns, $patterns], $file, $folder);
+        ForPsr4LoadedClasses::checkNow([PatternRefactorings::class], [$parsedPatterns, $patterns], $file, $folder);
+
         $this->getOutput()->writeln(' - Finished search/replace');
 
         return PatternRefactorings::$patternFound ? 1 : 0;

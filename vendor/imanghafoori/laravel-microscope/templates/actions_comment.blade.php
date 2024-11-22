@@ -3,8 +3,8 @@
     ($all_methods == $methods) && ($methods = ['any']);
 @endphp
 @if (\count($methods) > 1)
-         * @methods('{!! \implode("', ", $methods) !!}')
-         * @uri('{!! $url !!}')
+         * {!! '@' !!}methods('{!! \implode("', ", $methods) !!}')
+         * {!! '@' !!}uri('{!! $url !!}')
 @else
          * {!! '@'.strtolower(\implode('', $methods)) !!}('{!! $url !!}')
 @endif
@@ -12,6 +12,6 @@
          * @name('{!! $routeName !!}')
 @endif
 @if ($file)
-         * @at({!! $file !!}:{!! $line !!})
+         * {!! '@' !!}at({!! $file !!}:{!! $line !!})
 @endif
-         * @middlewares('{!! implode("', '", $middlewares) !!}')
+         * {!! '@' !!}middlewares('{!! implode("', '", $middlewares) !!}')

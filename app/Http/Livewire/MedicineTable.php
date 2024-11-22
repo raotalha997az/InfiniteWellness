@@ -43,8 +43,8 @@ class MedicineTable extends LivewireTableComponent
         $this->setThAttributes(function (Column $column) {
             if ($column->isField('selling_price') || $column->isField('buying_price')) {
                 return [
-                    'class' => 'text-end',
-                    'style' => 'padding-right: 7rem !important',
+                    // 'class' => 'text-end',
+                    // 'style' => 'padding-right: 7rem !important',
                 ];
             }
 

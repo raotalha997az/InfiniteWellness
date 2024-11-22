@@ -3,7 +3,6 @@
 namespace Imanghafoori\LaravelMicroscope\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 use Imanghafoori\LaravelMicroscope\ErrorReporters\ErrorPrinter;
 use Imanghafoori\LaravelMicroscope\Traits\LogsErrors;
 
@@ -22,31 +21,33 @@ class CheckAll extends Command
         $t1 = microtime(true);
         $errorPrinter->printer = $this->output;
 
-        // turns off error logging.
+        // Turns off error logging.
         $errorPrinter->logErrors = false;
 
-        $this->call('check:psr4', ['--detailed' => $this->option('detailed'), '--nofix' => $this->option('nofix'), '--force' => $this->option('force')]);
-        $this->call('check:imports', ['--nofix' => $this->option('nofix'), '--detailed' => $this->option('detailed')]);
+        $this->call('check:psr4', ['--nofix' => $this->option('nofix'), '--force' => $this->option('force')]);
+        $this->call('check:imports', ['--nofix' => $this->option('nofix')]);
         $this->call('check:events');
         $this->call('check:gates');
-        $this->call('check:views', ['--detailed' => $this->option('detailed')]);
+        $this->call('check:views');
         $this->call('check:routes');
         $this->call('check:stringy_classes');
         $this->call('check:dd');
         $this->call('check:dead_controllers');
-        $this->call('check:early_returns', ['--nofix' => true]);
+        CheckEarlyReturns::applyCheckEarly('', '', true);
         $this->call('check:bad_practices');
 
         // turns on error logging.
         $errorPrinter->logErrors = true;
 
         $this->finishCommand($errorPrinter);
-        $errorPrinter->printer->writeln('time: '.round(microtime(true) - $t1, 2).' (sec)', 2);
-
-        if (random_int(1, 5) == 2 && Str::startsWith(request()->server('argv')[1] ?? '', 'check:al')) {
-            ErrorPrinter::thanks($this);
-        }
+        $duration = microtime(true) - $t1;
+        $errorPrinter->printer->writeln(self::getTimeMsg($duration), 2);
 
         return $errorPrinter->hasErrors() ? 1 : 0;
+    }
+
+    private static function getTimeMsg($time): string
+    {
+        return 'time: '.round($time, 2).' (sec)';
     }
 }

@@ -2,40 +2,30 @@
 
 namespace Imanghafoori\LaravelMicroscope\FileReaders;
 
-use Exception;
-use Symfony\Component\Finder\Finder;
+use Imanghafoori\LaravelMicroscope\Iterators\FiltersFiles;
 
 class Paths
 {
-    public static function getAbsFilePaths($dirs, $file = null, $folder = null)
+    use FiltersFiles;
+
+    /**
+     * @param  string|string[]|\Generator  $dirs
+     * @param  null|string  $fileName
+     * @param  null|string  $folder
+     * @return \Traversable
+     */
+    public static function getAbsFilePaths($dirs, $fileName = null, $folder = null)
     {
         if (! $dirs) {
             return [];
         }
 
         $folder && ($folder = str_replace('\\', '/', $folder));
-        try {
-            $files = Finder::create()->files()->name('*.php')->in($dirs);
-
-            $paths = [];
-            foreach ($files as $f) {
-                $absFilePath = $f->getRealPath();
-                [$fileName, $folderPath] = FilePath::getFolderFile($absFilePath);
-
-                if ($file && mb_strpos($fileName, $file) === false) {
-                    continue;
-                }
-
-                if ($folder && mb_strpos($folderPath, $folder) === false) {
-                    continue;
-                }
-
-                $paths[] = $absFilePath;
+        is_string($dirs) && ($dirs = [$dirs]);
+        foreach ($dirs as $dir) {
+            if (is_dir($dir)) {
+                yield $dir => self::filterFiles(PhpFinder::getPathsInDir($dir, $fileName), $folder);
             }
-
-            return $paths;
-        } catch (Exception $e) {
-            return [];
         }
     }
 }

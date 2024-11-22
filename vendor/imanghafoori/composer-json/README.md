@@ -1,7 +1,9 @@
-# Composer Json Reader
+# Composer.json Reader
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/imanghafoori/composer-json.svg?style=flat-square)](https://packagist.org/packages/imanghafoori/composer-json)
 [![Tests](https://img.shields.io/github/actions/workflow/status/imanghafoori1/composer-json/run-tests-phpunit.yml?branch=main&label=tests&style=flat-square)](https://github.com/imanghafoori1/composer-json/actions/workflows/run-tests-phpunit.yml)
+[![Coverage Status](https://coveralls.io/repos/github/imanghafoori1/composer-json/badge.svg?branch=main)](https://coveralls.io/github/imanghafoori1/composer-json?branch=main)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/imanghafoori/composer-json.svg?style=flat-square)](https://packagist.org/packages/imanghafoori/composer-json)
+[![StyleCI](https://github.styleci.io/repos/581894115/shield?branch=main)](https://github.styleci.io/repos/581894115?branch=main)
 [![Total Downloads](https://img.shields.io/packagist/dt/imanghafoori/composer-json.svg?style=flat-square)](https://packagist.org/packages/imanghafoori/composer-json)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 

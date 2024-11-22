@@ -84,9 +84,10 @@
                     {{-- Doctors Widget --}}
                         <div class="col-xxl-3 col-xl-4 col-sm-6 widget">
                             <a href="{{ route('doctors.index') }}" class="text-decoration-none">
-                                <div class="bg-secondary shadow-md rounded-10 p-xxl-10 px-5 py-10 d-flex align-items-center justify-content-between my-sm-3 my-2">
-                                    <div class="bg-gray-600 widget-icon rounded-10 me-2 d-flex align-items-center justify-content-center">
-                                        <i class="fa-solid fa-user fs-1-xl text-white"></i>
+                                <div class="shadow-md rounded-10 p-xxl-10 px-5 py-10 d-flex align-items-center justify-content-between my-sm-3 my-2 cs_dark_grey" style="background-color: #383B49">
+                                    <div class="widget-icon rounded-10 me-2 d-flex align-items-center justify-content-center">
+                                        {{-- <i class="fa-solid fa-user fs-1-xl text-white"></i> --}}
+                                        <img src="{{asset('assets/images/customer-check.png')}}" alt="">
                                     </div>
                                     <div class="text-end text-white">
                                         <h2 class="fs-1-xxl fw-bolder text-white">{{ $data['doctors'] }}</h2>
@@ -100,9 +101,10 @@
                             {{-- Patients Widget --}}
                             <div class="col-xxl-3 col-xl-4 col-sm-6 widget">
                                 <a href="{{ route('patients.index') }}" class="text-decoration-none">
-                                    <div class="bg-danger shadow-md rounded-10 p-xxl-10 px-5 py-10 d-flex align-items-center justify-content-between my-sm-3 my-2">
-                                        <div class="bg-red-300 widget-icon rounded-10 me-2 d-flex align-items-center justify-content-center">
-                                            <i class="fa-solid fa-user fs-1-xl text-white"></i>
+                                    <div class="cs_dark_grey shadow-md rounded-10 p-xxl-10 px-5 py-10 d-flex align-items-center justify-content-between my-sm-3 my-2" style="background-color: #383B49">
+                                        <div class="widget-icon rounded-10 me-2 d-flex align-items-center justify-content-center">
+                                            {{-- <i class="fa-solid fa-user fs-1-xl text-white"></i> --}}
+                                            <img src="{{asset('assets/images/customer-health.png')}}" alt="">
                                         </div>
                                         <div class="text-end text-white">
                                             <h2 class="fs-1-xxl fw-bolder text-white">{{ $data['patients'] }}</h2>
@@ -196,7 +198,7 @@
                                 {{ __('messages.dashboard.notice_boards') }}
                             </h3>
                         </div>
-                        <div class="card-body pt-7 pb-2">
+                        <div class="card-body pt-7">
                             @if(count($data['noticeBoards']) > 0)
                                 <table class="table table-striped">
                                     <thead>

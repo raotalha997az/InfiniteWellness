@@ -75,7 +75,7 @@
             </div>
         </li>
         <li class="px-xxl-3 px-2">
-            
+
             <div class="dropdown d-flex align-items-center py-4">
                 <div class="image image-circle image-mini">
                     <img src="{{ Auth::user()->image_url??'' }}"

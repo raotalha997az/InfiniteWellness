@@ -5,65 +5,48 @@ namespace Imanghafoori\LaravelMicroscope\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
 use Imanghafoori\LaravelMicroscope\ErrorReporters\ErrorPrinter;
-use Imanghafoori\LaravelMicroscope\ForPsr4LoadedClasses;
 use Imanghafoori\LaravelMicroscope\SearchReplace\IsSubClassOf;
-use Imanghafoori\LaravelMicroscope\SearchReplace\PatternRefactorings;
 use Imanghafoori\LaravelMicroscope\Traits\LogsErrors;
 use Imanghafoori\SearchReplace\Filters;
-use Imanghafoori\SearchReplace\PatternParser;
+use JetBrains\PhpStorm\ExpectedValues;
 
 class EnforceQuery extends Command
 {
     use LogsErrors;
+    use PatternApply;
 
-    protected $signature = 'enforce:query {--f|file=} {--d|folder=} {--detailed : Show files being checked} {--s|nofix : avoids the automatic fixes}';
+    protected $signature = 'enforce:query
+        {--f|file=}
+        {--d|folder=}
+        {--m|methods=}
+        {--c|classes=}
+        {--detailed : Show files being checked}
+    ';
 
     protected $description = 'Enforces the ::query() method call on models.';
 
+    protected $customMsg = 'No case was found to add ::query()-> to it.  \(^_^)/';
+
+    #[ExpectedValues(values: [0, 1])]
     public function handle(ErrorPrinter $errorPrinter)
     {
         event('microscope.start.command');
         $this->info('Soaring like an eagle...');
 
-        $this->option('nofix') && config(['microscope.no_fix' => true]);
+        Filters::$filters['is_subclass_of'] = IsSubClassOf::class;
 
-        $errorPrinter->printer = $this->output;
-
-        $fileName = ltrim($this->option('file'), '=');
-        $folder = ltrim($this->option('folder'), '=');
-        Filters::$filters['is_sub_class_of'] = IsSubClassOf::class;
-
-        app()->singleton('current.command', function () {
-            return $this;
-        });
-
-        $errorPrinter->printer = $this->output;
-
-        $patterns = $this->getPatterns();
-        $parsedPatterns = PatternParser::parsePatterns($patterns);
-
-        ForPsr4LoadedClasses::check([PatternRefactorings::class], [$parsedPatterns, $patterns], $fileName, $folder);
-
-        // Checks the blade files for class references.
-        // BladeFiles::check([PatternRefactorings::class], $fileName, $folder);
-
-        $this->finishCommand($errorPrinter);
-
-        $errorPrinter->printTime();
-
-        return $errorPrinter->hasErrors() ? 1 : 0;
+        return $this->patternCommand($errorPrinter);
     }
 
-    private function getPatterns(): array
+    private function getPatterns()
     {
         return [
-            'pattern_name' => [
+            'enforce_query' => [
+                'cache_key' => 'enforce_query-v1',
                 'search' => '<class_ref>::<name>',
                 'replace' => '<1>::query()-><2>',
                 'filters' => [
-                    1 => [
-                        'is_sub_class_of' => Model::class,
-                    ],
+                    1 => $this->getModelConditions(),
                     2 => [
                         'in_array' => $this->getMethods(),
                     ],
@@ -72,13 +55,37 @@ class EnforceQuery extends Command
         ];
     }
 
-    private function getMethods(): array
+    private function getMethods()
+    {
+        $methods = ltrim($this->option('methods'), '=');
+
+        if ($methods) {
+            return explode(',', $methods);
+        }
+
+        return $this->allMethods();
+    }
+
+    private function getModelConditions()
+    {
+        $modelConditions = [
+            'is_subclass_of' => Model::class,
+        ];
+
+        $methods = ltrim($this->option('classes'), '=');
+        $methods && $modelConditions['in_array'] = explode(',', $methods);
+
+        return $modelConditions;
+    }
+
+    private function allMethods()
     {
         return [
+            'has',
             'where',
             'whereIn',
-            'whereNotIn',
             'whereNull',
+            'whereNotIn',
             'whereNotNull',
             'whereHas',
             'whereRaw',
@@ -86,17 +93,21 @@ class EnforceQuery extends Command
             'find',
             'findOr',
             'firstOr',
-            'firstOrCreate',
             'findOrFail',
             'firstOrFail',
-            'paginate',
-            'findOrNew',
-            'first',
-            'pluck',
+            'firstOrCreate',
             'firstOrNew',
+            'selectRaw',
+            'findOrNew',
+            'paginate',
+            'first',
+            'get',
+            'pluck',
             'select',
             'create',
             'insert',
+            'limit',
+            'orderBy',
             'findMany',
         ];
     }

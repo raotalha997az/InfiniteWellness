@@ -2,18 +2,23 @@
 
 namespace Imanghafoori\LaravelMicroscope\Checks\PSR12;
 
+use Imanghafoori\LaravelMicroscope\Check;
+use Imanghafoori\LaravelMicroscope\Foundations\PhpFileDescriptor;
 use Imanghafoori\TokenAnalyzer\Refactor;
 
-class CurlyBraces
+class CurlyBraces implements Check
 {
     public static $command;
 
-    public static function check($tokens, $absFilePath, $classFilePath, $psr4Path, $psr4Namespace)
+    public static function check(PhpFileDescriptor $file)
     {
-        self::addPublicKeyword($tokens, $classFilePath->getRealpath());
+        $tokens = $file->getTokens();
+        $absFilePath = $file->getAbsolutePath();
+
+        self::addPublicKeyword($tokens, $absFilePath);
     }
 
-    private static function addPublicKeyword($tokens, $classFilePath)
+    private static function addPublicKeyword($tokens, $absolutePath)
     {
         $level = 0;
         $isInSideClass = false;
@@ -22,38 +27,34 @@ class CurlyBraces
         while ($i < $ct - 1) {
             $i++;
             $token = $tokens[$i];
-            \in_array($token[0], [T_CURLY_OPEN, '{'], true) && $level++;
+            in_array($token[0], [T_CURLY_OPEN, '{'], true) && $level++;
             if ($token[0] === '}') {
                 $level--;
                 ($isInSideClass === true && $level === 0) && ($isInSideClass = false);
             }
-            if ($level === 0) {
-                if (\in_array($token[0], [T_CLASS, T_TRAIT, T_INTERFACE])) {
-                    if ($tokens[$i - 1] !== T_DOUBLE_COLON) {
-                        $isInSideClass = true;
-                    }
-                }
+            if (self::isGoingInsideClass($level, $token[0], $tokens[$i - 1][0])) {
+                $isInSideClass = true;
             }
-            self::openCurly($token, $level, $tokens, $i, $classFilePath);
+            self::openCurly($token, $level, $tokens, $i, $absolutePath);
 
-            [$tokens, $i] = self::writePublic($level, $token, $isInSideClass, $i, $tokens, $classFilePath);
+            [$tokens, $i] = self::writePublic($level, $token, $isInSideClass, $i, $tokens, $absolutePath);
         }
     }
 
-    private static function openCurly($token, $level, $tokens, $i, $classFilePath)
+    private static function openCurly($token, $level, $tokens, $i, $absFilePath)
     {
-        if ($token == '{' && ! \in_array($tokens[$i - 1][0], [T_DOUBLE_COLON, T_OBJECT_OPERATOR])) {
+        if ($token == '{' && ! in_array($tokens[$i - 1][0], [T_DOUBLE_COLON, T_OBJECT_OPERATOR])) {
             $sp = str_repeat('    ', $level);
             if ($tokens[$i + 1][0] === T_WHITESPACE) {
                 if ($tokens[$i + 1][1] !== PHP_EOL.$sp && $tokens[$i + 1][1] !== "\n".$sp) {
                     $tokens[$i + 1][1] = PHP_EOL.$sp;
-                    Refactor::saveTokens($classFilePath, $tokens);
+                    Refactor::saveTokens($absFilePath, $tokens);
                 } else {
                     //
                 }
             } else {
                 array_splice($tokens, $i + 1, 0, [[T_WHITESPACE, PHP_EOL.$sp]]);
-                Refactor::saveTokens($classFilePath, $tokens);
+                Refactor::saveTokens($absFilePath, $tokens);
             }
         }
     }
@@ -65,11 +66,11 @@ class CurlyBraces
         }
 
         $t = $i;
-        if (\in_array($tokens[$t - 2][0], [T_STATIC])) {
+        if (in_array($tokens[$t - 2][0], [T_STATIC])) {
             $t = $t - 2;
         }
 
-        if (! \in_array($tokens[$t - 2][0], [T_PUBLIC, T_PROTECTED, T_PRIVATE])) {
+        if (! in_array($tokens[$t - 2][0], [T_PUBLIC, T_PROTECTED, T_PRIVATE])) {
             array_splice($tokens, $t, 0, [[T_WHITESPACE, ' ']]);
             array_splice($tokens, $t, 0, [[T_PUBLIC, 'public']]);
             $i++;
@@ -78,5 +79,10 @@ class CurlyBraces
         }
 
         return [$tokens, $i];
+    }
+
+    private static function isGoingInsideClass($level, $token, $previousToken): bool
+    {
+        return $level === 0 && in_array($token, [T_CLASS, T_TRAIT, T_INTERFACE]) && $previousToken !== T_DOUBLE_COLON;
     }
 }

@@ -13,8 +13,6 @@ Setting Content Security Policy headers helps solve this problem. These headers 
 
 This readme does not aim to fully explain all the possible usages of CSP and its directives. We highly recommend that you read [Mozilla's documentation on the Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) before using this package. Another good resource to learn about CSP, is [this edition of the Larasec newsletter](https://larasec.substack.com/p/in-depth-content-security-policy) by Stephen Rees-Carter.
 
-If you're an audiovisual learner, you should check out [this video](https://www.laraning.com/videos/spatie-csp-content-security-policy
-) on how to use this package.
 
 ## Support us
 
@@ -200,7 +198,7 @@ class MyCustomPolicy extends Basic
 }
 ```
 
-Don't forget to set the `policy` key in the `csp` config file to the class name of your policy (in this case it would be `App\Services\Csp\Policies\MyCustomPolicy`).
+Don't forget to set the `policy` key in the `csp` config file to the class name of your policy (in this case it would be `App\Support\MyCustomPolicy`).
 
 ### Using inline scripts and styles
 
@@ -239,7 +237,7 @@ There are few other options to use inline styles and scripts. Take a look at the
 
 ### Integration with Vite
 
-When building assets, Laravel's Vite plugin can [generate a nonce](https://laravel.com/docs/9.x/vite#content-security-policy-csp-nonce) that you can retrieve with `Vite::useCspNonce`.  You can use in your own `NonceGenerator`.
+When building assets, Laravel's Vite plugin can [generate a nonce](https://laravel.com/docs/9.x/vite#content-security-policy-csp-nonce) that you can retrieve with `Vite::cspNonce`.  You can use in your own `NonceGenerator`.
 
 ```php
 namespace App\Support;
@@ -251,7 +249,7 @@ class LaravelViteNonceGenerator implements NonceGenerator
 {
     public function generate(): string
     {
-        return Vite::useCspNonce();
+        return Vite::cspNonce();
     }
 }
 ```
@@ -288,7 +286,7 @@ To support this use case, this package provides a `@cspMetaTag` blade directive 
 
 ```blade
 <head>
-    @cspMetaTag(App\Services\Csp\Policies\MyCustomPolicy::class)
+    @cspMetaTag(App\Support\MyCustomPolicy::class)
 </head>
 ```
 
