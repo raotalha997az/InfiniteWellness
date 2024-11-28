@@ -1,20 +1,28 @@
 <x-layouts.app title="Products List">
+
+    <style>
+        thead td {
+    color: #2A2A2A;
+    font-weight: 600;
+}
+    </style>
     <div class="container-fluid mt-5">
         <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <h3>Products</h3>
                     <div class="container">
-                        
+
                         <form method="Get" role="search">
                             <div class="search-container">
                                   <input type="text" name="search_data" id="search_data" class="search_data form-control" value="{{$search_data}}" placeholder="Search by Name or ID ...">
                                   <button type="submit" class="search-button">
-                                    <i class="fa fa-search"  style="font-size:48px;color:rgb(1, 7, 41);"></i>
+                                    <i class="fa fa-search"  style="color:#999999"></i>
                                   </button>
                                 </div>
                         </form>
                 </div>
+
                     <div class="d-flex col-auto gap-5">
                         <a href="{{route('inventory.export-to-excel') }}" target="_blank"><button class="btn btn-primary">Export All Product</button></a>
                         <div>
@@ -46,7 +54,7 @@
                     </div>
                 </div>
                 <table class="table table-bordered text-center table-hover">
-                    <thead class="table-dark">
+                    <thead>
                         <tr>
                             <td scope="col" id="serial_number">#</td>
                             <td scope="col" id="name">Name</td>
@@ -56,7 +64,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (count($products) > 0) 
+                        @if (count($products) > 0)
                         @forelse ($products as $product)
                             <tr>
                                 <td scope="row" headers="serial_number">{{ $product->id }}</td>
@@ -90,7 +98,7 @@
                     </tbody>
                 </table>
                 <div>
-                    @if (count($products) > 0) 
+                    @if (count($products) > 0)
                     {!! $products->render() !!}
                     @endif
                 </div>
@@ -105,7 +113,7 @@
             //     if (e.which === 13) { // 13 is the key code for "Enter"
             //       e.preventDefault(); // Prevent the default form submission
             //     }
-            //   }); 
+            //   });
         });
             $('input[name="products_csv"]').change(function() {
                 $('#csv-form').submit();
@@ -119,7 +127,7 @@
                 $(this).prop('disabled', true);
                 $('#delete-product-form'+productId).submit();
             };
-            
+
         </script>
     @endpush
 </x-layouts.app>
@@ -137,11 +145,11 @@
                         display: flex;
 
                       }
-                      
+
                       /* Style for the search button */
                       .search-button {
-                      
-                      
+
+
                         background-color: transparent;
                         font-size: 30px;
                         border: none;
@@ -161,8 +169,8 @@
                         font-size: 20px;
 
                       }
-                      
-                      
+
+
                       /* Transition effect for the search icon color */
                       .search-input:focus + .search-button i{
                         color: #a10505;

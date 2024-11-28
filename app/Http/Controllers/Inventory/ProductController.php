@@ -42,6 +42,7 @@ class ProductController extends Controller
 {
     public function index(Request $request): View
     {
+
         if (isset($request->search_data)) {
             return view('inventory.products.index', [
                 'products' => Product::where('product_name', 'LIKE', '%' . $request->search_data . '%')->orWhere('id', 'LIKE', '%' . $request->search_data . '%')->with('goodReceiveProducts')->paginate(10)->setPath(''),
@@ -84,11 +85,11 @@ class ProductController extends Controller
     }
 
     public function exportReport(Request $request) {
-        
+
         $from = new Carbon($request->date_from);
         $to = new Carbon($request->date_to);
 
-        // Export Day Wise Report    
+        // Export Day Wise Report
         $records = BatchPOS::select(DB::raw('DAY(created_at), created_at, batch_id, product_id, quantity, sold_quantity, remaining_qty'))
                     ->whereBetween('created_at', [$from->format('Y-m-d')." 00:00:00", $to->format('Y-m-d')." 23:59:59"])
                     ->with('product')
@@ -103,7 +104,7 @@ class ProductController extends Controller
                 $grn_qty = GoodReceiveProduct::where('product_id', $row->first()->product_id)
                         ->whereDate('created_at', '=', $row->first()->created_at->format('Y-m-d'))
                         ->sum('deliver_qty');
-                
+
                 $arr = [
                     'date' => $row->first()->created_at->format('d'),
                     'opening_qty' => $row->sum('quantity'),
@@ -116,10 +117,10 @@ class ProductController extends Controller
 
             });
 
-        });        
+        });
 
         $dateRange = CarbonPeriod::create($from, $to);
-        
+
         $range = array_slice($dateRange->toArray(), 1);
 
         $days = [];
@@ -139,13 +140,13 @@ class ProductController extends Controller
         ];
 
         foreach ($results as $key => $result) {
-            
+
             $product_id = $key;
 
             foreach ($days as $key => $value) {
-                
+
                 if (!array_key_exists($key, $result->toArray())) {
-                    
+
                     $grn_qty = GoodReceiveProduct::where('product_id', $product_id)
                         ->whereDay('created_at', '=', $key)
                         ->sum('deliver_qty');
@@ -171,7 +172,7 @@ class ProductController extends Controller
             $grand_total['total_purchase'] += $result->sum('purchase');
             $grand_total['total_sold'] += $result->sum('sold_qty');
             $grand_total['closing'] += $result->sum('closing_qty');
-            
+
         }
 
         return view('inventory.batch_report.export', compact('results', 'days', 'grand_total'));

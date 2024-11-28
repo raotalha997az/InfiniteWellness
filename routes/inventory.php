@@ -29,7 +29,7 @@ Route::prefix('inventory')->as('inventory.')->middleware(['auth'])->group(functi
     Route::post('products/update-import-excel', [ProductController::class, 'updateImportExcel'])->name('products.update-import-excel');
     Route::get('report_products', [ProductController::class, 'productsReport'])->name('products.products_report');
     // Route::get('report_products/print', [ProductController::class, 'productsReportPrint'])->name('products_report.print');
-  
+
     // Product Categories
     Route::resource('product-categories', ProductCategoryController::class)->except('show');
     Route::post('product-categories/import-excel', [ProductCategoryController::class, 'importExcel'])->name('product-categories.import-excel');

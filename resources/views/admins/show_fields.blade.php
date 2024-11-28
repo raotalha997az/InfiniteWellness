@@ -16,7 +16,7 @@
 {{--                                   class="text-gray-800 text-hover-primary fs-2 me-4 text-decoration-none">{{$admin->user->full_name}}</a>--}}
                                    class="text-gray-800 text-hover-primary fs-2 me-4 text-decoration-none">{{$admin->full_name}}</a>
                                 <span
-                                        class="text-{{ $admin->status === 1 ? 'success' : 'danger' }} mb-2 d-block">{{ ($admin->status === 1) ? __('messages.common.active') : __('messages.common.de_active') }}</span>
+                                        class="text-{{ $admin->status === 1 ? 'success' : 'danger' }} d-block">{{ ($admin->status === 1) ? __('messages.common.active') : __('messages.common.de_active') }}</span>
                             </div>
 {{--                            <a href="mailto: {{$admin->user->email}}"--}}
                             <a href="mailto: {{$admin->email}}"
@@ -46,35 +46,35 @@
                     <div class="card-body  border-top p-9">
                         <div class="row">
                             <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
-                                <label class="pb-2 fs-5 text-gray-600">{{ __('messages.user.phone')  }}</label>
+                                <label class="pb-2 fs-5 text-gray-600" style="font-weight: 600;">{{ __('messages.user.phone')  }}</label>
                                 <div class="col-lg-8">
 {{--                                    <span class="fs-5 text-gray-800">{{!empty($admin->user->phone)?$admin->user->phone:'N/A'}}</span>--}}
                                     <span class="fs-5 text-gray-800">{{!empty($admin->phone)?$admin->phone:'N/A'}}</span>
                                 </div>
                             </div>
                             <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
-                                <label class="pb-2 fs-5 text-gray-600">{{ __('messages.user.gender')  }}</label>
+                                <label class="pb-2 fs-5 text-gray-600" style="font-weight: 600;">{{ __('messages.user.gender')  }}</label>
                                 <div class="col-lg-8">
 {{--                                    <span class="fs-5 text-gray-800">{{ $admin->user->gender == 0 ? 'Male' : 'Female' }}</span>--}}
                                     <span class="fs-5 text-gray-800">{{ $admin->gender == 0 ? 'Male' : 'Female' }}</span>
                                 </div>
                             </div>
                             <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
-                                <label class="pb-2 fs-5 text-gray-600">{{ __('messages.user.dob')  }}</label>
+                                <label class="pb-2 fs-5 text-gray-600" style="font-weight: 600;">{{ __('messages.user.dob')  }}</label>
                                 <div class="col-lg-8">
 {{--                                    <span class="fs-5 text-gray-800">{{ !empty($admin->user->dob) ? \Carbon\Carbon::parse($admin->user->dob)->translatedFormat('jS M, Y') : __('messages.common.n/a') }}</span>--}}
                                     <span class="fs-5 text-gray-800">{{ !empty($admin->dob) ? \Carbon\Carbon::parse($admin->dob)->translatedFormat('jS M, Y') : __('messages.common.n/a') }}</span>
                                 </div>
                             </div>
                             <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
-                                <label class="pb-2 fs-5 text-gray-600">{{ __('messages.common.created_at') }}</label>
+                                <label class="pb-2 fs-5 text-gray-600" style="font-weight: 600;">{{ __('messages.common.created_at') }}</label>
                                 <div class="col-lg-8">
                                 <span
                                         class="fs-5 text-gray-800 me-2">{{ !empty($admin->created_at) ? $admin->created_at->diffForHumans() : __('messages.common.n/a') }}</span>
                                 </div>
                             </div>
                             <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
-                                <label class="pb-2 fs-5 text-gray-600">{{ __('messages.common.updated_at') }}</label>
+                                <label class="pb-2 fs-5 text-gray-600" style="font-weight: 600;">{{ __('messages.common.updated_at') }}</label>
                                 <div class="col-lg-8">
                                 <span
                                         class="fs-5 text-gray-800 me-2">{{ !empty($admin->updated_at) ? $admin->updated_at->diffForHumans() : __('messages.common.n/a') }}</span>

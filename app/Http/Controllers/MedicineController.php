@@ -86,6 +86,8 @@ class MedicineController extends AppBaseController
      *
      * @return Factory|View
      */
+
+
     public function show(Medicine $medicine)
     {
         $medicine->brand;
@@ -345,7 +347,7 @@ public function medicinesHistory($id){
     $posProductReturn = PosProductReturn::where('medicine_id', $id)
     ->orderBy('created_at', 'asc')
     ->get();
-    
+
     return view('medicines.medicinesHistory', compact('product', 'posProduct', 'posProductReturn', 'transfer'));
 }
 }

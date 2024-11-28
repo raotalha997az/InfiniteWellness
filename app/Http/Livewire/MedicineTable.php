@@ -63,11 +63,11 @@ class MedicineTable extends LivewireTableComponent
                 ->view('medicines.templates.columns.name')
                 ->searchable()
                 ->sortable(),
-                Column::make('Piece Per Pack', 'product.pieces_per_pack')
+            Column::make('Piece Per Pack', 'product.pieces_per_pack')
                 ->view('medicines.templates.columns.piece_per_pack')
                 ->searchable()
                 ->sortable(),
-                Column::make('Category', 'product.productCategory.name')
+            Column::make('Category', 'product.productCategory.name')
                 ->view('medicines.templates.columns.category')
                 ->searchable()
                 ->sortable(),
