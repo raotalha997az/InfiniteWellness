@@ -139,8 +139,8 @@
                 @endphp
 
                 <!-- Display Download Link for All File Types -->
-                <a href="{{ $fileUrl }}" download="{{ $fileName }}" class="btn btn-primary">
-                    Download License ({{ strtoupper($fileExtension) }})
+                <a href="{{ $fileUrl ?? '' }}" download="{{ $fileName  ?? '' }}" class="btn btn-primary">
+                    Download License ({{ strtoupper($fileExtension ?? '') }})
                 </a>
             @else
                 <!-- No License Uploaded -->
