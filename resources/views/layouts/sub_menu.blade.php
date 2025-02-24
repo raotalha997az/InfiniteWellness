@@ -1025,27 +1025,27 @@
 @endrole
 @role('Doctor')
 @module('Doctors',$modules)
-<li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('employee/doctor*','prescriptions*','schedules*','doctors*')) ? 'd-none' : '' }}">
+{{-- <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('employee/doctor*','prescriptions*','schedules*','doctors*')) ? 'd-none' : '' }}">
     <a class="nav-link p-0 {{ Request::is('employee/doctor*') ? 'active' : '' }}" href="{{ url('employee/doctor') }}">
         {{ __('messages.doctors') }}
     </a>
-</li>
+</li> --}}
 @endmodule
 @module('Schedules',$modules)
-<li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('employee/doctor*','prescriptions*','schedules*','doctors*')) ? 'd-none' : '' }}">
+{{-- <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('employee/doctor*','prescriptions*','schedules*','doctors*')) ? 'd-none' : '' }}">
     <a class="nav-link p-0 {{ Request::is('schedules*') ? 'active' : '' }}"
        href="{{ route('schedules.index') }}">
         {{ __('messages.schedules') }}
     </a>
-</li>
+</li> --}}
 @endmodule
 @module('Prescriptions',$modules)
-<li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('employee/doctor*','prescriptions*','schedules*','doctors*')) ? 'd-none' : '' }}">
+{{-- <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('employee/doctor*','prescriptions*','schedules*','doctors*')) ? 'd-none' : '' }}">
     <a class="nav-link p-0 {{ Request::is('prescriptions*') ? 'active' : '' }}"
        href="{{ route('prescriptions.index') }}">
         {{ __('messages.prescriptions') }}
     </a>
-</li>
+</li> --}}
 @endmodule
 @endrole
 @role('Doctor|Accountant|Case Manager|Receptionist|Pharmacist|Lab Technician|Nurse|Patient|PharmacistAdmin')

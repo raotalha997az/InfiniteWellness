@@ -720,7 +720,7 @@
 
 
 
-        @module('Doctors', $modules)
+        {{-- @module('Doctors', $modules)
             <li
                 class="nav-item  {{ Request::is('employee/doctor*', 'prescriptions*', 'schedules*', 'doctors*') ? 'active' : '' }}">
                 <a class="py-3 nav-link d-flex align-items-center" href="{{ url('employee/doctor') }}">
@@ -730,7 +730,7 @@
                     <span class="d-none">{{ __('messages.prescriptions') }}</span>
                 </a>
             </li>
-        @endmodule
+        @endmodule --}}
 
         {{-- @module('Documents', $modules)
             <li class="nav-item  {{ Request::is('documents*') ? 'active' : '' }}">
