@@ -1,4 +1,30 @@
 @extends('layouts.app3')
+
+<style>
+    #select2-patient_mr_number-container {
+-webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
+background-clip: padding-box;
+background-color: #fff;
+border: 1px solid #ced4da;
+border-radius: .313rem;
+color: #6c757d;
+display: block;
+font-size: .875rem;
+font-weight: 400;
+line-height: 1.5;
+padding: .688rem .938rem;
+transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+width: 100%;
+}
+
+.select2-container--default .select2-selection--single{
+    border:0 !important;
+    margin-bottom:10px !important;
+}
+</style>
+
 @section('title')
     Medication Administration
 @endsection
