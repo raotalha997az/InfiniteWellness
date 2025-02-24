@@ -28,6 +28,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Repositories\OpdPatientDepartmentRepository;
 use App\Http\Requests\CreateOpdPatientDepartmentRequest;
 use App\Http\Requests\UpdateOpdPatientDepartmentRequest;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class OpdPatientDepartmentController
@@ -332,10 +333,16 @@ class OpdPatientDepartmentController extends AppBaseController
     }
 
     public function getOpdData(Request $request){
-        $data = OpdPatientDepartment::where(['patient_id'=>$request->pataientID])->get()->toArray();
-        $data2 = DentalOpdPatientDepartment::where(['patient_id'=>$request->pataientID])->get()->toArray();
+        $user = Auth::user();
+        if($user->hasRole('Doctor')){
+            $doctor = Doctor::where('doctor_user_id',$user->id)->first();
+            $data = OpdPatientDepartment::where(['patient_id'=>$request->pataientID,'doctor_id'=>$doctor->id])->get()->toArray();
+            $data2 = DentalOpdPatientDepartment::where(['patient_id'=>$request->pataientID,'doctor_id'=>$doctor->id])->get()->toArray();
+        }else{
+            $data = OpdPatientDepartment::where(['patient_id'=>$request->pataientID])->get()->toArray();
+            $data2 = DentalOpdPatientDepartment::where(['patient_id'=>$request->pataientID])->get()->toArray();
+        }
         $newData = array_merge($data,$data2);
-
         return $newData;
     }
 

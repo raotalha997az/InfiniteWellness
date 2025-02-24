@@ -143,9 +143,13 @@
                    href="#addonForms">Addon Forms</a>
             </li>
             <li class="nav-item position-relative me-7 mb-3">
+                <a class="nav-link p-0" data-bs-toggle="tab"
+                   href="#prescriptionsTable">Prescriptions</a>
+            </li>
+            {{-- <li class="nav-item position-relative me-7 mb-3">
                 <a class="nav-link p-0"
                    href="{{ url('/prescriptions/create') }}">Prescriptions</a>
-            </li>
+            </li> --}}
             <li class="nav-item position-relative me-7 mb-3">
                 <a class="nav-link p-0"
                 href="{{route('dietitan.show', $data->id)}}">Dietitian Assessment</a>
@@ -332,6 +336,48 @@
                                 @endforelse
                             </tbody>
                         </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="tab-pane fade show" id="prescriptionsTable" role="tabpanel">
+        <div class="card mb-5 mb-xl-10">
+            <div>
+                <div class="card-body  border-top p-9">
+                    <div class="row">
+                        {{-- <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Form No.</th>
+                                    <th>Paitent MR No.</th>
+                                    <th>Patient Name</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($MedicattionAdministration as $m)
+                                    <tr>
+                                        <td>{{ $m->id }}</td>
+                                        <td>{{ $m->mr_number }}</td>
+                                        <td>{{ $m->patient->user->first_name }} {{ $m->patient->user->last_name }}</td>
+                                        <td class="d-flex justify-content-center gap-5">
+                                            <a href="/medication-administration/{{$m->id}}">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </td>
+        
+                                    </tr>
+                                @empty
+                                    <tr class="text-center">
+                                        <td colspan="5" class="text-danger">No Medication Administration stock</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table> --}}
+                        <livewire:prescription-table/>
 
                     </div>
                 </div>
