@@ -129,23 +129,20 @@
         </div>
     </div>
 
-    <div class="col-md-6 mt-5">
+    <div class="col-md-6">
         <div class="form-group">
-            @if(isset($doctor) && $doctor->doctor_license)
-                @php
-                    $fileExtension = pathinfo($doctor->doctor_license, PATHINFO_EXTENSION);
-                    $fileUrl = asset($doctor->doctor_license); // Generate the full URL using the asset() helper
-                    $fileName = basename($doctor->doctor_license); // Get the file name
-                @endphp
-
-                <!-- Display Download Link for All File Types -->
-                <a href="{{ $fileUrl ?? '' }}" download="{{ $fileName  ?? '' }}" class="btn btn-primary">
-                    Download License ({{ strtoupper($fileExtension ?? '') }})
-                </a>
-            @else
-                <!-- No License Uploaded -->
-                <p>No license uploaded.</p>
-            @endif
+            @if (!empty($doctor->doctor_license))
+            <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
+                <label for="license" class="pb-2 fs-5 text-gray-600">
+                    {{ __('messages.common.license') }}
+                </label>
+                <p>
+                    <a href="{{ asset($doctor->doctor_license) }}" target="_blank" class="btn btn-primary">
+                        View License
+                    </a>
+                </p>
+            </div>
+    @endif
         </div>
     </div>
 </div>

@@ -211,6 +211,7 @@ return [
         'back' => 'Back',
         'created_on' => 'Created On',
         'last_updated' => 'Last Updated',
+        'license' => 'Doctor license',
         'n/a' => 'N/A',
         'new' => 'New',
         'total' => 'Total',

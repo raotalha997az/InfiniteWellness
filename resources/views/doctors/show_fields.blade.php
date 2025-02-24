@@ -166,6 +166,21 @@
                                 <span class="fs-5 text-gray-800">{{ !empty($doctorData->doctorUser->updated_at) ? $doctorData->doctorUser->updated_at->diffForHumans() : __('messages.common.n/a') }}</span>
                             </p>
                         </div>
+
+                        @if (!empty($doctorData->doctor_license))
+                                <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
+                                    <label for="license" class="pb-2 fs-5 text-gray-600">
+                                        {{ __('messages.common.license') }}
+                                    </label>
+                                    <p>
+                                        <a href="{{ asset($doctorData->doctor_license) }}" target="_blank" class="btn btn-primary">
+                                            View License
+                                        </a>
+                                    </p>
+                                </div>
+                        @endif
+
+
                     </div>
                 </div>
             </div>
