@@ -782,18 +782,18 @@
             </li>
         @endmodule
 
-        <li class="nav-item  {{ Request::is('nursing-form*') ? 'active' : '' }}">
+        {{-- <li class="nav-item  {{ Request::is('nursing-form*') ? 'active' : '' }}">
             <a class="py-3 nav-link d-flex align-items-center" href="{{ route('nursing.index') }}">
                 <span class="aside-menu-icon pe-3"><i class="fa fa-user-nurse"></i></span>
                 <span class="aside-menu-title">Nursing Form </span>
             </a>
-        </li>
-        <li class="nav-item  {{ Request::is('medication-administration*') ? 'active' : '' }}">
+        </li> --}}
+        {{-- <li class="nav-item  {{ Request::is('medication-administration*') ? 'active' : '' }}">
             <a class="py-3 nav-link d-flex align-items-center" href="{{ route('medication.index') }}">
                 <span class="aside-menu-icon pe-3"><i class="fa fa-user-nurse"></i></span>
                 <span class="aside-menu-title">Medication Administration</span>
             </a>
-        </li>
+        </li> --}}
 
         {{-- Patients --}}
         <?php
@@ -828,14 +828,14 @@
         @endif
 
         {{-- SMS --}}
-        @module('SMS', $modules)
+        {{-- @module('SMS', $modules)
             <li class="nav-item {{ Request::is('sms*') ? 'active' : '' }}">
                 <a class="py-3 nav-link d-flex align-items-center" href="{{ route('sms.index') }}">
                     <span class="aside-menu-icon pe-3"><i class="fas fa fa-sms"></i></span>
                     <span class="aside-menu-title">{{ __('messages.sms.sms') }}</span>
                 </a>
             </li>
-        @endmodule
+        @endmodule --}}
     @endrole
 
     @role('Case Manager')

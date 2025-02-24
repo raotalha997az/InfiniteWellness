@@ -114,6 +114,14 @@
             </li>
             <li class="nav-item position-relative me-7 mb-3">
                 <a class="nav-link p-0" data-bs-toggle="tab"
+                   href="#nursingForms">Nursing Forms</a>
+            </li>
+            <li class="nav-item position-relative me-7 mb-3">
+                <a class="nav-link p-0" data-bs-toggle="tab"
+                   href="#MedicattionAdministration">Medication Administration</a>
+            </li>
+            <li class="nav-item position-relative me-7 mb-3">
+                <a class="nav-link p-0" data-bs-toggle="tab"
                    href="#showPatientCases">{{ __('messages.cases') }}</a>
             </li>
 
@@ -235,6 +243,96 @@
                                 <span class="fs-5 text-gray-800">{{ !empty($data->patientUser->updated_at) ? $data->patientUser->updated_at->diffForHumans() : __('messages.common.n/a') }}</span>
                             </p>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="tab-pane fade show" id="nursingForms" role="tabpanel">
+        <div class="card mb-5 mb-xl-10">
+            <div>
+                <div class="card-body  border-top p-9">
+                    <div class="row">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Form #</th>
+                                    <th scope="col">Patient MR #</th>
+                                    <th scope="col">Patient Name</th>
+                                    <th scope="col">OPD ID</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($nursingDataAll as $nursing_from)
+                                {{-- {{dd($nursing_from)}} --}}
+                            <tr>
+                                <td>{{ $nursing_from->id }}</td>
+                                <td>{{ $nursing_from->patient_mr_number }}</td>
+                                <td>{{ $nursing_from->patient->user->first_name }} {{ $nursing_from->patient->user->last_name }}</td>
+                                <td>{{ $nursing_from->opd_id }}</td>
+                                <td class="d-flex justify-content-center gap-5">
+                                    <a href="/nursing-form/{{$nursing_from->id}}">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                    {{-- <form action="{{ route('nursing-form.destroy',$nursing_from->id) }}" class="d-inline" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="bg-transparent border-0 text-danger"><i class="fa fa-trash"></i></button>
+                                    </form> --}}
+                                </td>
+
+                            </tr>
+                        @empty
+                            <tr class="text-center">
+                                <td colspan="5" >No record found</td>
+                            </tr>
+                        @endforelse
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="tab-pane fade show" id="MedicattionAdministration" role="tabpanel">
+        <div class="card mb-5 mb-xl-10">
+            <div>
+                <div class="card-body  border-top p-9">
+                    <div class="row">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Form No.</th>
+                                    <th>Paitent MR No.</th>
+                                    <th>Patient Name</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($MedicattionAdministration as $m)
+                                    <tr>
+                                        <td>{{ $m->id }}</td>
+                                        <td>{{ $m->mr_number }}</td>
+                                        <td>{{ $m->patient->user->first_name }} {{ $m->patient->user->last_name }}</td>
+                                        <td class="d-flex justify-content-center gap-5">
+                                            <a href="/medication-administration/{{$m->id}}">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </td>
+        
+                                    </tr>
+                                @empty
+                                    <tr class="text-center">
+                                        <td colspan="5" class="text-danger">No Medication Administration stock</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
             </div>
