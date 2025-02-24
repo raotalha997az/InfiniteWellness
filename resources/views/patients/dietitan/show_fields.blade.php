@@ -108,10 +108,10 @@
                         <a class="p-0 nav-link active" data-bs-toggle="tab"
                             href="#PatientOverview">{{ __('messages.overview') }}</a>
                     </li>
-                    <li class="mb-3 nav-item position-relative me-7">
+                    {{-- <li class="mb-3 nav-item position-relative me-7">
                         <a class="p-0 nav-link"
                             href="/patients/{{$forNutritions->patientID}}/{{$forNutritions->id}}">Nutritional Assessment Form</a>
-                    </li>
+                    </li> --}}
                     {{-- <li class="mb-3 nav-item position-relative me-7">
                     <a class="p-0 nav-link" data-bs-toggle="tab"
                     href="#showPatientCases">{{ __('messages.cases') }}</a>
@@ -152,7 +152,7 @@
                         <a class="p-0 nav-link" data-bs-toggle="tab" href="#nutritionassessment">Dietitian Assessment</a>
                     </li>
                 @endrole
-                @role('Nurse|Doctor')
+                @role('Nurse')
                     <li class="mb-3 nav-item position-relative me-7">
                         <a class="p-0 nav-link active" data-bs-toggle="tab"
                             href="#PatientOverview">{{ __('messages.overview') }}</a>

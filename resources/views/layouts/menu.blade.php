@@ -289,7 +289,7 @@
     <?php
     $documentMGT = getMenuLinks(\App\Models\User::MAIN_DOCUMENT);
     ?>
-    @if ($documentMGT)
+    {{-- @if ($documentMGT)
         <li class="nav-item {{ Request::is('documents*', 'document-types*') ? 'active' : '' }}">
             <a class="py-3 nav-link d-flex align-items-center" href="{{ $documentMGT }}">
                 <span class="aside-menu-icon pe-3"><i class="fas fa-file"></i></span>
@@ -297,7 +297,7 @@
                 <span class="d-none">{{ __('messages.document_types') }}</span>
             </a>
         </li>
-    @endif
+    @endif --}}
 
     {{-- Doctors dropdown --}}
     <?php
@@ -711,12 +711,12 @@
         {{-- dietitian-form --}}
 
 
-        <li class="nav-item  {{ Request::is('dietitian-form*') ? 'active' : '' }}">
+        {{-- <li class="nav-item  {{ Request::is('dietitian-form*') ? 'active' : '' }}">
             <a class="py-3 nav-link d-flex align-items-center" href="{{ route('dietitan.index') }}">
                 <span class="aside-menu-icon pe-3"><i class="fas fa-tint"></i></span>
                 <span class="aside-menu-title">Dietitan Assessment</span>
             </a>
-        </li>
+        </li> --}}
 
 
 
@@ -732,14 +732,14 @@
             </li>
         @endmodule
 
-        @module('Documents', $modules)
+        {{-- @module('Documents', $modules)
             <li class="nav-item  {{ Request::is('documents*') ? 'active' : '' }}">
                 <a class="py-3 nav-link d-flex align-items-center" href="{{ route('documents.index') }}">
                     <span class="aside-menu-icon pe-3"><i class="fas fa-file"></i></span>
                     <span class="aside-menu-title">{{ __('messages.documents') }}</span>
                 </a>
             </li>
-        @endmodule
+        @endmodule --}}
 
 
         {{-- ipds/opds --}}
@@ -747,7 +747,7 @@
         $ipdOPD = getMenuLinks(\App\Models\User::MAIN_IPD_OPD);
         ?>
         @if ($ipdOPD)
-            <li class="nav-item  {{ Request::is('ipds*', 'opds*') ? 'active' : '' }}">
+            {{-- <li class="nav-item  {{ Request::is('ipds*', 'opds*') ? 'active' : '' }}">
                 <a class="py-3 nav-link d-flex align-items-center" href="{{ $ipdOPD }}"
                     title="{{ __('messages.ipd_opd') }}">
                     <span class="aside-menu-icon pe-3">
@@ -757,10 +757,10 @@
                     <span class="d-none">{{ __('messages.ipd_patients') }}</span>
                     <span class="d-none">{{ __('messages.opd_patients') }}</span>
                 </a>
-            </li>
+            </li> --}}
         @endif
         {{-- Dental OPDS --}}
-        <li class="nav-item  {{ Request::is('dentalOpds*') ? 'active' : '' }}">
+        {{-- <li class="nav-item  {{ Request::is('dentalOpds*') ? 'active' : '' }}">
             <a class="py-3 nav-link d-flex align-items-center" href="{{ route('dentalopd.patient.index') }}"
                 title="{{ __('messages.ipd_opd') }}">
                 <span class="aside-menu-icon pe-3">
@@ -770,7 +770,7 @@
                 <span class="d-none">{{ __('messages.ipd_patients') }}</span>
                 <span class="d-none">{{ __('messages.opd_patients') }}</span>
             </a>
-        </li>
+        </li> --}}
 
         {{-- Nursers --}}
         @module('Nurses', $modules)
@@ -1554,14 +1554,14 @@
         @endmodule
 
         {{-- Documents --}}
-        @module('Documents', $modules)
+        {{-- @module('Documents', $modules)
             <li class="nav-item  {{ Request::is('documents*') ? 'active' : '' }}">
                 <a class="py-3 nav-link d-flex align-items-center" href="{{ route('documents.index') }}">
                     <span class="aside-menu-icon pe-3"><i class="fas fa-file"></i></span>
                     <span class="aside-menu-title">{{ __('messages.documents') }}</span>
                 </a>
             </li>
-        @endmodule
+        @endmodule --}}
 
         @module('Notice Boards', $modules)
             <li class="nav-item  {{ Request::is('employee/notice-board*') ? 'active' : '' }}">

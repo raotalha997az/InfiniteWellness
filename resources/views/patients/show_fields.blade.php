@@ -138,6 +138,10 @@
                 <a class="nav-link p-0"
                    href="{{ url('/prescriptions/create') }}">Prescriptions</a>
             </li>
+            <li class="nav-item position-relative me-7 mb-3">
+                <a class="nav-link p-0"
+                href="{{route('dietitan.show', $data->id)}}">Dietitian Assessment</a>
+            </li>
 
             @endrole
 
