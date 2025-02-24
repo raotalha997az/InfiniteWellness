@@ -560,6 +560,7 @@ return [
         'doctor_details' => 'Doctor Details',
         'specialist' => 'Specialist',
         'name' => 'Name',
+        'upload_license' => 'Upload Dr License',
     ],
 
     // bed assigns keys

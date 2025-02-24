@@ -109,6 +109,15 @@
             {{ Form::password('password_confirmation', ['class' => 'form-control','required','min' => '6','max' => '10']) }}
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group mb-5">
+                {{ Form::label('doctor_license', __('messages.doctor.upload_license').(':'), ['class' => 'form-label']) }}
+                <span class="required"></span>
+                {{ Form::file('doctor_license', ['class' => 'form-control', 'id' => 'doctor_license']) }}
+            </div>
+        </div>
+    </div>
     <div class="form-group col-md-4 mb-5">
         <div class="row2" io-image-input="true">
             {{ Form::label('image',__('messages.common.profile').(':'), ['class' => 'form-label']) }}

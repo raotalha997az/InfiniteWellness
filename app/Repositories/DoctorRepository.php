@@ -95,11 +95,22 @@ class DoctorRepository extends BaseRepository
                 storeProfileImage($user, $input['image']);
             }
 
+             // Handle doctor license file upload if provided
+                if (!empty($input['doctor_license'])) {
+                    $licenseFile = $input['doctor_license'];
+                    $fileName = time() . '_' . $licenseFile->getClientOriginalName(); // Generate a unique file name
+                    $filePath = $licenseFile->move(public_path('assets/doctorLiesence'), $fileName); // Save the file to the public/assets/doctorLiesence directory
+                    $input['doctor_license'] = 'assets/doctorLiesence/' . $fileName; // Save the relative path to the database
+                } else {
+                    $input['doctor_license'] = null; // Set to null if no file is uploaded
+                }
+
             // Create doctor and associate with user
             $doctor = Doctor::create([
                 'doctor_user_id' => $user->id,
                 'department_id' => $input['department_id'],
                 'specialist' => $input['specialist'],
+                'doctor_license' => $input['doctor_license'], // Save the file path or null
             ]);
 
             // Save address if available
@@ -126,40 +137,61 @@ class DoctorRepository extends BaseRepository
     }
 
     public function update($doctor, $input)
-    {
-        try {
-            unset($input['password']);
-            $user = User::find($doctor->doctorUser->id);
-            if ($input['avatar_remove'] == 1 && isset($input['avatar_remove']) && ! empty($input['avatar_remove'])) {
-                removeFile($user, User::COLLECTION_PROFILE_PICTURES);
-            }
-            if (isset($input['image']) && ! empty($input['image'])) {
-                $mediaId = updateProfileImage($user, $input['image']);
-            }
+{
+    try {
+        unset($input['password']);
+        $user = User::find($doctor->doctorUser->id);
 
-
-            $input['phone'] = preparePhoneNumber($input, 'phone');
-            $input['dob'] = (! empty($input['dob'])) ? $input['dob'] : null;
-            $doctor->doctorUser->update($input);
-            $doctor->update($input);
-
-            if (! empty($doctor->address)) {
-                if (empty($address = Address::prepareAddressArray($input))) {
-                    $doctor->address->delete();
-                }
-                $doctor->address->update($input);
-            } else {
-                if (! empty($address = Address::prepareAddressArray($input)) && empty($doctor->address)) {
-                    $ownerId = $doctor->id;
-                    $ownerType = Doctor::class;
-                    Address::create(array_merge($address, ['owner_id' => $ownerId, 'owner_type' => $ownerType]));
-                }
-            }
-            return true;
-        } catch (Exception $e) {
-            throw new UnprocessableEntityHttpException($e->getMessage());
+        // Handle profile image update
+        if ($input['avatar_remove'] == 1 && isset($input['avatar_remove']) && !empty($input['avatar_remove'])) {
+            removeFile($user, User::COLLECTION_PROFILE_PICTURES);
         }
+        if (isset($input['image']) && !empty($input['image'])) {
+            $mediaId = updateProfileImage($user, $input['image']);
+        }
+
+        // Handle doctor license file update
+        if (!empty($input['doctor_license'])) {
+            // Delete the old file if it exists
+            if ($doctor->doctor_license && file_exists(public_path($doctor->doctor_license))) {
+                unlink(public_path($doctor->doctor_license));
+            }
+
+            // Save the new file
+            $licenseFile = $input['doctor_license'];
+            $fileName = time() . '_' . $licenseFile->getClientOriginalName(); // Generate a unique file name
+            $filePath = $licenseFile->move(public_path('assets/doctorLiesence'), $fileName); // Save the file to the public/assets/doctorLiesence directory
+            $input['doctor_license'] = 'assets/doctorLiesence/' . $fileName; // Save the relative path to the database
+        } else {
+            // If no new file is uploaded, retain the existing file
+            $input['doctor_license'] = $doctor->doctor_license;
+        }
+
+        // Update user and doctor details
+        $input['phone'] = preparePhoneNumber($input, 'phone');
+        $input['dob'] = (!empty($input['dob'])) ? $input['dob'] : null;
+        $doctor->doctorUser->update($input);
+        $doctor->update($input);
+
+        // Handle address update
+        if (!empty($doctor->address)) {
+            if (empty($address = Address::prepareAddressArray($input))) {
+                $doctor->address->delete();
+            }
+            $doctor->address->update($input);
+        } else {
+            if (!empty($address = Address::prepareAddressArray($input)) && empty($doctor->address)) {
+                $ownerId = $doctor->id;
+                $ownerType = Doctor::class;
+                Address::create(array_merge($address, ['owner_id' => $ownerId, 'owner_type' => $ownerType]));
+            }
+        }
+
+        return true;
+    } catch (Exception $e) {
+        throw new UnprocessableEntityHttpException($e->getMessage());
     }
+}
 
 
     public function getDoctors()

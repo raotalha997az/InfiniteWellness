@@ -120,6 +120,35 @@
     </div>
 </div>
 </div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group mb-5">
+            {{ Form::label('doctor_license', __('messages.doctor.upload_license').(':'), ['class' => 'form-label']) }}
+            <span class="required"></span>
+            {{ Form::file('doctor_license', ['class' => 'form-control', 'id' => 'doctor_license']) }}
+        </div>
+    </div>
+
+    <div class="col-md-6 mt-5">
+        <div class="form-group">
+            @if(isset($doctor) && $doctor->doctor_license)
+                @php
+                    $fileExtension = pathinfo($doctor->doctor_license, PATHINFO_EXTENSION);
+                    $fileUrl = asset($doctor->doctor_license); // Generate the full URL using the asset() helper
+                    $fileName = basename($doctor->doctor_license); // Get the file name
+                @endphp
+
+                <!-- Display Download Link for All File Types -->
+                <a href="{{ $fileUrl }}" download="{{ $fileName }}" class="btn btn-primary">
+                    Download License ({{ strtoupper($fileExtension) }})
+                </a>
+            @else
+                <!-- No License Uploaded -->
+                <p>No license uploaded.</p>
+            @endif
+        </div>
+    </div>
+</div>
 <hr>
 <div class="row mt-3">
     <div class="col-md-12 mb-3">

@@ -15,6 +15,7 @@ class Doctor extends Model
         'doctor_user_id',
         'department_id',
         'specialist',
+        'doctor_license',
     ];
 
     const STATUS_ALL = 2;

@@ -25,6 +25,7 @@ class UpdateDoctorRequest extends FormRequest
         $rules = Doctor::$rules;
         $rules['email'] = 'required|email:filter|unique:users,email,'.$this->route('doctor')->doctorUser->id;
         $rules['image'] = 'mimes:jpeg,jpg,png,gif';
+        $rules['doctor_license'] = 'nullable|mimes:jpeg,jpg,png,pdf,doc,docx|max:5048';
 
         return $rules;
     }
@@ -36,6 +37,7 @@ class UpdateDoctorRequest extends FormRequest
     {
         return [
             'image.mimes' => 'The profile image must be a file of type: jpeg, jpg, png.',
+            'doctor_license.max' => 'The doctor license file must less than or exceed 5MB in size.',
         ];
     }
 }
