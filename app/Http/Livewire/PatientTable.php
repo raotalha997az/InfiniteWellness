@@ -85,7 +85,7 @@ class PatientTable extends LivewireTableComponent
                     ->sortable()->searchable(),
                 Column::make(__('messages.user.blood_group'), 'patientUser.blood_group')->view('patients.columns.blood_group')
                     ->sortable()->searchable(),
-
+                    Column::make(__('messages.common.action'), 'id')->view('patients.action'),
             ];
         }
     }

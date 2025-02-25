@@ -1,4 +1,4 @@
-<a href="/opds/{{$row->id}}/print" title="Print" "
+<a href="/opds/{{$row->id}}/print" title="Print"
     class="btn px-1 text-info fs-3 ps-0">
      <i class="fa-solid fa-print"></i>
  </a>

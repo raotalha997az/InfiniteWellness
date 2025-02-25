@@ -1,4 +1,11 @@
 <div class="d-flex align-items-center">
+
+    <a href="{{route('patients.show', $row->id)}}"
+        class="btn px-1 text-primary fs-3 ps-0">
+         <i class="fa-solid fa-eye"></i>
+     </a>
+
+@role('Admin|CSR')
     @role('Admin')
     <a href="{{ route('patients.edit',$row->id)}}" title="{{__('messages.common.edit') }}"
        class="btn px-1 text-primary fs-3 ps-0">
@@ -21,3 +28,4 @@
     <i class="fa-solid fa-trash"></i>
 </a>
 @endif
+@endrole
