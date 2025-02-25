@@ -26,6 +26,7 @@ class CreateDoctorRequest extends FormRequest
     {
         $rules = Doctor::$rules;
         $rules['image'] = 'mimes:jpeg,jpg,png';
+        $rules['doctor_license'] = 'nullable|mimes:jpeg,jpg,png,pdf,doc,docx|max:5048';
 
         return $rules;
     }
@@ -37,6 +38,7 @@ class CreateDoctorRequest extends FormRequest
     {
         return [
             'image.mimes' => 'The profile image must be a file of type: jpeg, jpg, png.',
+            'doctor_license.max' => 'The doctor license file must less than or exceed 5MB in size.',
         ];
     }
 }
