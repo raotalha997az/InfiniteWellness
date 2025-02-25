@@ -40,8 +40,8 @@ class AppointmentTable extends LivewireTableComponent
     public function changeDateFilter($param, $value)
     {
         $this->resetPage($this->getComputedPageName());
-        $this->startDate = $value[0];
-        $this->endDate = $value[1];
+        $this->startDate = $value[0] ?? now()->startOfDay()->toDateString();
+        $this->endDate = $value[1] ?? now()->endOfDay()->toDateString();
         $this->setBuilder($this->builder());
     }
 
@@ -171,10 +171,13 @@ class AppointmentTable extends LivewireTableComponent
         }
     });
 
-    // Handle date filter
-    $query->when(isset($this->startDate) && $this->endDate, function (Builder $q) {
-        $q->whereBetween('opd_date', [$this->startDate, $this->endDate]);
-    });
+    // Apply date filter
+    if ($this->startDate && $this->endDate) {
+        $query->whereBetween('opd_date', [$this->startDate, $this->endDate]);
+    } else {
+        // Default to today's appointments if no dates are provided
+        $query->whereDate('opd_date', now()->toDateString());
+    }
 
     return $query;
 }
