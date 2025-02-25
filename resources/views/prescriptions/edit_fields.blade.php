@@ -1,18 +1,23 @@
 <div class="row gx-10 mb-5">
+    <!-- Patient Name (Disabled Input) -->
     <div class="form-group col-md-3 mb-5">
         {{ Form::label('patient_id', __('messages.prescription.patient').(':'), ['class' => 'form-label']) }}
         <span class="required"></span>
-        {{ Form::select('patient_id',$patients, null, ['class' => 'form-select','required','id' => 'editPrescriptionPatientId','placeholder'=>'Select Patient']) }}
+        {{ Form::text('patient_name', $prescription->patient->patientUser->first_name . ' ' . $prescription->patient->patientUser->last_name, ['class' => 'form-control', 'disabled']) }}
+        {{ Form::hidden('patient_id', $prescription->patient_id) }} <!-- Hidden field to retain patient_id -->
     </div>
+
+    <!-- Doctor Dropdown -->
     @if(Auth::user()->hasRole('Doctor'))
         <input type="hidden" name="doctor_id" value="{{ Auth::user()->owner_id }}">
     @else
         <div class="form-group col-md-3 mb-5">
             {{ Form::label('doctor_name', __('messages.case.doctor').(':'), ['class' => 'form-label']) }}
             <span class="required"></span>
-            {{ Form::select('doctor_id',$doctors, null, ['class' => 'form-select','required','id' => 'editPrescriptionDoctorId','placeholder'=>'Select Doctor']) }}
+            {{ Form::select('doctor_id', $doctors, $prescription->doctor_id, ['class' => 'form-select', 'required', 'id' => 'editPrescriptionDoctorId', 'placeholder' => 'Select Doctor']) }}
         </div>
     @endif
+
 {{--    <div class="col-md-3">--}}
 {{--        <div class="form-group mb-5">--}}
 {{--            {{ Form::label('food_allergies', __('messages.prescription.food_allergies').(':'), ['class' => 'form-label']) }}--}}
@@ -91,12 +96,12 @@
             {{ Form::text('health_insurance', null, ['class' => 'form-control']) }}
         </div>
     </div>
-    <div class="col-md-3">
+    {{-- <div class="col-md-3">
         <div class="form-group mb-5">
             {{ Form::label('low_income', __('messages.prescription.low_income').(':'), ['class' => 'form-label']) }}
             {{ Form::text('low_income', null, ['class' => 'form-control']) }}
         </div>
-    </div>
+    </div> --}}
     <div class="col-md-3">
         <div class="form-group mb-5">
             {{ Form::label('reference', __('messages.prescription.reference').(':'), ['class' => 'form-label']) }}
@@ -111,6 +116,25 @@
                 <input name="status" class="form-check-input w-35px h-20px is-active" value="1"
                        type="checkbox" {{(isset($prescription) && ($prescription->status)) ? 'checked' : ''}}>
                 <label class="form-check-label" for="allowmarketing"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="form-group mb-5 p-l-0">
+            {{ Form::label('TestsandConsultations', __('Tests and Consultations').(':'), ['class' => 'form-label']) }}
+            <br>
+            <div class=" p-l-0">
+                {{ Form::text('TestsandConsultations', $prescription->TestsandConsultations, ['class' => 'form-control']) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group mb-5">
+            {{ Form::label('PatientEducation', __('Patient Education').(':'), ['class' => 'form-label']) }}
+            <br>
+            <div class=" p-l-0">
+                {{ Form::text('PatientEducation', $prescription->PatientEducation, ['class' => 'form-control']) }}
             </div>
         </div>
     </div>

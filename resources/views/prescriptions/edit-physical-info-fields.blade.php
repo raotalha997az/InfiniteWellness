@@ -1,5 +1,5 @@
 <div class="row gx-10 mb-5">
-    <div class="col-md-3">
+    {{-- <div class="col-md-3">
         <div class="form-group mb-5">
             {{ Form::label('food_allergies', __('messages.prescription.food_allergies').(':'), ['class' => 'form-label']) }}
             {{ Form::text('food_allergies', null, ['class' => 'form-control']) }}
@@ -58,20 +58,20 @@
             {{ Form::label('current_medication', __('messages.prescription.current_medication').(':'), ['class' => 'form-label']) }}
             {{ Form::text('current_medication', null, ['class' => 'form-control']) }}
         </div>
-    </div>
-    <div class="col-md-3">
+    </div> --}}
+    <div class="col-md-6">
         <div class="form-group mb-5">
             {{ Form::label('female_pregnancy', __('messages.prescription.female_pregnancy').(':'), ['class' => 'form-label']) }}
             {{ Form::text('female_pregnancy', null, ['class' => 'form-control']) }}
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-6">
         <div class="form-group mb-5">
             {{ Form::label('breast_feeding', __('messages.prescription.breast_feeding').(':'), ['class' => 'form-label mb-3']) }}
             {{ Form::text('breast_feeding', null, ['class' => 'form-control']) }}
         </div>
     </div>
-    <div class="col-md-3">
+    {{-- <div class="col-md-3">
         <div class="form-group mb-5">
             {{ Form::label('plus_rate', __('messages.prescription.plus_rate').(':'), ['class' => 'form-label']) }}
             {{ Form::text('plus_rate', null, ['class' => 'form-control']) }}
@@ -88,5 +88,5 @@
             {{ Form::label('problem_description', __('messages.prescription.problem_description').(':'), ['class' => 'form-label']) }}
             {{ Form::textarea('problem_description', null, ['class' => 'form-control', 'rows' => 5]) }}
         </div>
-    </div>
+    </div> --}}
 </div>
