@@ -81,6 +81,7 @@
     <div class="col-lg-3 col-md-4 col-sm-12 mb-5">
         {{ Form::label('discount_fetch', 'Available Discount' . ':', ['class' => 'form-label']) }}
         <select name="discount_fetch" class="form-control discount_fetch">
+            <option selected disabled>Select Discount</option>
             @foreach ($data['discount'] as $discount)
                 <option value="{{ $discount->amount_per }}" id="dynamic_discount" onchange="discount_amount()">{{ $discount->name }}</option>
             @endforeach

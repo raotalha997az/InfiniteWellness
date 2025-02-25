@@ -138,7 +138,7 @@
     $receptionistServiceMgt = getMenuLinks(\App\Models\User::MAIN_SERVICE);
     ?>
     @if ($receptionistServiceMgt)
-        <li
+        {{-- <li
             class="nav-item {{ Request::is('insurances*', 'packages*', 'services*', 'ambulances*', 'ambulance-calls*') ? 'active' : '' }}">
             <a class="py-3 nav-link d-flex align-items-center" href="{{ $receptionistServiceMgt }}">
                 <span class="aside-menu-icon pe-3"><i class="fas fa-box"></i></span>
@@ -149,7 +149,7 @@
                 <span class="d-none">{{ __('messages.ambulances') }}</span>
                 <span class="d-none">{{ __('messages.ambulance_calls') }}</span>
             </a>
-        </li>
+        </li> --}}
     @endif
 
 @endif
