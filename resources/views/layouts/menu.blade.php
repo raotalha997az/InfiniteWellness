@@ -925,6 +925,13 @@
         @endmodule
     @endrole
 
+       {{-- Notes For All users --}}
+   <li class="nav-item  {{ Request::is('notes*') ? 'active' : '' }}">
+    <a class="py-3 nav-link d-flex align-items-center" href="{{ route('notes.index') }}">
+        <span class="aside-menu-icon pe-3"><i class="fa fa-user-md"></i></span>
+        <span class="aside-menu-title">{{ __('messages.message.notes') }}</span>
+    </a>
+</li>
     @role('Receptionist')
         {{-- Appointments --}}
         @module('Appointments', $modules)

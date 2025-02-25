@@ -1164,6 +1164,7 @@ return [
     //Messages keys
     'message' => [
         'message' => 'Message',
+        'notes' => 'Notes',
         'messages' => 'Messages',
         'send_to' => 'Send To',
         'subject' => 'Subject',

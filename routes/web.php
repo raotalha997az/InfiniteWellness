@@ -55,6 +55,7 @@ use App\Http\Controllers\BloodIssueController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\IpdPaymentController;
 use App\Http\Controllers\IssuedItemController;
+use App\Http\Controllers\Notes\NoteController;
 use App\Http\Controllers\PharmacistController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\BirthReportController;
@@ -1695,6 +1696,12 @@ Route::get('get_opd_data_by_pataint_id/{pataientID}', [OpdPatientDepartmentContr
 Route::get('get_opd_doc_by_opd/{opdNumber}', [OpdPatientDepartmentController::class, 'getOpdDataDocName']);
 require __DIR__ . '/upgrade.php';
 
+
+Route::middleware('role:Admin|Patient|Doctor|Receptionist|Nurse|Accountant|Lab Technician|Pharmacist|PharmacistAdmin|Case Manager|CSR')->group(function () {
+    Route::prefix('notes')->name('notes.')->group(function () {
+        Route::get('index', [NoteController::class, 'index'])->name('index');
+    });
+});
 
 Route::get('createBatch', [GoodReceiveNoteController::class, 'createBatch']);
 Route::get('transferBatch', [GoodReceiveNoteController::class, 'transferBatch']);
