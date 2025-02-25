@@ -22,7 +22,6 @@
 @endif --}}
 
 
-
 @if ($row->is_completed == 3)
     <a data-bs-toggle="tooltip" data-placement="top" data-bs-original-title=" {{ __('messages.common.canceled') }} "
         class="btn px-1 text-danger fs-3 pe-0">
@@ -33,8 +32,7 @@
     <a data-bs-toggle="tooltip" data-placement="top" data-bs-original-title="{{ __('messages.common.cancel') }}"
         data-id="{{ $row->id }}"
         class="cancel-appointment btn px-1 text-danger fs-3 pe-0 {{ $row->is_completed == 1 || $row->is_completed == 4 ? 'd-none' : '' }}">
-        <i
-            class="far fa-calendar-times {{ $row->is_completed == 1 || $row->is_completed == 4 ? 'text-danger' : '' }}"></i>
+        <i class="far fa-calendar-times {{ $row->is_completed == 1 || $row->is_completed == 4 ? 'text-danger' : '' }}"></i>
     </a>
 @endif
 
@@ -55,9 +53,17 @@
 
 {{-- Show "Arrived" button only if status is not 4 --}}
 @if ($row->is_completed != 4)
-    <a onclick="confirmArrived({{ $row->id }})" data-bs-toggle="tooltip" data-placement="top"
+    <a wire:click="updateStatus({{ $row->id }}, 4)" data-bs-toggle="tooltip" data-placement="top"
         data-bs-original-title="{{ __('messages.common.user_arrived') }}" class="btn px-1 text-primary fs-3 pe-0">
         <i class="fas fa-user-check"></i>
+    </a>
+@endif
+
+{{-- Show "Complete" button only if status is 4 (Arrived) --}}
+@if ($row->is_completed == 4)
+    <a wire:click="updateStatus({{ $row->id }}, 1)" data-bs-toggle="tooltip" data-placement="top"
+        data-bs-original-title="{{ __('messages.common.complete_appointment') }}" class="btn px-1 text-primary fs-3 pe-0">
+        <i class="fas fa-calendar-check"></i>
     </a>
 @endif
 
