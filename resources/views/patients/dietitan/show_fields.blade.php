@@ -104,53 +104,34 @@
         <div class="overflow-hidden mt-7">
             <ul class="pb-1 mb-5 overflow-auto nav nav-tabs flex-nowrap text-nowrap">
                 @role('Admin|Doctor')
-                    <li class="mb-3 nav-item position-relative me-7">
-                        <a class="p-0 nav-link active" data-bs-toggle="tab"
-                            href="#PatientOverview">{{ __('messages.overview') }}</a>
-                    </li>
-                    {{-- <li class="mb-3 nav-item position-relative me-7">
-                        <a class="p-0 nav-link"
-                            href="/patients/{{$forNutritions->patientID}}/{{$forNutritions->id}}">Nutritional Assessment Form</a>
-                    </li> --}}
-                    {{-- <li class="mb-3 nav-item position-relative me-7">
-                    <a class="p-0 nav-link" data-bs-toggle="tab"
-                    href="#showPatientCases">{{ __('messages.cases') }}</a>
-                </li> --}}
-                    {{-- <li class="mb-3 nav-item position-relative me-7">
-                    <a class="p-0 nav-link" data-bs-toggle="tab"
-                    href="#showPatientAdmissions">{{ __('messages.patient_admissions') }}</a>
-                </li> --}}
-                    {{-- <li class="mb-3 nav-item position-relative me-7">
-                    <a class="p-0 nav-link" data-bs-toggle="tab"
-                    href="#showPatientAppointments">{{ __('messages.appointments') }}</a>
+                <li class="nav-item position-relative me-7 mb-3">
+                    <a class="nav-link p-0"
+                       href="{{  url('patients/') }}/{{ $data->id }}">{{ __('messages.overview') }}</a>
                 </li>
-                <li class="mb-3 nav-item position-relative me-7">
-                    <a class="p-0 nav-link" data-bs-toggle="tab"
-                    href="#showPatientBills">{{ __('messages.bills') }}</a>
+                <li class="nav-item position-relative me-7 mb-3">
+                    <a class="nav-link p-0"
+                       href="{{  url('patients/') }}/{{ $data->id }}">Nursing Forms</a>
                 </li>
-                <li class="mb-3 nav-item position-relative me-7">
-                    <a class="p-0 nav-link" data-bs-toggle="tab"
-                    href="#showPatientInvoices">{{ __('messages.invoices') }}</a>
+                <li class="nav-item position-relative me-7 mb-3">
+                    <a class="nav-link p-0"
+                       href="{{  url('patients/') }}/{{ $data->id }}">Medication Administration</a>
                 </li>
-                <li class="mb-3 nav-item position-relative me-7">
-                    <a class="p-0 nav-link" data-bs-toggle="tab"
-                    href="#showPatientAdvancedPayments">{{ __('messages.advanced_payments') }}</a>
+                <li class="nav-item position-relative me-7 mb-3">
+                    <a class="nav-link p-0"
+                       href="{{  url('patients/') }}/{{ $data->id }}">{{ __('messages.appointments') }}</a>
                 </li>
-                <li class="mb-3 nav-item position-relative me-7">
-                    <a class="p-0 nav-link" data-bs-toggle="tab"
-                    href="#showPatientDocument">{{ __('messages.documents') }}</a>
+                <li class="nav-item position-relative me-7 mb-3">
+                    <a class="nav-link p-0"
+                       href="{{  url('patients/') }}/{{ $data->id }}">Addon Forms</a>
                 </li>
-                <li class="mb-3 nav-item position-relative me-7">
-                    <a class="p-0 nav-link" data-bs-toggle="tab"
-                    href="#showPatientVaccinated">{{ __('messages.vaccinations') }}</a>
+                <li class="nav-item position-relative me-7 mb-3">
+                    <a class="nav-link p-0"
+                       href="{{  url('patients/') }}/{{ $data->id }}">Prescriptions</a>
                 </li>
-                <li class="mb-3 nav-item position-relative me-7">
-                    <a class="p-0 nav-link" data-bs-toggle="tab"
-                    href="#addonForms">Addon Forms</a>
-                </li> --}}
-                    <li class="mb-3 nav-item position-relative me-7">
-                        <a class="p-0 nav-link" data-bs-toggle="tab" href="#nutritionassessment">Dietitian Assessment</a>
-                    </li>
+                <li class="nav-item position-relative me-7 mb-3">
+                    <a class="nav-link active p-0"
+                    href="{{route('dietitan.show', $data->id)}}">Dietitian Assessment</a>
+                </li>
                 @endrole
                 @role('Nurse')
                     <li class="mb-3 nav-item position-relative me-7">
@@ -175,7 +156,7 @@
         </div>
     </div>
     <div class="tab-content" id="myPatientTabContent">
-        <div class="tab-pane fade show active" id="PatientOverview" role="tabpanel">
+        <div class="tab-pane fade" id="PatientOverview" role="tabpanel">
             <div class="mb-5 card mb-xl-10">
                 <div>
                     <div class="card-body border-top p-9">
@@ -333,7 +314,7 @@
             <div id="cardContainer"></div>
         </div>
     </div>
-    <div class="tab-pane fade" id="nutritionassessment" role="tabpanel">
+    <div class="tab-pane fade show active" id="nutritionassessment" role="tabpanel">
 
         <div class="mb-5 card mb-xl-10">
             <div>

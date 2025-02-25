@@ -120,10 +120,10 @@
                 <a class="nav-link p-0" data-bs-toggle="tab"
                    href="#MedicattionAdministration">Medication Administration</a>
             </li>
-            <li class="nav-item position-relative me-7 mb-3">
+            {{-- <li class="nav-item position-relative me-7 mb-3">
                 <a class="nav-link p-0" data-bs-toggle="tab"
                    href="#showPatientCases">{{ __('messages.cases') }}</a>
-            </li>
+            </li> --}}
 
             <li class="nav-item position-relative me-7 mb-3">
                 <a class="nav-link p-0" data-bs-toggle="tab"
@@ -193,19 +193,20 @@
         </ul>
     </div>
 </div>
+
 <div class="tab-content" id="myPatientTabContent">
     <div class="tab-pane fade show active" id="PatientOverview" role="tabpanel">
         <div class="card mb-5 mb-xl-10">
             <div>
                 <div class="card-body  border-top p-9">
                     <div class="row">
-                        <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
+                        {{-- <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
                             <label for="name"
                                    class="pb-2 fs-5 text-gray-600">{{ __('messages.user.phone') }}</label>
                             <p>
                                 <span class="fs-5 text-gray-800">{{ !empty($data->patientUser->phone) ? $data->patientUser->phone :__('messages.common.n/a') }}</span>
                             </p>
-                        </div>
+                        </div> --}}
                         <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
                             <label for="name"
                                    class="pb-2 fs-5 text-gray-600">{{ __('messages.user.gender') }}</label>
@@ -224,6 +225,27 @@
                                     <span
                                             class="fs-5 text-gray-800">{{ __('messages.common.n/a')}}</span>
                                 @endif
+                            </p>
+                        </div>
+                        <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
+                            <label for="name"
+                                   class="pb-2 fs-5 text-gray-600">Height</label>
+                            <p>
+                                    <span class="fs-5 text-gray-800">{{ $data->height ? $data->height : __('messages.common.n/a') }}</span>
+                            </p>
+                        </div>
+                        <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
+                            <label for="name"
+                                   class="pb-2 fs-5 text-gray-600">Weight</label>
+                            <p>
+                                    <span class="fs-5 text-gray-800">{{ $data->weight ? $data->weight : __('messages.common.n/a') }}</span>
+                            </p>
+                        </div>
+                        <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
+                            <label for="name"
+                                   class="pb-2 fs-5 text-gray-600">Blood Pressure</label>
+                            <p>
+                                    <span class="fs-5 text-gray-800">{{ $data->blood_pressure ? $data->blood_pressure : __('messages.common.n/a') }}</span>
                             </p>
                         </div>
                         <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">

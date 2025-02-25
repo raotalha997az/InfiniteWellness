@@ -90,10 +90,13 @@ class PrescriptionTable extends LivewireTableComponent
         /** @var Prescription $query */
         if (!getLoggedinDoctor()) {
             $query = Prescription::query()->select('prescriptions.*')->with('patient', 'doctor');
-        } else {
+        } else if($this->patientId != null) {
             $doctorId = Doctor::where('doctor_user_id', getLoggedInUserId())->first();
             $query = Prescription::query()->select('prescriptions.*')->with('patient', 'doctor')->where('doctor_id',$doctorId->id)->where('patient_id',$this->patientId);
             // $query = Prescription::query()->select('prescriptions.*')->with('patient', 'doctor');
+        }else{
+            $doctorId = Doctor::where('doctor_user_id', getLoggedInUserId())->first();
+            $query = Prescription::query()->select('prescriptions.*')->with('patient', 'doctor')->where('doctor_id',$doctorId->id);
         }
         $query->when(isset($this->statusFilter), function (Builder $q) {
             if ($this->statusFilter == 2) {
