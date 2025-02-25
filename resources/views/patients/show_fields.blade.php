@@ -33,8 +33,8 @@
                     <div class="row justify-content-center">
                         <div class="col-md-4 col-sm-6 col-12 mb-6 mb-md-0">
                             <div class="border rounded-10 p-5 h-100">
-                                <h2 class="text-primary mb-3">{{!empty($data->cases) ? $data->cases->count() : 0}}</h2>
-                                <h3 class="fs-5 fw-light text-gray-600 mb-0">{{__('messages.patient.total_cases')}}</h3>
+                                <h2 class="text-primary mb-3">{{!empty($data->cases) ? $data->appointments->where('is_completed', 4)->count() : 0}}</h2>
+                                <h3 class="fs-5 fw-light text-gray-600 mb-0">Total Visits</h3>
                             </div>
                         </div>
                         {{-- <div class="col-md-4 col-sm-6 col-12 mb-6 mb-md-0">
@@ -148,11 +148,15 @@
             </li>
             {{-- <li class="nav-item position-relative me-7 mb-3">
                 <a class="nav-link p-0"
-                   href="{{ url('/prescriptions/create') }}">Prescriptions</a>
+                href="{{ url('/prescriptions/create') }}">Prescriptions</a>
             </li> --}}
             <li class="nav-item position-relative me-7 mb-3">
                 <a class="nav-link p-0"
                 href="{{route('dietitan.show', $data->id)}}">Dietitian Assessment</a>
+            </li>
+            <li class="nav-item position-relative me-7 mb-3">
+                <a class="nav-link p-0" data-bs-toggle="tab"
+                   href="#opdTable">OPD</a>
             </li>
 
             @endrole
@@ -465,6 +469,17 @@
             <div id="cardContainer"></div>
         </div>
     </div>
+    <div class="tab-pane fade" id="opdTable" role="tabpanel">
+        <div class="card mb-5 mb-xl-10">
+            <div>
+                <div class="card-body  border-top p-9">
+                    <div class="row" >
+                        <livewire:opd-patient-table patientId="{{ $data->id }}"/>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
     <div class="tab-pane fade" id="nutritionassessment" role="tabpanel">
 
         <div class="card mb-5 mb-xl-10">

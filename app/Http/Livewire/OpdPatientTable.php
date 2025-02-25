@@ -19,6 +19,12 @@ class OpdPatientTable extends LivewireTableComponent
     public $showFilterOnHeader = false;
 
     protected $listeners = ['refresh' => '$refresh', 'resetPage'];
+    public $patientId;
+
+    public function mount($patientId = null) 
+    {
+        $this->patientId = $patientId;
+    }
 
     public function resetPage($pageName = 'page')
     {
@@ -113,12 +119,22 @@ class OpdPatientTable extends LivewireTableComponent
         $role = Auth::user()->roles()->first();
 
         if ($role->name == "Doctor") {
-            $query = OpdPatientDepartment::query()
+            if($this->patientId != null){
+                $query = OpdPatientDepartment::query()
+                ->select('opd_patient_departments.*')
+                ->where('patient_id', $this->patientId)
+                ->where('doctor_user_id', Auth::user()->id)
+                ->whereHas('patient')
+                ->whereHas('doctor')
+                ->with(['patient.patientUser', 'doctor.doctorUser', 'patient.opd']);
+            }else{
+                $query = OpdPatientDepartment::query()
                 ->select('opd_patient_departments.*')
                 ->where('doctor_user_id', Auth::user()->id)
                 ->whereHas('patient')
                 ->whereHas('doctor')
                 ->with(['patient.patientUser', 'doctor.doctorUser', 'patient.opd']);
+            }
         } else if ($role->name == "Admin") {
             $query = OpdPatientDepartment::query()
                 ->select('opd_patient_departments.*')
