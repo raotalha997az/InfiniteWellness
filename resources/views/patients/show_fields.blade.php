@@ -85,10 +85,10 @@
                 <a class="nav-link p-0" data-bs-toggle="tab"
                    href="#showPatientAdvancedPayments">{{ __('messages.advanced_payments') }}</a>
             </li>
-            <li class="nav-item position-relative me-7 mb-3">
+            {{-- <li class="nav-item position-relative me-7 mb-3">
                 <a class="nav-link p-0" data-bs-toggle="tab"
                    href="#showPatientDocument">{{ __('messages.documents') }}</a>
-            </li>
+            </li> --}}
             {{-- <li class="nav-item position-relative me-7 mb-3">
                 <a class="nav-link p-0" data-bs-toggle="tab"
                    href="#showPatientVaccinated">{{ __('messages.vaccinations') }}</a>
@@ -130,10 +130,10 @@
                    href="#showPatientAppointments">{{ __('messages.appointments') }}</a>
             </li>
 
-            <li class="nav-item position-relative me-7 mb-3">
+            {{-- <li class="nav-item position-relative me-7 mb-3">
                 <a class="nav-link p-0" data-bs-toggle="tab"
                    href="#showPatientDocument">{{ __('messages.documents') }}</a>
-            </li>
+            </li> --}}
             {{-- <li class="nav-item position-relative me-7 mb-3">
                 <a class="nav-link p-0" data-bs-toggle="tab"
                    href="#showPatientVaccinated">{{ __('messages.vaccinations') }}</a>
@@ -331,7 +331,7 @@
                                     </tr>
                                 @empty
                                     <tr class="text-center">
-                                        <td colspan="5" class="text-danger">No Medication Administration stock</td>
+                                        <td colspan="4">No record found</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -348,36 +348,8 @@
             <div>
                 <div class="card-body  border-top p-9">
                     <div class="row">
-                        {{-- <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Form No.</th>
-                                    <th>Paitent MR No.</th>
-                                    <th>Patient Name</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($MedicattionAdministration as $m)
-                                    <tr>
-                                        <td>{{ $m->id }}</td>
-                                        <td>{{ $m->mr_number }}</td>
-                                        <td>{{ $m->patient->user->first_name }} {{ $m->patient->user->last_name }}</td>
-                                        <td class="d-flex justify-content-center gap-5">
-                                            <a href="/medication-administration/{{$m->id}}">
-                                                <i class="fa fa-eye"></i>
-                                            </a>
-                                        </td>
-        
-                                    </tr>
-                                @empty
-                                    <tr class="text-center">
-                                        <td colspan="5" class="text-danger">No Medication Administration stock</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table> --}}
-                        <livewire:prescription-table/>
+                        {{-- <livewire:prescription-table/> --}}
+                        <livewire:prescription-table patientId="{{ $data->id }}" />
 
                     </div>
                 </div>
@@ -403,9 +375,9 @@
     <div class="tab-pane fade" id="showPatientAdvancedPayments" role="tabpanel">
         <livewire:patient-advance-payment-detail-table patient-id="{{ $data->id }}"/>
     </div>
-    <div class="tab-pane fade" id="showPatientDocument" role="tabpanel">
+    {{-- <div class="tab-pane fade" id="showPatientDocument" role="tabpanel">
         <livewire:patient-document-table patient-id="{{ $data->id }}"/>
-    </div>
+    </div> --}}
     {{-- <div class="tab-pane fade" id="showPatientVaccinated" role="tabpanel">
         <livewire:patient-vaccination-detail-table patient-id="{{ $data->id }}"/>
     </div> --}}

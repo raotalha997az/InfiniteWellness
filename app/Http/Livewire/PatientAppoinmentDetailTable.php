@@ -6,6 +6,7 @@ use App\Models\Appointment;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Rappasoft\LaravelLivewireTables\Views\Column;
+use App\Models\Doctor;
 
 class PatientAppoinmentDetailTable extends LivewireTableComponent
 {
@@ -61,7 +62,13 @@ class PatientAppoinmentDetailTable extends LivewireTableComponent
 
     public function builder(): Builder
     {
-        $query = Appointment::with('department')->select('appointments.*')->where('patient_id', $this->patientId);
+        $user = Auth::user();
+        if($user->hasRole('Doctor')){
+            $doctor = Doctor::where('doctor_user_id',$user->id)->first();
+            $query = Appointment::with('department')->select('appointments.*')->where('patient_id', $this->patientId)->where('doctor_id',$doctor->id);
+        }else{
+            $query = Appointment::with('department')->select('appointments.*')->where('patient_id', $this->patientId);
+        }
 
         return $query;
     }

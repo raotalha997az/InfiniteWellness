@@ -21,6 +21,14 @@ class PrescriptionTable extends LivewireTableComponent
 
     protected $listeners = ['refresh' => '$refresh', 'changeFilter', 'resetPage'];
 
+    public $patientId;
+
+    public function mount($patientId = null) 
+    {
+        $this->patientId = $patientId;
+    }
+
+
     public function resetPage($pageName = 'page')
     {
         $rowsPropertyData = $this->getRows()->toArray();
@@ -80,12 +88,11 @@ class PrescriptionTable extends LivewireTableComponent
     public function builder(): Builder
     {
         /** @var Prescription $query */
-        if (! getLoggedinDoctor()) {
+        if (!getLoggedinDoctor()) {
             $query = Prescription::query()->select('prescriptions.*')->with('patient', 'doctor');
         } else {
             $doctorId = Doctor::where('doctor_user_id', getLoggedInUserId())->first();
-            $query = Prescription::query()->select('prescriptions.*')->with('patient', 'doctor')->where('doctor_id',
-                $doctorId->id);
+            $query = Prescription::query()->select('prescriptions.*')->with('patient', 'doctor')->where('doctor_id',$doctorId->id)->where('patient_id',$this->patientId);
             // $query = Prescription::query()->select('prescriptions.*')->with('patient', 'doctor');
         }
         $query->when(isset($this->statusFilter), function (Builder $q) {

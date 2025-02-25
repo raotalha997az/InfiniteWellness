@@ -190,7 +190,7 @@ class PatientController extends AppBaseController
 
             $nursingData = NursingForm::where('patient_mr_number', $patientMR)->with(['patient.user', 'Allergies', 'Medication'])->first();
             $nursingDataAll = NursingForm::where('patient_mr_number', $patientMR)->with(['patient.user', 'Allergies', 'Medication'])->get();
-            $MedicattionAdministration =  $medication = MedicattionAdministration::orderBy('id', 'desc')->get();
+            $MedicattionAdministration = MedicattionAdministration::where('mr_number', $patientMR)->orderBy('id', 'desc')->get();
             return view('patients.show', ['ignore_minify' => true], compact('MedicattionAdministration','nursingDataAll','data', 'patients', 'vaccinations', 'vaccinationPatients', 'forms', 'currentForm', 'dietdata', 'nursingData'));
         }
     }
