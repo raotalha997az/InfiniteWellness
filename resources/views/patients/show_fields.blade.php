@@ -158,6 +158,10 @@
                 <a class="nav-link p-0" data-bs-toggle="tab"
                    href="#opdTable">OPD</a>
             </li>
+            <li class="nav-item position-relative me-7 mb-3">
+                <a class="nav-link p-0" data-bs-toggle="tab"
+                   href="#dentalOpdTable">Dental OPD</a>
+            </li>
 
             @endrole
 
@@ -475,6 +479,17 @@
                 <div class="card-body  border-top p-9">
                     <div class="row" >
                         <livewire:opd-patient-table patientId="{{ $data->id }}"/>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    <div class="tab-pane fade" id="dentalOpdTable" role="tabpanel">
+        <div class="card mb-5 mb-xl-10">
+            <div>
+                <div class="card-body  border-top p-9">
+                    <div class="row" >
+                        <livewire:dental-opd-patient-table patientId="{{ $data->id }}"/>
                     </div>
                 </div>
                 </div>

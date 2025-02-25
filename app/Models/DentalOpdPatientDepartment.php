@@ -14,6 +14,7 @@ class DentalOpdPatientDepartment extends Model
 
 
     const PAYMENT_MODES = [
+        0 => 'N/A',
         1 => 'Cash',
         2 => 'Cheque',
         3 => 'Card',

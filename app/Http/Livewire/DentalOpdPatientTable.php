@@ -22,6 +22,13 @@ class DentalOpdPatientTable extends LivewireTableComponent
 
     protected $listeners = ['refresh' => '$refresh', 'resetPage'];
 
+    public $patientId;
+
+    public function mount($patientId = null) 
+    {
+        $this->patientId = $patientId;
+    }
+
     public function resetPage($pageName = 'page')
     {
         $rowsPropertyData = $this->getRows()->toArray();
@@ -133,7 +140,11 @@ class DentalOpdPatientTable extends LivewireTableComponent
         if($role->name == "Admin"){
             $query = DentalOpdPatientDepartment::whereHas('patient')->with(['patient.patientUser', 'patient.opd'])->select('dental_opd_patient_departments.*')->orderBy('id', 'desc');
         }else if($role->name == "Doctor"){
-            $query = DentalOpdPatientDepartment::whereHas('patient')->with(['patient.patientUser', 'patient.opd'])->select('dental_opd_patient_departments.*')->where('doctor_id', $doctor->id)->orderBy('id', 'desc');
+            if($this->patientId != null){
+                $query = DentalOpdPatientDepartment::whereHas('patient')->with(['patient.patientUser', 'patient.opd'])->select('dental_opd_patient_departments.*')->where('doctor_id', $doctor->id)->where('patient_id', $this->patientId)->orderBy('id', 'desc');
+            }else{
+                $query = DentalOpdPatientDepartment::whereHas('patient')->with(['patient.patientUser', 'patient.opd'])->select('dental_opd_patient_departments.*')->where('doctor_id', $doctor->id)->orderBy('id', 'desc');
+            }
         }
         else if($role->name == "CSR"){
             $query = DentalOpdPatientDepartment::whereHas('patient')->with(['patient.patientUser', 'patient.opd'])->select('dental_opd_patient_departments.*')->orderBy('id', 'desc');

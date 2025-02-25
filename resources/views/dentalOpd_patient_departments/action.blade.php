@@ -8,6 +8,7 @@
     <i class="fa-solid fa-trash"></i>
 </a> --}}
 
+@if(auth()->user()->hasRole('Admin'))
 <form action="/dentalOpds/{{$row->id}}/delete" method="post" class="d-inline">
     @csrf
     <input type="hidden" name="id" value="{{$row->id}}">
@@ -23,3 +24,4 @@
     <i class="fa-solid fa-pen-to-square"></i>
 </a>
 
+@endif
