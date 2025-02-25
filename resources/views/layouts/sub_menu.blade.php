@@ -1,4 +1,14 @@
 @php($modules = App\Models\Module::cacheFor(now()->addDays())->toBase()->get())
+@role('CSR')
+@module('Schedules',$modules)
+<li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('doctors*','doctor-departments*','schedules*','prescriptions*')) ? 'd-none' : '' }}">
+    <a class="nav-link p-0 {{ Request::is('schedules*') ? 'active' : '' }}"
+       href="{{ route('schedules.index') }}">
+        {{ __('messages.schedules') }}
+    </a>
+</li>
+@endmodule
+@endrole
 @role('Admin')
     <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('dashboard*')) ? 'd-none' : '' }}">
         <a class="nav-link p-0 {{ Request::is('dashboard*') ? 'active' : ''  }}"

@@ -10,6 +10,16 @@
         </li>
     @endmodule
 
+    {{-- SMS --}}
+    @module('SMS', $modules)
+        <li class="nav-item {{ Request::is('sms*') ? 'active' : '' }}">
+            <a class="py-3 nav-link d-flex align-items-center" href="{{ route('sms.index') }}">
+                <span class="aside-menu-icon pe-3"><i class="fas fa fa-sms"></i></span>
+                <span class="aside-menu-title">{{ __('messages.sms.sms') }}</span>
+            </a>
+        </li>
+    @endmodule
+
 {{-- Billing --}}
 <?php
     $billingMGT = getMenuLinks(\App\Models\User::MAIN_BILLING_MGT);
@@ -926,12 +936,13 @@
     @endrole
 
        {{-- Notes For All users --}}
-   <li class="nav-item  {{ Request::is('notes*') ? 'active' : '' }}">
-    <a class="py-3 nav-link d-flex align-items-center" href="{{ route('notes.index') }}">
-        <span class="aside-menu-icon pe-3"><i class="fa fa-user-md"></i></span>
-        <span class="aside-menu-title">{{ __('messages.message.notes') }}</span>
-    </a>
-</li>
+    <li class="nav-item  {{ Request::is('notes*') ? 'active' : '' }}">
+            <a class="py-3 nav-link d-flex align-items-center" href="{{ route('notes.index') }}">
+                <span class="aside-menu-icon pe-3"><i class="fa fa-user-md"></i></span>
+                <span class="aside-menu-title">{{ __('messages.message.notes') }}</span>
+            </a>
+    </li>
+
     @role('Receptionist')
         {{-- Appointments --}}
         @module('Appointments', $modules)

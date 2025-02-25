@@ -62,7 +62,7 @@
 {{-- Show "Complete" button only if status is 4 (Arrived) --}}
 @if ($row->is_completed == 4)
     <a wire:click="updateStatus({{ $row->id }}, 1)" data-bs-toggle="tooltip" data-placement="top"
-        data-bs-original-title="{{ __('messages.common.complete_appointment') }}" class="btn px-1 text-primary fs-3 pe-0">
+        data-bs-original-title="{{ __('messages.common.user_arrived') }}" class="btn px-1 text-primary fs-3 pe-0">
         <i class="fas fa-calendar-check"></i>
     </a>
 @endif
