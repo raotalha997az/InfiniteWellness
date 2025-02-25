@@ -6,6 +6,9 @@ use App\Models\Patient;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\WithPagination;
 use Rappasoft\LaravelLivewireTables\Views\Column;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Doctor;
+use App\Models\Appointment;
 
 class PatientTable extends LivewireTableComponent
 {
@@ -89,7 +92,16 @@ class PatientTable extends LivewireTableComponent
 
     public function builder(): Builder
     {
-        $query = Patient::whereHas('patientUser')->with('patientUser.media')->select('patients.*');
+        $user = Auth::user();
+        if($user->hasRole('Doctor')){
+            $doctor = Doctor::where('doctor_user_id',$user->id)->first();
+            $appointmentIds = Appointment::where('doctor_id', $doctor->id)->pluck('patient_id');
+            // $query = Patient::whereIn('id', $appointmentIds)->whereHas('patientUser')->with('patientUser.media')->select('patients.*');
+            $query = Patient::whereIn('patients.id', $appointmentIds)->whereHas('patientUser')->with('patientUser.media')->select('patients.*');
+        }else{
+            $query = Patient::whereHas('patientUser')->with('patientUser.media')->select('patients.*');
+        }
+
         $query->when(isset($this->statusFilter), function (Builder $q) {
             if ($this->statusFilter == 1) {
                 $q->where('status', Patient::ACTIVE);
