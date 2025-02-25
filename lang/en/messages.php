@@ -262,6 +262,7 @@ return [
         'previous' => 'Previous',
         'next' => 'Next',
         'ok' => 'Ok',
+        'user_arrived' => 'Arrived',
         'this_action_is_not_allowed_for_default_record' => 'This action is not allowed for default record.',
     ],
 
@@ -697,6 +698,7 @@ return [
     //appointments
     'appointment' => [
         'new_appointment' => 'New Appointment',
+        'status' => 'Status',
         'edit_appointment' => 'Edit Appointment',
         'appointment_details' => 'Appointment Details',
         'calendar_view' => 'Calendar View',

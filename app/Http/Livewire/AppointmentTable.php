@@ -62,6 +62,17 @@ class AppointmentTable extends LivewireTableComponent
         $this->setQueryStringStatus(false);
     }
 
+
+    public function updateStatus($id, $status)
+    {
+        $appointment = Appointment::find($id);
+        if ($appointment) {
+            $appointment->is_completed = $status;
+            $appointment->save();
+            $this->emit('refresh');
+        }
+    }
+
     public function columns(): array
     {
         return [
@@ -83,6 +94,10 @@ class AppointmentTable extends LivewireTableComponent
                 ->view('appointments.templates.columns.department')
                 ->searchable()
                 ->sortable(),
+                Column::make(__('messages.appointment.status'), 'department.title')
+                ->view('appointments.templates.columns.status')
+                ->searchable()
+                ->sortable(),
             Column::make(__('messages.case.patient'), 'patient_id')->hideIf(1),
             Column::make(__('messages.case.doctor'), 'doctor_id')->hideIf(1),
             Column::make(__('messages.appointment.date'), 'opd_date')
@@ -95,35 +110,73 @@ class AppointmentTable extends LivewireTableComponent
         ];
     }
 
+    // public function builder(): Builder
+    // {
+
+    //     /** @var Appointment $query */
+    //     if (! getLoggedinDoctor()) {
+    //         if (getLoggedinPatient()) {
+    //             $query = Appointment::query()->select('appointments.*')->with('patient', 'doctor', 'department');
+    //             $patient = Auth::user();
+    //             $query->whereHas('patient', function (Builder $query) use ($patient) {
+    //                 $query->where('user_id', '=', $patient->id);
+    //             });
+    //         } else {
+    //             $query = Appointment::query()->select('appointments.*')->with('patient', 'doctor', 'department');
+    //         }
+    //     } else {
+    //         $doctorId = Doctor::where('doctor_user_id', getLoggedInUserId())->first();
+    //         $query = Appointment::query()->select('appointments.*')->with('patient', 'doctor',
+    //             'department')->where('doctor_id', $doctorId->id);
+    //     }
+
+    //     $query->when(isset($this->statusFilter), function (Builder $q) {
+    //         if ($this->statusFilter == 2) {
+    //         } else {
+    //             $q->where('is_completed', $this->statusFilter);
+    //         }
+    //     });
+    //     $query->when(isset($this->startDate) && $this->endDate, function (Builder $q) {
+    //         $q->whereBetween('opd_date', [$this->startDate, $this->endDate]);
+    //     });
+
+    //     return $query;
+    // }
+
     public function builder(): Builder
-    {
-        /** @var Appointment $query */
-        if (! getLoggedinDoctor()) {
-            if (getLoggedinPatient()) {
-                $query = Appointment::query()->select('appointments.*')->with('patient', 'doctor', 'department');
-                $patient = Auth::user();
-                $query->whereHas('patient', function (Builder $query) use ($patient) {
-                    $query->where('user_id', '=', $patient->id);
-                });
-            } else {
-                $query = Appointment::query()->select('appointments.*')->with('patient', 'doctor', 'department');
-            }
+{
+    /** @var Appointment $query */
+    if (!getLoggedinDoctor()) {
+        if (getLoggedinPatient()) {
+            $query = Appointment::query()->select('appointments.*')->with('patient', 'doctor', 'department');
+            $patient = Auth::user();
+            $query->whereHas('patient', function (Builder $query) use ($patient) {
+                $query->where('user_id', '=', $patient->id);
+            });
         } else {
-            $doctorId = Doctor::where('doctor_user_id', getLoggedInUserId())->first();
-            $query = Appointment::query()->select('appointments.*')->with('patient', 'doctor',
-                'department')->where('doctor_id', $doctorId->id);
+            $query = Appointment::query()->select('appointments.*')->with('patient', 'doctor', 'department');
         }
-
-        $query->when(isset($this->statusFilter), function (Builder $q) {
-            if ($this->statusFilter == 2) {
-            } else {
-                $q->where('is_completed', $this->statusFilter);
-            }
-        });
-        $query->when(isset($this->startDate) && $this->endDate, function (Builder $q) {
-            $q->whereBetween('opd_date', [$this->startDate, $this->endDate]);
-        });
-
-        return $query;
+    } else {
+        $doctorId = Doctor::where('doctor_user_id', getLoggedInUserId())->first();
+        $query = Appointment::query()->select('appointments.*')->with('patient', 'doctor',
+            'department')->where('doctor_id', $doctorId->id);
     }
+
+    // Handle status filter
+    $query->when(isset($this->statusFilter), function (Builder $q) {
+        if ($this->statusFilter == 2) {
+            // Show all appointments (no filter)
+        } else {
+            $q->where('is_completed', $this->statusFilter);
+        }
+    });
+
+    // Handle date filter
+    $query->when(isset($this->startDate) && $this->endDate, function (Builder $q) {
+        $q->whereBetween('opd_date', [$this->startDate, $this->endDate]);
+    });
+
+    return $query;
+}
+
 }

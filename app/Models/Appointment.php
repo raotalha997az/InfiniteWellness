@@ -13,6 +13,7 @@ class Appointment extends Model
         '0' => 'Pending',
         '1' => 'Completed',
         '3' => 'Cancelled',
+        '4' => 'Arrived'
     ];
     const SERVICE = [
         '1' =>    'Family Medicine Consultation',
@@ -21,7 +22,7 @@ class Appointment extends Model
         '4' =>  'I/M Injection',
         '5' =>  'Dietitian Consultation',
         '6' =>  'Functional Medicine Consultation',
-        '7' =>  'Others',      
+        '7' =>  'Others',
     ];
     const STATUS_PENDING = 0;
 
