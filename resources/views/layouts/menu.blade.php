@@ -720,17 +720,15 @@
 
 
 
-        {{-- @module('Doctors', $modules)
+        @module('Doctors', $modules)
             <li
-                class="nav-item  {{ Request::is('employee/doctor*', 'prescriptions*', 'schedules*', 'doctors*') ? 'active' : '' }}">
-                <a class="py-3 nav-link d-flex align-items-center" href="{{ url('employee/doctor') }}">
-                    <span class="aside-menu-icon pe-3"><i class="fa fa-user-md"></i></span>
-                    <span class="aside-menu-title">{{ __('messages.doctors') }}</span>
-                    <span class="d-none">{{ __('messages.schedules') }}</span>
-                    <span class="d-none">{{ __('messages.prescriptions') }}</span>
+                class="nav-item  {{ Request::is('prescriptions*') ? 'active' : '' }}">
+                <a class="py-3 nav-link d-flex align-items-center" href="{{ url('prescriptions') }}">
+                    <span class="aside-menu-icon pe-3"><i class="fas fa-pills"></i></span>
+                    <span class="aside-menu-title">{{ __('messages.prescriptions') }}</span>
                 </a>
             </li>
-        @endmodule --}}
+        @endmodule
 
         {{-- @module('Documents', $modules)
             <li class="nav-item  {{ Request::is('documents*') ? 'active' : '' }}">
@@ -828,14 +826,14 @@
         @endif
 
         {{-- SMS --}}
-        {{-- @module('SMS', $modules)
+        @module('SMS', $modules)
             <li class="nav-item {{ Request::is('sms*') ? 'active' : '' }}">
                 <a class="py-3 nav-link d-flex align-items-center" href="{{ route('sms.index') }}">
                     <span class="aside-menu-icon pe-3"><i class="fas fa fa-sms"></i></span>
                     <span class="aside-menu-title">{{ __('messages.sms.sms') }}</span>
                 </a>
             </li>
-        @endmodule --}}
+        @endmodule
     @endrole
 
     @role('Case Manager')

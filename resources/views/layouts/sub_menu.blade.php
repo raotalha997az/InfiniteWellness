@@ -357,12 +357,12 @@
 </li>
 @endmodule --}}
 @module('Prescriptions',$modules)
-<li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('patients*','doctor-departments*','schedules*','prescriptions*')) ? 'd-none' : '' }}">
+{{-- <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('patients*','doctor-departments*','schedules*','prescriptions*')) ? 'd-none' : '' }}">
     <a class="nav-link p-0 {{ Request::is('prescriptions*') ? 'active' : '' }}"
        href="{{ route('prescriptions.index') }}">
         {{ __('messages.prescriptions') }}
     </a>
-</li>
+</li> --}}
 @endmodule
 @endrole
 @role('Admin|Receptionist|Doctor|Case Manager')
