@@ -65,6 +65,7 @@
                     {{ __('messages.overview') }}
                 </button>
             </li>
+            @role('Admin')
             <li class="nav-item position-relative me-7 mb-3" role="presentation">
                 <button class="nav-link p-0" id="opdVisitTab" data-bs-toggle="tab" data-bs-target="#opdVisits"
                         type="button" role="tab" aria-controls="cases" aria-selected="false">
@@ -77,11 +78,12 @@
                     {{ __('messages.ipd_diagnosis') }}
                 </button>
             </li>
+            @endif
             <li class="nav-item position-relative me-7 mb-3" role="presentation">
                 <button class="nav-link p-0" id="opdPatientsTimelinesTab" data-bs-toggle="tab"
                         data-bs-target="#opdPatientsTimelines"
                         type="button" role="tab" aria-controls="patients" aria-selected="false">
-                    {{ __('messages.ipd_timelines') }}
+                    Notes
                 </button>
             </li>
         </ul>
