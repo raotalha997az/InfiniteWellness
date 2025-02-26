@@ -1,22 +1,20 @@
 @php($modules = App\Models\Module::cacheFor(now()->addDays())->toBase()->get())
-    {{-- Functional Medicine --}}
-    @role('Nurse|Doctor|Dietitian')
-    <li class="nav-item  {{ Request::is('functional-medicine*') ? 'active' : '' }}">
-        <a class="py-3 nav-link d-flex align-items-center" href="{{ route('functional-medicine.index') }}">
-            <span class="aside-menu-icon pe-3"><i class="fa fa-medkit"></i></span>
-            <span class="aside-menu-title">Functional Medicine</span>
-        </a>
-    </li>
-    {{-- Fast Medical Record --}}
-    @role('Nurse|Doctor|Dietitian')
-    <li class="nav-item  {{ Request::is('fast-medical-record*') ? 'active' : '' }}">
-        <a class="py-3 nav-link d-flex align-items-center" href="{{ route('fast-medical-record.index') }}">
-            <span class="aside-menu-icon pe-3"><i class="fa fa-user-cog"></i></span>
-            <span class="aside-menu-title">Fast Medical Record</span>
-        </a>
-    </li>
-    @endrole
-    @endrole
+   {{-- Functional Medicine --}}
+   @role('Nurse|Doctor|Dietitian')
+   <li class="nav-item  {{ Request::is('functional-medicine*') ? 'active' : '' }}">
+       <a class="py-3 nav-link d-flex align-items-center" href="{{ route('functional-medicine.index') }}">
+           <span class="aside-menu-icon pe-3"><i class="fa fa-medkit"></i></span>
+           <span class="aside-menu-title">Functional Medicine</span>
+       </a>
+   </li>
+   {{-- Fast Medical Record --}}
+   <li class="nav-item  {{ Request::is('fast-medical-record*') ? 'active' : '' }}">
+       <a class="py-3 nav-link d-flex align-items-center" href="{{ route('fast-medical-record.index') }}">
+           <span class="aside-menu-icon pe-3"><i class="fa fa-user-cog"></i></span>
+           <span class="aside-menu-title">Fast Medical Record</span>
+       </a>
+   </li>
+   @endrole
     {{-- For CSR Role --}}
     @if (auth()->user()->hasRole('CSR'))
     @module('Appointments', $modules)
