@@ -8,7 +8,7 @@
         @include('flash::message')
         {{-- @role('Admin|Nurse|Receptionist') --}}
         <div class="mb-5 col-md-12 text-end">
-            <a href="{{ route('notes.create') }}" class="btn btn-primary btn-sm float-end">Add Note</a>
+            <a href="{{ route('notes.create') }}" class="cutomsmsButton">Add Note</a>
         </div>
         {{-- @endrole --}}
         <div class="table-responsive">
