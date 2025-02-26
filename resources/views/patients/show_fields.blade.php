@@ -154,14 +154,24 @@
                 <a class="nav-link p-0"
                 href="{{route('dietitan.show', $data->id)}}">Dietitian Assessment</a>
             </li>
+            @php
+                $user = app\Models\Doctor::with('department')->where('doctor_user_id', auth()->user()->id)->first();
+                $departments = $user->department->title;
+            @endphp
+
+
+            @if($departments != "Dental")
             <li class="nav-item position-relative me-7 mb-3">
                 <a class="nav-link p-0" data-bs-toggle="tab"
                    href="#opdTable">OPD</a>
             </li>
+            @endif
+            @if($departments == "Dental")
             <li class="nav-item position-relative me-7 mb-3">
                 <a class="nav-link p-0" data-bs-toggle="tab"
                    href="#dentalOpdTable">Dental OPD</a>
             </li>
+            @endif
 
             @endrole
 
