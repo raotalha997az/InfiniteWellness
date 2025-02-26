@@ -1700,8 +1700,11 @@ require __DIR__ . '/upgrade.php';
 Route::middleware('role:Admin|Patient|Doctor|Receptionist|Nurse|Accountant|Lab Technician|Pharmacist|PharmacistAdmin|Case Manager|CSR')->group(function () {
     Route::prefix('notes')->name('notes.')->group(function () {
         Route::get('index', [NoteController::class, 'index'])->name('index');
+        Route::get('create', [NoteController::class, 'create'])->name('create');
         Route::post('store', [NoteController::class, 'store'])->name('store');
-        Route::post('create', [NoteController::class, 'create'])->name('create');
+        Route::get('edit/{id}', [NoteController::class, 'edit'])->name('edit');
+        Route::put('update/{id}', [NoteController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [NoteController::class, 'destroy'])->name('destroy');
     });
 });
 
