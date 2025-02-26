@@ -4,19 +4,19 @@
         .form-logo img {
             height: 5rem;
         }
-    
+
         .forem {
             width: 100%;
         }
-    
+
         .input_box label {
             text-wrap: nowrap;
         }
-    
+
         .input_box {
             padding: 1rem 0;
         }
-    
+
         .input_box input,
         .input_box textarea {
             border: 0;
@@ -25,31 +25,17 @@
             padding: 0rem 1rem;
             border-bottom: 1px #000 solid;
         }
-    
+
         @media print {
-    
-            /* Hide everything except the specific section */
-            body * {
-                visibility: hidden;
-            }
-    
-            section.container,
-            section.container * {
-                visibility: visible;
-            }
-    
-            section.container {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-            }
-    
-            /* Hide the SAVE button inside the form when printing */
-            form .btn-primary {
+            .print{
                 display: none;
             }
         }
+        /* @page {
+            size: A4;
+            margin: 0;
+            background: true;
+        } */
     </style>
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
@@ -366,16 +352,16 @@
 
                     @foreach ($prescription->getMedicine as $medicine)
                         <tr>
-                            <td class="py-4 border-bottom-0">{{ $medicine->medicine->name }}</td>
+                            <td class="py-4 border-bottom-0">{{ $medicine->medicine->name ?? ''}}</td>
                             <td class="py-4 border-bottom-0">
-                                {{ $medicine->dosage }}
+                                {{ $medicine->dosage ?? ''}}
                                 @if ($medicine->time == 0)
                                     ({{ __('messages.prescription.after_meal') }})
                                 @else
                                     ({{ __('messages.prescription.before_meal') }})
                                 @endif
                             </td>
-                            <td class="py-4 border-bottom-0">{{ $medicine->day }} Day</td>
+                            <td class="py-4 border-bottom-0">{{ $medicine->day  ?? ''}} Day</td>
                             <td class="py-4 border-bottom-0">{{ $medicine->route ? $medicine->route  : ''}} Route</td>
                         </tr>
                     @endforeach
@@ -408,14 +394,10 @@
         </div>
     </div>
     {{-- @endforeach --}}
-    <style media="print">
-        @page {
-            size: A4;
-            margin: 0;
-            background: true;
-        }
-    </style>
-    <script>
-        window.print();
-    </script>
+
 </body>
+
+<script>
+    window.print();
+</script>
+
