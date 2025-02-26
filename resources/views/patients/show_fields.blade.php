@@ -189,10 +189,6 @@
                     <a class="nav-link p-0" data-bs-toggle="tab"
                        href="#addonForms">Addon Forms</a>
                 </li>
-                <li class="nav-item position-relative me-7 mb-3">
-                    <a class="nav-link p-0"
-                       href="{{ url('/prescriptions/create') }}">Prescriptions</a>
-                </li>
             @endrole
             @role('Nurse')
             <li class="nav-item position-relative me-7 mb-3">
