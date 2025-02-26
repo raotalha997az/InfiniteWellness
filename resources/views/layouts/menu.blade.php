@@ -1,13 +1,4 @@
 @php($modules = App\Models\Module::cacheFor(now()->addDays())->toBase()->get())
-    {{-- Nursing Form  --}}
-    @role('Nurse|Doctor|Dietitian')
-    <li class="nav-item  {{ Request::is('nursing-form*') ? 'active' : '' }}">
-        <a class="py-3 nav-link d-flex align-items-center" href="{{ route('nursing.index') }}">
-            <span class="aside-menu-icon pe-3"><i class="fa fa-user-nurse"></i></span>
-            <span class="aside-menu-title">Nursing Form </span>
-        </a>
-    </li>
-    @endrole
     {{-- Functional Medicine --}}
     @role('Nurse|Doctor|Dietitian')
     <li class="nav-item  {{ Request::is('functional-medicine*') ? 'active' : '' }}">
