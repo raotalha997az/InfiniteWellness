@@ -35,13 +35,15 @@
 @section('scripts')
 <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(function() {
+        
+        
         CKEDITOR.replace('note');
-
+    
         CKEDITOR.on('instanceReady', function() {
             var submitBtn = document.getElementById('submit');
             var noteEditor = CKEDITOR.instances.note;
-
+    
             function enableSubmitButton() {
                 if (noteEditor.getData().trim()) {
                     submitBtn.disabled = false;
@@ -49,11 +51,13 @@
                     submitBtn.disabled = true;
                 }
             }
-
+    
             noteEditor.on('change', enableSubmitButton);
             enableSubmitButton(); // Run on page load
-        });
-    });
+        }
+    );
+    }, 1000);
+    
 </script>
 
 @endsection

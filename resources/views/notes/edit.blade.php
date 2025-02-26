@@ -35,7 +35,8 @@
 @section('scripts')
 <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+      setTimeout(function() {
+
         CKEDITOR.replace('note');
 
         CKEDITOR.on('instanceReady', function() {
@@ -43,7 +44,10 @@
             var submitBtn = document.querySelector('button[type="submit"]');
 
             // Set CKEditor content dynamically
-            noteEditor.setData(@json($note->notes));
+            setTimeout(function() {
+                noteEditor.setData(@json($note->notes));
+            },1000);
+            
 
             function enableSubmitButton() {
                 submitBtn.disabled = !noteEditor.getData().trim();
@@ -52,6 +56,8 @@
             noteEditor.on('change', enableSubmitButton);
             enableSubmitButton(); // Check on page load
         });
-    });
+    
+
+}, 1000);
 </script>
 @endsection
