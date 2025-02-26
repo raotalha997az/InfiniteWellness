@@ -1,14 +1,41 @@
 @php($modules = App\Models\Module::cacheFor(now()->addDays())->toBase()->get())
-{{-- For CSR Role --}}
-@if (auth()->user()->hasRole('CSR'))
-@module('Appointments', $modules)
-        <li class="nav-item {{ Request::is('appointment*') ? 'active' : '' }}">
-            <a class="py-3 nav-link d-flex align-items-center" href="{{ route('appointments.index') }}">
-                <span class="aside-menu-icon pe-3"><i class="fas fa-calendar-check"></i></span>
-                <span class="aside-menu-title">{{ __('messages.appointments') }}</span>
-            </a>
-        </li>
-    @endmodule
+    {{-- Nursing Form  --}}
+    @role('Nurse|Doctor|Dietitian')
+    <li class="nav-item  {{ Request::is('nursing-form*') ? 'active' : '' }}">
+        <a class="py-3 nav-link d-flex align-items-center" href="{{ route('nursing.index') }}">
+            <span class="aside-menu-icon pe-3"><i class="fa fa-user-nurse"></i></span>
+            <span class="aside-menu-title">Nursing Form </span>
+        </a>
+    </li>
+    @endrole
+    {{-- Functional Medicine --}}
+    @role('Nurse|Doctor|Dietitian')
+    <li class="nav-item  {{ Request::is('functional-medicine*') ? 'active' : '' }}">
+        <a class="py-3 nav-link d-flex align-items-center" href="{{ route('functional-medicine.index') }}">
+            <span class="aside-menu-icon pe-3"><i class="fa fa-medkit"></i></span>
+            <span class="aside-menu-title">Functional Medicine</span>
+        </a>
+    </li>
+    {{-- Fast Medical Record --}}
+    @role('Nurse|Doctor|Dietitian')
+    <li class="nav-item  {{ Request::is('fast-medical-record*') ? 'active' : '' }}">
+        <a class="py-3 nav-link d-flex align-items-center" href="{{ route('fast-medical-record.index') }}">
+            <span class="aside-menu-icon pe-3"><i class="fa fa-user-cog"></i></span>
+            <span class="aside-menu-title">Fast Medical Record</span>
+        </a>
+    </li>
+    @endrole
+    @endrole
+    {{-- For CSR Role --}}
+    @if (auth()->user()->hasRole('CSR'))
+    @module('Appointments', $modules)
+            <li class="nav-item {{ Request::is('appointment*') ? 'active' : '' }}">
+                <a class="py-3 nav-link d-flex align-items-center" href="{{ route('appointments.index') }}">
+                    <span class="aside-menu-icon pe-3"><i class="fas fa-calendar-check"></i></span>
+                    <span class="aside-menu-title">{{ __('messages.appointments') }}</span>
+                </a>
+            </li>
+        @endmodule
 
     {{-- SMS --}}
     @module('SMS', $modules)
@@ -19,7 +46,6 @@
             </a>
         </li>
     @endmodule
-
 {{-- Billing --}}
 <?php
     $billingMGT = getMenuLinks(\App\Models\User::MAIN_BILLING_MGT);

@@ -24,7 +24,7 @@ class DentalOpdPatientTable extends LivewireTableComponent
 
     public $patientId;
 
-    public function mount($patientId = null) 
+    public function mount($patientId = null)
     {
         $this->patientId = $patientId;
     }
@@ -147,6 +147,12 @@ class DentalOpdPatientTable extends LivewireTableComponent
             }
         }
         else if($role->name == "CSR"){
+            $query = DentalOpdPatientDepartment::whereHas('patient')->with(['patient.patientUser', 'patient.opd'])->select('dental_opd_patient_departments.*')->orderBy('id', 'desc');
+        }
+        else if($role->name == "Doctor"){
+            $query = DentalOpdPatientDepartment::whereHas('patient')->with(['patient.patientUser', 'patient.opd'])->select('dental_opd_patient_departments.*')->orderBy('id', 'desc');
+        }
+        else if($role->name == "Nurse"){
             $query = DentalOpdPatientDepartment::whereHas('patient')->with(['patient.patientUser', 'patient.opd'])->select('dental_opd_patient_departments.*')->orderBy('id', 'desc');
         }
 

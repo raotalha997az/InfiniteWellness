@@ -21,7 +21,7 @@ class OpdPatientTable extends LivewireTableComponent
     protected $listeners = ['refresh' => '$refresh', 'resetPage'];
     public $patientId;
 
-    public function mount($patientId = null) 
+    public function mount($patientId = null)
     {
         $this->patientId = $patientId;
     }
@@ -142,6 +142,20 @@ class OpdPatientTable extends LivewireTableComponent
                 ->whereHas('doctor')
                 ->with(['patient.patientUser', 'doctor.doctorUser', 'patient.opd']);
         }
+        else if ($role->name == "Doctor") {
+            $query = OpdPatientDepartment::query()
+                ->select('opd_patient_departments.*')
+                ->whereHas('patient')
+                ->whereHas('doctor')
+                ->with(['patient.patientUser', 'doctor.doctorUser', 'patient.opd']);
+        }
+        else if ($role->name == "Nurse") {
+            $query = OpdPatientDepartment::query()
+                ->select('opd_patient_departments.*')
+                ->whereHas('patient')
+                ->whereHas('doctor')
+                ->with(['patient.patientUser', 'doctor.doctorUser', 'patient.opd']);
+        }
         else if ($role->name == "CSR") {
             $query = OpdPatientDepartment::query()
                 ->select('opd_patient_departments.*')
@@ -151,6 +165,6 @@ class OpdPatientTable extends LivewireTableComponent
         }
         return $query;
 
-        //        return Patient::whereHas('opd')->with(['opd','opd.doctor.user'])->withCount('opd');
+            //    return Patient::whereHas('opd')->with(['opd','opd.doctor.user'])->withCount('opd');
     }
 }
