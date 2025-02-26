@@ -11,7 +11,7 @@
         </button>
 
 
-        <a data-turbo="false" href="https://webapp.infinitewellnesspk.com/" data-toggle="tooltip" data-placement="right"
+        <a data-turbo="false" href="{{ env('APP_URL') }}" data-toggle="tooltip" data-placement="right"
            class="text-decoration-none sidebar-logo"
            title="{{ getAppName() }}">
             <img src="{{ asset('logo.png') }}"

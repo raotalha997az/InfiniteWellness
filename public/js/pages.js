@@ -10057,6 +10057,14 @@
                 $("#opdDiagnosisDeleteBtn").val()
               );
             }),
+            listenClick(".deleteDentalOpdDiagnosisBtn", function (e) {
+              var t = $(e.currentTarget).attr("data-id");
+              deleteItem(
+                $("#showOpdDiagnosisUrl").val() + "/" + t,
+                null,
+                $("#opdDiagnosisDeleteBtn").val()
+              );
+            }),
             listenSubmit("#addOpdDiagnosisForm", function (e) {
               e.preventDefault();
               var t = jQuery(this).find("#btnOpdDiagnosisSave");
@@ -10075,6 +10083,7 @@
                 renderOpdDiagnosisData(t);
               }
             }),
+
 
             (window.renderOpdDiagnosisData = function (e) {
               $.ajax({
@@ -13923,10 +13932,11 @@
                   return 200 == e.statusCode && !e.redirected;
                 })(t)
               ) {
-                const e = new Error(
-                  "Form responses must redirect to another location"
-                );
-                this.delegate.formSubmissionErrored(this, e);
+                // const e = new Error(
+                //   "Form responses must redirect to another location"
+                // );
+                // this.delegate.formSubmissionErrored(this, e);
+                window.location.reload();
               } else
                 (this.state = d.receiving),
                   (this.result = { success: !0, fetchResponse: t }),

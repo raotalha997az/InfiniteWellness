@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateOpdDiagnosisRequest;
-use App\Http\Requests\UpdateOpdDiagnosisRequest;
+use Response;
+use Exception;
+use DataTables;
 use App\Models\OpdDiagnosis;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Models\dentalOpdDiagnosis;
 use App\Queries\OpdDiagnosisDataTable;
 use App\Repositories\OpdDiagnosisRepository;
-use DataTables;
-use Exception;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Response;
+use App\Http\Requests\CreateOpdDiagnosisRequest;
+use App\Http\Requests\UpdateOpdDiagnosisRequest;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class OpdDiagnosisController extends AppBaseController
@@ -85,6 +86,14 @@ class OpdDiagnosisController extends AppBaseController
     {
         $this->opdDiagnosisRepository->deleteOpdDiagnosis($opdDiagnosis->id);
 
+        return $this->sendSuccess('OPD Diagnosis deleted successfully.');
+    }
+    public function dentalDestroy(dentalOpdDiagnosis $opdDiagnosis)
+    {
+        $dentalOpdDiagnosis = dentalOpdDiagnosis::where('id',$opdDiagnosis->id);
+        if($dentalOpdDiagnosis){
+            $dentalOpdDiagnosis->delete();
+        }
         return $this->sendSuccess('OPD Diagnosis deleted successfully.');
     }
 

@@ -1517,6 +1517,10 @@ Route::middleware(['auth', 'verified', 'xss', 'checkUserStatus'])->group(functio
             'opd-diagnosis/{opdDiagnosis}',
             [OpdDiagnosisController::class, 'destroy']
         )->name('opd.diagnosis.destroy');
+        Route::delete(
+            'dentalOpd-diagnosis/{opdDiagnosis?}',
+            [OpdDiagnosisController::class, 'dentalDestroy']
+        )->name('dentalOpd.diagnosis.destroy');
 
         // OPD Timelines routes
         Route::post('opd-timelines', [OpdTimelineController::class, 'store'])->name('opd.timelines.store');

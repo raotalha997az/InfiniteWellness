@@ -25,7 +25,7 @@
                 {{Form::hidden('opdPatientDepartmentId',$opdPatientDepartment->id,['id'=>'showOpdPatientDepartmentId'])}}
                 {{Form::hidden('defaultDocumentImageUrl',asset('assets/img/default_image.jpg'),['id'=>'showOpdDefaultDocumentImageUrl', 'class' => 'defaultDocumentImageUrl'])}}
                 {{Form::hidden('opdDiagnosisCreateUrl',route('opd.diagnosis.store'),['id'=>'showOpdDiagnosisCreateUrl'])}}
-                {{Form::hidden('opdDiagnosisUrl',route('opd.diagnosis.index'),['id'=>'showOpdDiagnosisUrl'])}}
+                {{Form::hidden('opdDiagnosisUrl',route('dentalOpd.diagnosis.destroy'),['id'=>'showOpdDiagnosisUrl'])}}
                 {{Form::hidden('downloadDiagnosisDocumentUrl',url('opd-diagnosis-download'),['id'=>'showOpdDownloadDiagnosisDocumentUrl'])}}
                 {{Form::hidden('opdTimelineCreateUrl',route('opd.timelines.store'),['id'=>'showOpdTimelineCreateUrl'])}}
                 {{Form::hidden('opdTimelinesUrl',route('opd.timelines.index'),['id'=>'showOpdTimelinesUrl'])}}
@@ -58,6 +58,35 @@
     </div>
 @endsection
 @section('scripts')
+<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+    // Initialize CKEditor
+    CKEDITOR.replace('opdDiagnosisDescription');
+
+    // Ensure CKEditor initializes properly when the modal opens
+    $('#add_opd_diagnoses_modal').on('shown.bs.modal', function () {
+        if (CKEDITOR.instances.opdDiagnosisDescription) {
+            CKEDITOR.instances.opdDiagnosisDescription.setData(''); // Clear editor content
+            CKEDITOR.instances.opdDiagnosisDescription.focus();
+        }
+    });
+
+    // Enable/Disable submit button based on CKEditor content
+    CKEDITOR.instances.opdDiagnosisDescription.on('change', function () {
+        var submitBtn = document.getElementById('btnOpdDiagnosisSave');
+        var editorData = CKEDITOR.instances.opdDiagnosisDescription.getData().trim();
+        submitBtn.disabled = !editorData;
+    });
+
+    // Ensure CKEditor data is sent with form submission
+    document.querySelector('#add_opd_diagnoses_modal form').addEventListener('submit', function () {
+        document.getElementById('opdDiagnosisDescription').value = CKEDITOR.instances.opdDiagnosisDescription.getData();
+    });
+});
+
+
+    </script>
     {{-- assets/js/opd_tab_active/opd_tab_active.js--}}
     {{-- assets/js/opd_patients/visits.js --}}
     {{-- assets/js/opd_diagnosis/opd_diagnosis.js--}}
