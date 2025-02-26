@@ -33,7 +33,7 @@
                     <div class="row justify-content-center">
                         <div class="col-md-4 col-sm-6 col-12 mb-6 mb-md-0">
                             <div class="border rounded-10 p-5 h-100">
-                                <h2 class="text-primary mb-3">{{!empty($data->cases) ? $data->appointments->where('is_completed', 4)->count() : 0}}</h2>
+                                <h2 class="text-primary mb-3">{{!empty($data->appointments) ? $data->appointments->count() : 0}}</h2>
                                 <h3 class="fs-5 fw-light text-gray-600 mb-0">Total Visits</h3>
                             </div>
                         </div>
@@ -112,6 +112,24 @@
                 <a class="nav-link active p-0" data-bs-toggle="tab"
                    href="#PatientOverview">{{ __('messages.overview') }}</a>
             </li>
+            @php
+            $user = app\Models\Doctor::with('department')->where('doctor_user_id', auth()->user()->id)->first();
+            $departments = $user->department->title;
+        @endphp
+
+
+        @if($departments != "Dental")
+        <li class="nav-item position-relative me-7 mb-3">
+            <a class="nav-link p-0" data-bs-toggle="tab"
+               href="#opdTable">OPD</a>
+        </li>
+        @endif
+        @if($departments == "Dental")
+        <li class="nav-item position-relative me-7 mb-3">
+            <a class="nav-link p-0" data-bs-toggle="tab"
+               href="#dentalOpdTable">Dental OPD</a>
+        </li>
+        @endif
             <li class="nav-item position-relative me-7 mb-3">
                 <a class="nav-link p-0" data-bs-toggle="tab"
                    href="#nursingForms">Nursing Forms</a>
@@ -154,24 +172,7 @@
                 <a class="nav-link p-0"
                 href="{{route('dietitan.show', $data->id)}}">Dietitian Assessment</a>
             </li>
-            @php
-                $user = app\Models\Doctor::with('department')->where('doctor_user_id', auth()->user()->id)->first();
-                $departments = $user->department->title;
-            @endphp
 
-
-            @if($departments != "Dental")
-            <li class="nav-item position-relative me-7 mb-3">
-                <a class="nav-link p-0" data-bs-toggle="tab"
-                   href="#opdTable">OPD</a>
-            </li>
-            @endif
-            @if($departments == "Dental")
-            <li class="nav-item position-relative me-7 mb-3">
-                <a class="nav-link p-0" data-bs-toggle="tab"
-                   href="#dentalOpdTable">Dental OPD</a>
-            </li>
-            @endif
 
             @endrole
 
@@ -367,7 +368,7 @@
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                         </td>
-        
+
                                     </tr>
                                 @empty
                                     <tr class="text-center">

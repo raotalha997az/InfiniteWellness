@@ -74,12 +74,10 @@
                     </div>
                     <div class="col-xxl-7 col-12">
                         <div class="row justify-content-center">
-                            <div class="mb-6 col-md-4 col-sm-6 col-12 mb-md-0">
-                                <div class="p-5 border rounded-10 h-100">
-                                    <h2 class="mb-3 text-primary">{{ !empty($data->cases) ? $data->cases->count() : 0 }}
-                                    </h2>
-                                    <h3 class="mb-0 text-gray-600 fs-5 fw-light">{{ __('messages.patient.total_cases') }}
-                                    </h3>
+                            <div class="col-md-4 col-sm-6 col-12 mb-6 mb-md-0">
+                                <div class="border rounded-10 p-5 h-100">
+                                    <h2 class="text-primary mb-3">{{!empty($data->appointments) ? $data->appointments->count() : 0}}</h2>
+                                    <h3 class="fs-5 fw-light text-gray-600 mb-0">Total Visits</h3>
                                 </div>
                             </div>
                             {{-- <div class="mb-6 col-md-4 col-sm-6 col-12 mb-md-0">
@@ -108,6 +106,22 @@
                     <a class="nav-link p-0"
                        href="{{  url('patients/') }}/{{ $data->id }}">{{ __('messages.overview') }}</a>
                 </li>
+                @php
+                $user = app\Models\Doctor::with('department')->where('doctor_user_id', auth()->user()->id)->first();
+                $departments = $user->department->title;
+            @endphp
+            @if($departments != "Dental")
+            <li class="nav-item position-relative me-7 mb-3">
+                <a class="nav-link p-0"
+                   href="{{  url('patients/') }}/{{ $data->id }}">OPD</a>
+            </li>
+            @endif
+            @if($departments == "Dental")
+            <li class="nav-item position-relative me-7 mb-3">
+                <a class="nav-link p-0"
+                   href="{{  url('patients/') }}/{{ $data->id }}">Dental OPD</a>
+            </li>
+            @endif
                 <li class="nav-item position-relative me-7 mb-3">
                     <a class="nav-link p-0"
                        href="{{  url('patients/') }}/{{ $data->id }}">Nursing Forms</a>
@@ -132,24 +146,7 @@
                     <a class="nav-link active p-0"
                     href="{{route('dietitan.show', $data->id)}}">Dietitian Assessment</a>
                 </li>
-                @php
-                $user = app\Models\Doctor::with('department')->where('doctor_user_id', auth()->user()->id)->first();
-                $departments = $user->department->title;
-            @endphp
 
-
-            @if($departments != "Dental")
-            <li class="nav-item position-relative me-7 mb-3">
-                <a class="nav-link p-0"
-                   href="{{  url('patients/') }}/{{ $data->id }}">OPD</a>
-            </li>
-            @endif
-            @if($departments == "Dental")
-            <li class="nav-item position-relative me-7 mb-3">
-                <a class="nav-link p-0"
-                   href="{{  url('patients/') }}/{{ $data->id }}">Dental OPD</a>
-            </li>
-            @endif
                 @endrole
                 @role('Nurse')
                     <li class="mb-3 nav-item position-relative me-7">
