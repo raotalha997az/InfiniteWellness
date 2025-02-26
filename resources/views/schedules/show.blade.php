@@ -10,7 +10,7 @@
                 <a class="btn btn-primary me-2"
                    href="{{ route('schedules.edit',['schedule' => $schedule->id])}}">{{ __('messages.common.edit') }}</a>
                 <a href="{{ route('schedules.index') }}"
-                   class="btn btn-outline-primary">{{ __('messages.common.back') }}</a>
+                   class="custombackButton">{{ __('messages.common.back') }}</a>
             </div>
         </div>
     </div>

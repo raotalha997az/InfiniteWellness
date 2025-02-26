@@ -31,6 +31,36 @@
     {{--    <script src="{{ asset('livewire/livewire.css') }}"></script> --}}
     @yield('css')
     @yield('page_css')
+    <style>
+        .custombackButton{
+            color: #6571ff;
+            background-color: transparent;
+            border: 1px solid #6571ff;
+            border-radius: .313rem;
+            cursor: pointer;
+            display: inline-block;
+            font-size: .875rem;
+            font-weight: 400;
+            line-height: 1.5;
+            padding: .563rem 1.563rem;
+            text-align: center;
+            text-decoration: none;
+        }
+        .custombackButton:hover{
+            color: #fff;
+            background-color: #6571ff;
+            border: 1px solid #6571ff;
+            border-radius: .313rem;
+            cursor: pointer;
+            display: inline-block;
+            font-size: .875rem;
+            font-weight: 400;
+            line-height: 1.5;
+            padding: .563rem 1.563rem;
+            text-align: center;
+            text-decoration: none;
+        }
+    </style>
     {{--    <link href="{{ asset('css/pages.css') }}" rel="stylesheet" type="text/css"/> --}}
     <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
     {{--    <link rel="stylesheet" href="{{ asset('assets/css/livewire-table.css') }}"> --}}

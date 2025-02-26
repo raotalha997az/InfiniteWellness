@@ -14,7 +14,7 @@
                        class="btn btn-primary me-2">{{ __('messages.common.edit') }}</a>
                 @endif
                 <a href="{{ url()->previous() }}"
-                   class="btn btn-outline-primary">{{ __('messages.common.back') }}</a>
+                   class="custombackButton">{{ __('messages.common.back') }}</a>
             </div>
         </div>
     </div>

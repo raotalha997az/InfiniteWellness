@@ -9,7 +9,7 @@
             <h1 class="mb-0">@yield('title')</h1>
             <div class="text-end mt-4 mt-md-0">
                 <a href="{{ url()->previous() }}"
-                   class="btn btn-outline-primary">{{ __('messages.common.back') }}</a>
+                   class="custombackButton">{{ __('messages.common.back') }}</a>
             </div>
         </div>
     </div>

@@ -7,7 +7,7 @@
         <div class="d-md-flex align-items-center justify-content-between mb-7">
             <h1 class="mb-0">@yield('title')</h1>
             <a href="{{ route('issued.item.index') }}"
-               class="btn btn-outline-primary">{{ __('messages.common.back') }}</a>
+               class="custombackButton">{{ __('messages.common.back') }}</a>
         </div>
     </div>
 @endsection

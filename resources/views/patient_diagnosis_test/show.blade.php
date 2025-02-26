@@ -16,7 +16,7 @@
                 <a href="{{route('patient.diagnosis.test.edit',['patientDiagnosisTest' => $patientDiagnosisTest->id])}}"
                    class="btn btn-primary edit-btn me-2">{{ __('messages.common.edit') }}</a>
                 <a href="{{ url('patient-diagnosis-test')}}"
-                   class="btn btn-outline-primary">{{ __('messages.common.back') }}</a>
+                   class="custombackButton">{{ __('messages.common.back') }}</a>
             </div>
         </div>
     </div>
