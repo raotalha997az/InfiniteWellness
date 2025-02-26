@@ -63,7 +63,7 @@ class dentalOpdDiagnosesTable extends LivewireTableComponent
             Column::make(__('messages.ipd_patient_diagnosis.description'), 'description')
                 ->view('opd_patient_departments.columnsDiagnoses.description')
                 ->sortable(),
-            // Column::make(__('messages.common.action'), 'id')->view('opd_diagnoses.action'),
+            //  Column::make(__('messages.common.action'), 'id')->view('opd_diagnoses.action'),
 
         ];
     }

@@ -48,18 +48,19 @@ class OpdDiagnosesTable extends LivewireTableComponent
     public function columns(): array
     {
         return [
-            Column::make(__('messages.ipd_patient_diagnosis.report_type'), 'report_type')
-                ->searchable()
-                ->sortable(),
-            Column::make(__('messages.ipd_patient_diagnosis.report_date'), 'report_date')
+            Column::make('Diagnosis', 'description')
+            ->view('opd_patient_departments.columnsDiagnoses.description')
+            ->sortable(),
+            // Column::make(__('messages.ipd_patient_diagnosis.report_type'), 'report_type')
+            //     ->searchable()
+            //     ->sortable(),
+            Column::make('Created Date', 'report_date')
                 ->view('opd_patient_departments.columnsDiagnoses.report_date')
                 ->sortable()->searchable(),
-            Column::make(__('messages.ipd_patient_diagnosis.document'), 'opd_patient_department_id')
-                ->view('opd_patient_departments.columnsDiagnoses.document'),
+            // Column::make(__('messages.ipd_patient_diagnosis.document'), 'opd_patient_department_id')
+            //     ->view('opd_patient_departments.columnsDiagnoses.document'),
 
-            Column::make(__('messages.ipd_patient_diagnosis.description'), 'description')
-                ->view('opd_patient_departments.columnsDiagnoses.description')
-                ->sortable(),
+
             Column::make(__('messages.common.action'), 'id')->view('opd_diagnoses.action'),
 
         ];

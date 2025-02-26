@@ -10075,6 +10075,7 @@
                 renderOpdDiagnosisData(t);
               }
             }),
+
             (window.renderOpdDiagnosisData = function (e) {
               $.ajax({
                 url: $("#showOpdDiagnosisUrl").val() + "/" + e + "/edit",
@@ -10322,7 +10323,7 @@
                 addAmount();
 
                 }
-                    
+
                   }
                 });
 

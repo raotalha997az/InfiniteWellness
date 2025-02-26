@@ -58,6 +58,7 @@
 
     <div class="mt-7 overflow-hidden">
         <ul class="nav nav-tabs mb-5 pb-1 overflow-auto flex-nowrap text-nowrap" id="myTab" role="tablist">
+            @role('Admin')
             <li class="nav-item position-relative me-7 mb-3" role="presentation">
                 <button class="nav-link active p-0" id="opdPatientOverview" data-bs-toggle="tab"
                         data-bs-target="#opdOverview"
@@ -65,20 +66,19 @@
                     {{ __('messages.overview') }}
                 </button>
             </li>
-            @role('Admin')
             <li class="nav-item position-relative me-7 mb-3" role="presentation">
                 <button class="nav-link p-0" id="opdVisitTab" data-bs-toggle="tab" data-bs-target="#opdVisits"
                         type="button" role="tab" aria-controls="cases" aria-selected="false">
                     {{ __('messages.opd_patient.visits') }}
                 </button>
             </li>
+            @endrole
             <li class="nav-item position-relative me-7 mb-3" role="presentation">
                 <button class="nav-link p-0" id="opdDiagnosisTab" data-bs-toggle="tab" data-bs-target="#opdDiagnosis"
                         type="button" role="tab" aria-controls="patients" aria-selected="false">
                     {{ __('messages.ipd_diagnosis') }}
                 </button>
             </li>
-            @endrole
             <li class="nav-item position-relative me-7 mb-3" role="presentation">
                 <button class="nav-link p-0" id="opdPatientsTimelinesTab" data-bs-toggle="tab"
                         data-bs-target="#opdPatientsTimelines"

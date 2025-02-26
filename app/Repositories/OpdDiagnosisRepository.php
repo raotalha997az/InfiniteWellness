@@ -74,9 +74,9 @@ class OpdDiagnosisRepository extends BaseRepository
                 $opdDiagnosis->addMedia($input['file'])->toMediaCollection(OpdDiagnosis::OPD_DIAGNOSIS_PATH,
                     config('app.media_disc'));
             }
-            if ($input['avatar_remove'] == 1 && isset($input['avatar_remove']) && ! empty($input['avatar_remove'])) {
-                removeFile($opdDiagnosis, OpdDiagnosis::OPD_DIAGNOSIS_PATH);
-            }
+            // if ($input['avatar_remove'] == 1 && isset($input['avatar_remove']) && ! empty($input['avatar_remove'])) {
+            //     removeFile($opdDiagnosis, OpdDiagnosis::OPD_DIAGNOSIS_PATH);
+            // }
         } catch (\Exception $e) {
             throw new UnprocessableEntityHttpException($e->getMessage());
         }

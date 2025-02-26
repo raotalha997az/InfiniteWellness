@@ -70,8 +70,8 @@ class OpdDiagnosis extends Model implements HasMedia
      * @var array
      */
     public static $rules = [
-        'report_type' => 'required',
-        'report_date' => 'required',
+        'report_type' => 'nullable',
+        'report_date' => 'nullable',
         'file' => 'nullable|mimes:jpeg,png,pdf,docx,doc',
     ];
 

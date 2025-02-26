@@ -156,7 +156,7 @@ function updateInputFieldName(isChecked) {
         document.getElementById('opdStandardChargeLabel').innerHTML='Standard Charge';
 
     }
-              
+
                 $.ajax({
                   url: '/get-doctor-opd-charge',
                   type: "get",
@@ -177,9 +177,9 @@ function updateInputFieldName(isChecked) {
                             )
                         : $("#opdStandardCharge,#editOpdStandardCharge").val(0);
                     }
-                    
+
                   }});
-   
+
 }
 
 
@@ -211,7 +211,7 @@ function fetchDoctorSchedule() {
 checkbox.addEventListener('change', function () {
     // Update the name attribute when the checkbox state changes
     updateInputFieldName(this.checked);
-  
+
 });
 
 </script>
