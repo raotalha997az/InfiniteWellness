@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Bed;
 use App\Models\Pos;
 use App\Models\Bill;
@@ -15,6 +16,7 @@ use App\Models\Payment;
 use App\Models\Setting;
 use App\Models\PosReturn;
 use Illuminate\View\View;
+use App\Models\Appointment;
 use App\Models\NoticeBoard;
 use Illuminate\Http\Request;
 use App\Models\AdvancedPayment;
@@ -53,6 +55,16 @@ class HomeController extends AppBaseController
     {
         
             //    $data['invoiceAmount'] = Invoice::sum('amount');
+        $doctorTodayAppointments = null;
+        $doctorWeekAppointments = null;
+        $doctorMonthAppointments = null;
+        $today = Carbon::now();
+        $weekStart = Carbon::now()->startOfWeek()->startOfDay(); // Monday 00:00:00
+        $weekEnd = Carbon::now()->endOfWeek()->endOfDay(); // Sunday 23:59:59
+
+        $monthStart = $today->copy()->startOfMonth()->startOfDay();
+        $monthEnd = $today->copy()->endOfMonth()->endOfDay();
+
         $PosAmount = Pos::where('is_paid', 1)->sum('total_amount');
         $billAmount = Bill::sum('amount');
         $PosReturn = PosReturn::sum('total_amount');
@@ -70,7 +82,16 @@ class HomeController extends AppBaseController
         $data['currency'] = Setting::CURRENCIES;
         $modules = Module::pluck('is_active', 'name')->toArray();
 
-        return view('dashboard.index', compact('data', 'modules'));
+        $doctor = Doctor::where('doctor_user_id',auth()->user()->id)->first();
+        if ($doctor) {
+            // dd($doctor->id);
+            // $doctorTodayAppointments = Appointment::where('doctor_id', $doctor->id)->whereDate('opd_date', date('Y-m-d'))->count();
+            $doctorTodayAppointments = Appointment::where('doctor_id', $doctor->id)->whereDate('opd_date', $today->toDateString())->count();
+            $doctorWeekAppointments = Appointment::where('doctor_id', $doctor->id)->whereBetween('opd_date', [$weekStart, $weekEnd])->count();  
+            $doctorMonthAppointments = Appointment::where('doctor_id', $doctor->id)->whereBetween('opd_date', [$monthStart, $monthEnd])->count();
+        }
+
+        return view('dashboard.index', compact('data', 'modules','doctorTodayAppointments', 'doctorWeekAppointments', 'doctorMonthAppointments'));
     }
 
     /**

@@ -1701,7 +1701,7 @@ Route::get('get_opd_doc_by_opd/{opdNumber}', [OpdPatientDepartmentController::cl
 require __DIR__ . '/upgrade.php';
 
 
-Route::middleware('role:Admin|Patient|Doctor|Receptionist|Nurse|Accountant|Lab Technician|Pharmacist|PharmacistAdmin|Case Manager|CSR')->group(function () {
+Route::middleware('role:Admin|Patient|Doctor|Receptionist|Nurse|Accountant|Lab Technician|Pharmacist|PharmacistAdmin|Case Manager|CSR|Dietitian')->group(function () {
     Route::prefix('notes')->name('notes.')->group(function () {
         Route::get('index', [NoteController::class, 'index'])->name('index');
         Route::get('create', [NoteController::class, 'create'])->name('create');

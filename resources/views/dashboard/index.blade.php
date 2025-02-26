@@ -31,6 +31,7 @@
                                 </a>
                             </div>
                         @endif
+                        @role('Admin')
                         @if($modules['Bills'])
                             {{-- Bills Widget --}}
                             <div class="col-xxl-3 col-xl-4 col-sm-6 widget">
@@ -48,6 +49,7 @@
                                 </a>
                             </div>
                         @endif
+                        @endrole
                         @if($modules['Payments'] == true)
                             {{-- Payments Widget --}}
                             <div class="col-xxl-3 col-xl-4 col-sm-6 widget">
@@ -80,8 +82,9 @@
                                 </a>
                             </div>
                         @endif
+                        @role('Admin')
                         @if($modules['Doctors'])
-                    {{-- Doctors Widget --}}
+                        {{-- Doctors Widget --}}
                         <div class="col-xxl-3 col-xl-4 col-sm-6 widget">
                             <a href="{{ route('doctors.index') }}" class="text-decoration-none">
                                 <div class="shadow-md rounded-10 p-xxl-10 px-5 py-10 d-flex align-items-center justify-content-between my-sm-3 my-2 cs_dark_grey" style="background-color: #383B49">
@@ -98,7 +101,7 @@
                         </div>
                         @endif
                         @if($modules['Patients'] == true)
-                            {{-- Patients Widget --}}
+                        {{-- Patients Widget --}}
                             <div class="col-xxl-3 col-xl-4 col-sm-6 widget">
                                 <a href="{{ route('patients.index') }}" class="text-decoration-none">
                                     <div class="cs_dark_grey shadow-md rounded-10 p-xxl-10 px-5 py-10 d-flex align-items-center justify-content-between my-sm-3 my-2" style="background-color: #383B49">
@@ -114,6 +117,51 @@
                                 </a>
                             </div>
                         @endif
+                        @endrole
+                        @role('Doctor')
+                        <div class="col-xxl-3 col-xl-4 col-sm-6 widget">
+                            <a href="{{ route('patients.index') }}" class="text-decoration-none">
+                                <div class="bg-success shadow-md rounded-10 p-xxl-10 px-5 py-10 d-flex align-items-center justify-content-between my-sm-3 my-2" style="background-color: #383B49">
+                                    <div class="widget-icon rounded-10 me-2 d-flex align-items-center justify-content-center">
+                                        {{-- <i class="fa-solid fa-user fs-1-xl text-white"></i> --}}
+                                        <img src="{{asset('assets/images/customer-health.png')}}" alt="">
+                                    </div>
+                                    <div class="text-end text-white">
+                                        <h2 class="fs-1-xxl fw-bolder text-white">{{ $doctorTodayAppointments }}</h2>
+                                        <h3 class="mb-0 fs-5 fw-light">Today's Appointments</h3>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-xxl-3 col-xl-4 col-sm-6 widget">
+                            <a href="{{ route('patients.index') }}" class="text-decoration-none">
+                                <div class="cs_dark_grey shadow-md rounded-10 p-xxl-10 px-5 py-10 d-flex align-items-center justify-content-between my-sm-3 my-2" style="background-color: #383B49">
+                                    <div class="widget-icon rounded-10 me-2 d-flex align-items-center justify-content-center">
+                                        {{-- <i class="fa-solid fa-user fs-1-xl text-white"></i> --}}
+                                        <img src="{{asset('assets/images/customer-health.png')}}" alt="">
+                                    </div>
+                                    <div class="text-end text-white">
+                                        <h2 class="fs-1-xxl fw-bolder text-white">{{ $doctorWeekAppointments }}</h2>
+                                        <h3 class="mb-0 fs-5 fw-light">This Week's Appointments</h3>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-xxl-3 col-xl-4 col-sm-6 widget">
+                            <a href="{{ route('patients.index') }}" class="text-decoration-none">
+                                <div class="cs_dark_grey shadow-md rounded-10 p-xxl-10 px-5 py-10 d-flex align-items-center justify-content-between my-sm-3 my-2" style="background-color: #383B49">
+                                    <div class="widget-icon rounded-10 me-2 d-flex align-items-center justify-content-center">
+                                        {{-- <i class="fa-solid fa-user fs-1-xl text-white"></i> --}}
+                                        <img src="{{asset('assets/images/customer-health.png')}}" alt="">
+                                    </div>
+                                    <div class="text-end text-white">
+                                        <h2 class="fs-1-xxl fw-bolder text-white">{{ $doctorMonthAppointments }}</h2>
+                                        <h3 class="mb-0 fs-5 fw-light">This Month's Appointments</h3>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        @endrole
                         @if($modules['Nurses'] == true)
                             {{-- Nurses Widget --}}
                             <div class="col-xxl-3 col-xl-4 col-sm-6 widget">
