@@ -125,7 +125,7 @@
                             <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
                                 <label for="name"
                                        class="pb-2 fs-5 text-gray-600">{{ __('messages.ipd_patient.doctor_id').':' }}</label>
-                                <span class="fs-5 text-gray-800">{{ $opdPatientDepartment->doctor->doctorUser->full_name }}</span>
+                                <span class="fs-5 text-gray-800">{{ $opdPatientDepartment->doctor->doctorUser->full_name ?? '' }}</span>
                             </div>
                             <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
                                 <label for="name"
@@ -136,7 +136,7 @@
                                 <label for="name"
                                        class="pb-2 fs-5 text-gray-600">{{ __('messages.doctor_opd_charge.standard_charge') }}</label>
                                 <span class="fs-5 text-gray-800">
-                                    {{ !empty($opdPatientDepartment->standard_charge) ? 
+                                    {{ !empty($opdPatientDepartment->standard_charge) ?
 checkNumberFormat($opdPatientDepartment->standard_charge, strtoupper($opdPatientDepartment->currency_symbol ?? getCurrentCurrency()))
 :
                                         __('messages.common.n/a') }}

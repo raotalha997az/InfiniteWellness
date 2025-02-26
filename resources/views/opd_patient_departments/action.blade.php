@@ -1,3 +1,6 @@
+<a href="{{ route('opd.patient.show',$row->id) }}" class="text-decoration-none">
+    <i class="fa-solid fa-eye"></i>
+</a>
 <a href="/opds/{{$row->id}}/print" title="Print"
     class="btn px-1 text-info fs-3 ps-0">
      <i class="fa-solid fa-print"></i>
