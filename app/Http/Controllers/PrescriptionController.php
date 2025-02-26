@@ -99,8 +99,9 @@ class PrescriptionController extends AppBaseController
         $data = $this->medicineRepository->getSyncList();
         $medicineList = $this->medicineRepository->getMedicineList($medicines['medicines']);
         $mealList = $this->medicineRepository->getMealList();
-        // dd($medicines);
         $medicines = $medicines['medicines'];
+
+
         // return $medicines;
         return view('prescriptions.create',
             compact('patients', 'doctors', 'medicines', 'mealList'))->with($data);
@@ -154,16 +155,15 @@ class PrescriptionController extends AppBaseController
             return view('errors.404');
         } else {
             $prescription->getMedicine;
-            $PrescriptionMedicine = PrescriptionMedicineModal::where('prescription_id',$prescription->id)->with('medicine')->get();
+            $PrescriptionMedicine = PrescriptionMedicineModal::where('prescription_id', $prescription->id)
+            ->with('medicine')
+            ->get();
             $patients = $this->prescriptionRepository->getPatients();
-            // dd($patients);
             $doctors = $this->doctorRepository->getDoctors();
             $medicines = $this->prescriptionRepository->getMedicines();
             $data = $this->medicineRepository->getSyncList();
             $medicineList = $this->medicineRepository->getMedicineList($medicines['medicines']);
             $mealList = $this->medicineRepository->getMealList();
-
-
             return view('prescriptions.edit',
                 compact('patients', 'prescription', 'doctors', 'medicines', 'medicineList', 'mealList','PrescriptionMedicine'))->with($data);
         }

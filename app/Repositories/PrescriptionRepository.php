@@ -149,15 +149,17 @@ class PrescriptionRepository extends BaseRepository
             $prescription->update($prescriptionMedicineArr);
             $prescription->getMedicine()->delete();
 
-            if (! empty($input['medicine'])) {
-                foreach ($input['medicine'] as $key => $value) {
+            if (!empty($input['medicine'])) {
+                foreach ($input['medicine'] as $key => $medicineId) {
                     $PrescriptionItem = [
                         'prescription_id' => $prescription->id,
-                        'medicine' => $input['medicine'][$key],
+                        'medicine_id' => $medicineId,  // Use medicine_id instead of medicine
+                        'category_id' => $input['category_id'][$key] ?? null, // Add category_id if needed
                         'dosage' => $input['dosage'][$key],
                         'day' => $input['day'][$key],
                         'time' => $input['time'][$key],
                         'comment' => $input['comment'][$key],
+                        'route' => $input['route'][$key] ?? null,
                     ];
                     PrescriptionMedicineModal::create($PrescriptionItem);
                 }

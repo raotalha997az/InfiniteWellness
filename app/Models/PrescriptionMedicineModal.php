@@ -68,8 +68,8 @@ class PrescriptionMedicineModal extends Model
     //     return $this->hasMany(Medicine::class, 'id', 'medicine');
     // }
 
-    public function medicine(): HasOne
+    public function medicine(): BelongsTo
     {
-        return $this->HasOne(Medicine::class, 'id', 'medicine_id');
+        return $this->belongsTo(Medicine::class,'medicine_id');
     }
 }
