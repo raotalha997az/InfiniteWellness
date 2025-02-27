@@ -157,7 +157,7 @@ class BillController extends AppBaseController
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
-
+            dd($e->getMessage());
             return $this->sendError($e->getMessage());
         }
 
