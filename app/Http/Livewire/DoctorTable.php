@@ -120,7 +120,14 @@ class DoctorTable extends LivewireTableComponent
             $query = Doctor::query()->select('doctors.*')->with('doctorUser');
 
         }
+        else if ($role->name == "Receptionist") {
+            $query = Doctor::query()->select('doctors.*')->with('doctorUser');
 
+        }
+        else if ($role->name == "Nurse") {
+            $query = Doctor::query()->select('doctors.*')->with('doctorUser');
+
+        }
         $query->when(isset($this->statusFilter), function (Builder $q) {
             if ($this->statusFilter == 2) {
             }

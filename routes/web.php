@@ -953,7 +953,7 @@ Route::middleware(['auth', 'verified', 'xss', 'checkUserStatus'])->group(functio
         Route::get('notice-boards', [NoticeBoardController::class, 'index'])->name('noticeboard')->middleware('modules');
     });
 
-    Route::middleware('role:Admin|Receptionist|Case Manager')->group(function () {
+    Route::middleware('role:Admin|Receptionist|Case Manager|Doctor|Dietitian|Nurse|CSR')->group(function () {
         Route::resource('ambulances', AmbulanceController::class)->parameters(['ambulances' => 'ambulance']);
         Route::get('ambulances', [AmbulanceController::class, 'index'])->name('ambulances.index')->middleware('modules');
         Route::post('ambulances/{ambulance_id}/active-deactive', [AmbulanceController::class, 'isAvailableAmbulance']);

@@ -15,6 +15,27 @@
        </a>
    </li>
    @endrole
+   @role('Nurse|Dietitian|Receptionist|Nurse|CSR')
+
+       {{-- sms/mail --}}
+       <?php
+       $smsMailMgt = getMenuLinks(\App\Models\User::MAIN_SMS_MAIL);
+       ?>
+       @if ($smsMailMgt)
+           <li class="nav-item  {{ Request::is('sms*', 'mail*') ? 'active' : '' }}">
+               <a class="py-3 nav-link d-flex align-items-center" href="{{ route('mail') }}"
+                   title="{{ __('SMS/Mail') }}">
+                   <span class="aside-menu-icon pe-3">
+                       <i class="fas fa-bell"></i>
+                   </span>
+                   <span class="aside-menu-title">{{ __('messages.sms.sms') }}/{{ __('messages.mail') }}</span>
+                   <span class="d-none">{{ __('messages.sms.sms') }}</span>
+                   <span class="d-none">{{ __('messages.mail') }}</span>
+               </a>
+           </li>
+       @endif
+
+   @endrole
     {{-- For CSR Role --}}
     @if (auth()->user()->hasRole('CSR'))
     @module('Appointments', $modules)
@@ -26,16 +47,7 @@
             </li>
         @endmodule
 
-    {{-- SMS --}}
-    @module('SMS', $modules)
-        <li class="nav-item {{ Request::is('sms*') ? 'active' : '' }}">
-            <a class="py-3 nav-link d-flex align-items-center" href="{{ route('sms.index') }}">
-                <span class="aside-menu-icon pe-3"><i class="fas fa fa-sms"></i></span>
-                <span class="aside-menu-title">{{ __('messages.sms.sms') }}</span>
-            </a>
-        </li>
-    @endmodule
-{{-- Billing --}}
+    {{-- Billing --}}
 <?php
     $billingMGT = getMenuLinks(\App\Models\User::MAIN_BILLING_MGT);
     ?>
@@ -668,22 +680,23 @@
     @endif
 
     {{-- sms/mail --}}
-    <?php
-    $smsMailMgt = getMenuLinks(\App\Models\User::MAIN_SMS_MAIL);
-    ?>
-    @if ($smsMailMgt)
-        <li class="nav-item  {{ Request::is('sms*', 'mail*') ? 'active' : '' }}">
-            <a class="py-3 nav-link d-flex align-items-center" href="{{ $smsMailMgt }}"
-                title="{{ __('SMS/Mail') }}">
-                <span class="aside-menu-icon pe-3">
-                    <i class="fas fa-bell"></i>
-                </span>
-                <span class="aside-menu-title">{{ __('messages.sms.sms') }}/{{ __('messages.mail') }}</span>
-                <span class="d-none">{{ __('messages.sms.sms') }}</span>
-                <span class="d-none">{{ __('messages.mail') }}</span>
-            </a>
-        </li>
-    @endif
+  {{-- sms/mail --}}
+  <?php
+  $smsMailMgt = getMenuLinks(\App\Models\User::MAIN_SMS_MAIL);
+  ?>
+  @if ($smsMailMgt)
+      <li class="nav-item  {{ Request::is('sms*', 'mail*') ? 'active' : '' }}">
+          <a class="py-3 nav-link d-flex align-items-center" href="{{ route('mail') }}"
+              title="{{ __('SMS/Mail') }}">
+              <span class="aside-menu-icon pe-3">
+                  <i class="fas fa-bell"></i>
+              </span>
+              <span class="aside-menu-title">{{ __('messages.sms.sms') }}/{{ __('messages.mail') }}</span>
+              <span class="d-none">{{ __('messages.sms.sms') }}</span>
+              <span class="d-none">{{ __('messages.mail') }}</span>
+          </a>
+      </li>
+  @endif
 
     {{-- Settings --}}
     <li class="nav-item  {{ Request::is('settings*', 'hospital-schedules*', 'currency-settings*') ? 'active' : '' }}">
@@ -850,15 +863,23 @@
             </li>
         @endif
 
-        {{-- SMS --}}
-        @module('SMS', $modules)
-            <li class="nav-item {{ Request::is('sms*') ? 'active' : '' }}">
-                <a class="py-3 nav-link d-flex align-items-center" href="{{ route('sms.index') }}">
-                    <span class="aside-menu-icon pe-3"><i class="fas fa fa-sms"></i></span>
-                    <span class="aside-menu-title">{{ __('messages.sms.sms') }}</span>
-                </a>
-            </li>
-        @endmodule
+       {{-- sms/mail --}}
+    <?php
+    $smsMailMgt = getMenuLinks(\App\Models\User::MAIN_SMS_MAIL);
+    ?>
+    @if ($smsMailMgt)
+        <li class="nav-item  {{ Request::is('sms*', 'mail*') ? 'active' : '' }}">
+            <a class="py-3 nav-link d-flex align-items-center" href="{{ route('mail') }}"
+                title="{{ __('SMS/Mail') }}">
+                <span class="aside-menu-icon pe-3">
+                    <i class="fas fa-bell"></i>
+                </span>
+                <span class="aside-menu-title">{{ __('messages.sms.sms') }}/{{ __('messages.mail') }}</span>
+                <span class="d-none">{{ __('messages.sms.sms') }}</span>
+                <span class="d-none">{{ __('messages.mail') }}</span>
+            </a>
+        </li>
+    @endif
     @endrole
 
     @role('Case Manager')
@@ -1152,23 +1173,7 @@
             </li>
         @endif
 
-        {{-- Mail and SMS --}}
-        <?php
-        $receptionistSmsMailMgt = getMenuLinks(\App\Models\User::MAIN_SMS_MAIL);
-        ?>
-        @if ($receptionistSmsMailMgt)
-            <li class="nav-item  {{ Request::is('sms*', 'mail*') ? 'active' : '' }}">
-                <a class="py-3 nav-link d-flex align-items-center" href="{{ $receptionistSmsMailMgt }}"
-                    title="{{ __('SMS/Mail') }}">
-                    <span class="aside-menu-icon pe-3">
-                        <i class="fas fa-bell"></i>
-                    </span>
-                    <span class="aside-menu-title">{{ __('messages.sms.sms') }}/{{ __('messages.mail') }}</span>
-                    <span class="d-none">{{ __('messages.sms.sms') }}</span>
-                    <span class="d-none">{{ __('messages.mail') }}</span>
-                </a>
-            </li>
-        @endif
+        
 
         {{-- @module('Testimonial',$modules) --}}
         {{-- <li class="nav-item"> --}}

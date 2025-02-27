@@ -155,6 +155,9 @@ class DentalOpdPatientTable extends LivewireTableComponent
         else if($role->name == "Dietitian"){
             $query = DentalOpdPatientDepartment::whereHas('patient')->with(['patient.patientUser', 'patient.opd'])->select('dental_opd_patient_departments.*')->orderBy('id', 'desc');
         }
+        else if($role->name == "Receptionist"){
+            $query = DentalOpdPatientDepartment::whereHas('patient')->with(['patient.patientUser', 'patient.opd'])->select('dental_opd_patient_departments.*')->orderBy('id', 'desc');
+        }
         else if($role->name == "Nurse"){
             $query = DentalOpdPatientDepartment::whereHas('patient')->with(['patient.patientUser', 'patient.opd'])->select('dental_opd_patient_departments.*')->orderBy('id', 'desc');
         }

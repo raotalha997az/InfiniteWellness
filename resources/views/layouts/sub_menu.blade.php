@@ -728,7 +728,7 @@
 </li>
 @endmodule
 @endrole
-@role('Admin|Doctor|Accountant|Case Manager|Receptionist|Pharmacist|PharmacistAdmin')
+{{-- @role('Admin|Doctor|Accountant|Case Manager|Receptionist|Pharmacist|PharmacistAdmin')
 @module('SMS',$modules)
 <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('sms*','mail*')) ? 'd-none' : '' }}">
     <a class="nav-link p-0 {{ Request::is('sms*') ? 'active' : '' }}"
@@ -737,8 +737,8 @@
     </a>
 </li>
 @endmodule
-@endrole
-@role('Admin|Case Manager|Receptionist')
+@endrole --}}
+@role('Admin|Doctor|Accountant|Case Manager|Receptionist|Pharmacist|PharmacistAdmin|Nurse|CSR|Dietitian')
 @module('Mail',$modules)
 <li class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ (!Request::is('sms*','mail*')) ? 'd-none' : '' }}">
     <a class="nav-link p-0 {{ Request::is('mail*') ? 'active' : '' }}"

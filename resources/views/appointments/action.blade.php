@@ -75,5 +75,8 @@
 <?php }?>
 <a class="btn px-1 text-primary fs-3 pe-0" href="{{ route('appointments.print', $row->id) }}" target="_blank"><i
         class="fa-solid fa-print"></i></a>
-<a class="btn px-1 text-primary fs-3 pe-0" href="{{ route('appointments.edit', $row->id) }}"><i
+       @if (Auth::user()->hasRole('Admin|Receptionist|CSR'))
+
+       <a class="btn px-1 text-primary fs-3 pe-0" href="{{ route('appointments.edit', $row->id) }}"><i
         class="fa-solid fa-edit"></i></a>
+        @endif
