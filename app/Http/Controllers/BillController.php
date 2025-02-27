@@ -150,11 +150,10 @@ class BillController extends AppBaseController
                 return $this->sendError(__('messages.bed_assign.assign_date_should_not_be_smaller_than_patient_birth_date'));
 
             }
-            dd($request->all());
-
+            
             $bill = $this->billRepository->saveBill($request->all());
             //return $this->sendError("testing");
-            $this->billRepository->saveNotification($input);
+            // $this->billRepository->saveNotification($input);
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
